@@ -65,12 +65,18 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.5",
     "errorhandler": "^1.5.0",
     "express": "^4.16.4",
+    "express-jwt": "^5.3.1",
+    "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.4.0",
+    "morgan": "^1.9.1",
     "multer": "^1.4.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "print-ip": "^1.0.2",
     "routes": "^2.1.0"
   }

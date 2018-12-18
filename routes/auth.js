@@ -1,23 +1,26 @@
-const app = module.exports = require('express')();
-const {login, logout} = require('../app/actions/auth');
+const jwt = require('express-jwt');
 
-app.post('/login', (req, res) => {
-  console.log(req)
-  console.log(req.body)
-  console.log(req.query)
-  console.log(req.params)
-  login(req.body)
-    .then(({token, user, projects}) => res.send({
-      token,
-      user: omit(user, 'password'),
-      projects
-    }))
-    .catch(() => {
-      res.status(400).send({ error: 'Login failed!' });
-    });
-});
+const getTokenFromHeaders = (req) => {
+  const { headers: { authorization } } = req;
 
-// ToDo: Make it DELETE
-app.get('/logout', (req, res) => {
-  logout(req.query).then(() => res.send({ msg: 'Logged out!' }));
-});
+  if(authorization && authorization.split(' ')[0] === 'Token') {
+    return authorization.split(' ')[1];
+  }
+  return null;
+};
+
+const auth = {
+  required: jwt({
+    secret: 'secret',
+    userProperty: 'payload',
+    getToken: getTokenFromHeaders,
+  }),
+  optional: jwt({
+    secret: 'secret',
+    userProperty: 'payload',
+    getToken: getTokenFromHeaders,
+    credentialsRequired: false,
+  }),
+};
+
+module.exports = auth;
