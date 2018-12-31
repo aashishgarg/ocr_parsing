@@ -1,9 +1,0 @@
-{
-  "generator-node": {
-    "promptValues": {
-      "authorName": "Raj Kumar",
-      "authorEmail": "raj.kumar@trantorinc.com",
-      "authorUrl": "https://github.com/RajRoR"
-    }
-  }
-}

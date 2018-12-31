@@ -1,38 +1,24 @@
-# pittohio [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
-> pittohio trantor app
+# README
 
-## Installation
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-```sh
-$ npm install --save pittohio
-```
+Things you may want to cover:
 
-## Usage
+* Ruby version
 
-```js
-const pittohio = require('pittohio');
+* System dependencies
 
-pittohio('Rainbow');
-```
-## License
+* Configuration
 
-Apache-2.0 © [Raj Kumar](https://github.com/RajRoR)
+* Database creation
 
+* Database initialization
 
-[npm-image]: https://badge.fury.io/js/pittohio.svg
-[npm-url]: https://npmjs.org/package/pittohio
-[travis-image]: https://travis-ci.org/RajRoR/pittohio.svg?branch=master
-[travis-url]: https://travis-ci.org/RajRoR/pittohio
-[daviddm-image]: https://david-dm.org/RajRoR/pittohio.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/RajRoR/pittohio
-[coveralls-image]: https://coveralls.io/repos/RajRoR/pittohio/badge.svg
-[coveralls-url]: https://coveralls.io/r/RajRoR/pittohio
+* How to run the test suite
 
+* Services (job queues, cache servers, search engines, etc.)
 
+* Deployment instructions
 
-
-
-# Set env
-```js
-NODE_ENV=dev
-```
+* ...
