@@ -6,9 +6,6 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-# Load ENV vars
-Dotenv::Railtie.load
-
 module Pittohio
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

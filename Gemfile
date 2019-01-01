@@ -27,8 +27,8 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# JWT Authentication
-gem 'devise-jwt'
+# Authentication
+gem 'devise'
 
 # Shim to load environment variables from .env into ENV in development
 gem 'dotenv-rails', groups: [:development, :test]
