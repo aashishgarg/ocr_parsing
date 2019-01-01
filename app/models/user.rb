@@ -10,8 +10,10 @@ class User < ApplicationRecord
 
   def generate_jwt
     JWT.encode(
-        { id: id,
-          exp: 60.days.from_now.to_i},
+        {
+          id: id,
+          exp: 60.days.from_now.to_i
+        },
         ENV['DEVISE_JWT_SECRET_KEY']
     )
   end
