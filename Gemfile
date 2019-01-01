@@ -28,7 +28,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Authentication
-gem 'devise'
+gem 'devise-jwt'
 
 # Shim to load environment variables from .env into ENV in development
 gem 'dotenv-rails', groups: [:development, :test]
