@@ -33,6 +33,9 @@ gem 'devise'
 # Shim to load environment variables from .env into ENV in development
 gem 'dotenv-rails', groups: [:development, :test]
 
+# AWS S3
+gem 'aws-sdk-s3', '~> 1'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
