@@ -36,6 +36,9 @@ gem 'dotenv-rails', groups: [:development, :test]
 # AWS S3
 gem 'aws-sdk-s3', '~> 1'
 
+# Rack CORS for cross-domain requests
+gem 'rack-cors', :require => 'rack/cors'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
