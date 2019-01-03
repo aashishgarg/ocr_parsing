@@ -42,6 +42,9 @@ gem 'rack-cors', :require => 'rack/cors'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
+# File upload operations
+gem "paperclip", "~> 6.0.0"
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
