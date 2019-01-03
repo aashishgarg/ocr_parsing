@@ -10,10 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_31_073915) do
+ActiveRecord::Schema.define(version: 2019_01_03_112609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bol_files", force: :cascade do |t|
+    t.integer "shipper_id"
+    t.integer "bol_type_id"
+    t.string "name"
+    t.integer "status"
+    t.integer "status_updated_by"
+    t.datetime "status_updated_at"
+    t.jsonb "ocr_parsed_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bol_type_id"], name: "index_bol_files_on_bol_type_id"
+    t.index ["shipper_id"], name: "index_bol_files_on_shipper_id"
+    t.index ["status_updated_by"], name: "index_bol_files_on_status_updated_by"
+  end
+
+  create_table "bol_types", force: :cascade do |t|
+    t.integer "shipper_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "shippers", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "name"
+    t.string "address1"
+    t.string "address2"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_shippers_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -21,6 +56,11 @@ ActiveRecord::Schema.define(version: 2018_12_31_073915) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "company"
+    t.string "phone"
+    t.string "fax"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

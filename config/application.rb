@@ -24,6 +24,6 @@ module Pittohio
     config.action_dispatch.x_sendfile_header = "X-Accel-Redirect"
 
     # File storage on Amazon S3
-    config.active_storage.service = :amazon
+    # config.active_storage.service = :amazon
   end
 end

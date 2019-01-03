@@ -8,6 +8,9 @@ class User < ApplicationRecord
 
   validates :email, uniqueness: true, presence: true, allow_blank: false#, format: { with: /\A[a-zA-Z0-9]+\z/ }
 
+  has_many :bol_files
+  has_many :shippers
+
   def generate_jwt
     JWT.encode(
         {
