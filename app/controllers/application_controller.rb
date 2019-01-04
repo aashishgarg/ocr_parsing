@@ -5,6 +5,8 @@ class ApplicationController < ActionController::API
 
   before_action :authenticate_user
 
+  # ToDo: Global exception handling
+
   private
 
   def authenticate_user
