@@ -38,6 +38,6 @@ class ApplicationController < ActionController::API
   end
 
   def set_current_user
-    User.current = current_user
+    User.current = current_user if signed_in?
   end
 end

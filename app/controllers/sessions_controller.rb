@@ -1,4 +1,6 @@
 class SessionsController < Devise::SessionsController
+  skip_before_action :set_paper_trail_whodunnit, only: :create
+
   def create
     user = User.find_by_email(sign_in_params[:email])
 
