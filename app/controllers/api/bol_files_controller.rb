@@ -8,7 +8,8 @@ class Api::BolFilesController < ApplicationController
   def show; end
 
   def create
-    @bol_file = BolFile.new(bol_file_params)
+    shipper = Shipper.find(params[:shipper_id])
+    @bol_file = shipper.bol_files.new(bol_file_params)
 
     unless @bol_file.save
       render json: { errors: @bol_file.errors }, status: :unprocessable_entity
@@ -34,7 +35,7 @@ class Api::BolFilesController < ApplicationController
   end
 
   def bol_file_params
-    params.require(:bol_file).permit(:shipper_id, :bol_type_id, :name, :status, :ocr_parsed_data, :status_updated_by,
+    params.require(:bol_file).permit(:bol_type_id, :name, :status, :ocr_parsed_data, :status_updated_by,
                                      attachments_attributes: [:data])
   end
 end
