@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_07_071411) do
+ActiveRecord::Schema.define(version: 2019_01_07_132716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 2019_01_07_071411) do
     t.integer "shipper_id"
     t.integer "bol_type_id"
     t.string "name"
-    t.integer "status"
+    t.integer "status", default: 0
     t.integer "status_updated_by"
     t.datetime "status_updated_at"
     t.jsonb "ocr_parsed_data"

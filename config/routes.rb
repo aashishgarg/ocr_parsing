@@ -7,7 +7,9 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resource :user, only: [:show, :update]
-    resources :shippers
+    resources :shippers do |shipper|
+      resources :bol_files
+    end
     resources :bol_types
   end
 

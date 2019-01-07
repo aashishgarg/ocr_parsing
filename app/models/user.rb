@@ -12,6 +12,16 @@ class User < ApplicationRecord
 
   has_many :bol_files
 
+  # Get current user
+  def self.current
+    Thread.current[:user]
+  end
+
+  # Set current user
+  def self.current=(user)
+    Thread.current[:user] = user
+  end
+
   def generate_jwt
     JWT.encode(
         {

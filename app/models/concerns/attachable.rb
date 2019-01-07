@@ -3,6 +3,6 @@ module Attachable
 
   included do
     has_many :attachments, as: :attachable, dependent: :destroy
-    alias_attribute :data_files, :attachments
+    alias_attribute :data, :attachments
   end
 end
