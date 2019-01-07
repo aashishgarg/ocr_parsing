@@ -1,2 +1,0 @@
-class BolFilesController < ApplicationController
-end

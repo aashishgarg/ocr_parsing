@@ -1,3 +1,3 @@
 json.user do |json|
-  json.partial! 'users/user', user: current_user, show_token: true
+  json.partial! 'users/user', user: current_user
 end

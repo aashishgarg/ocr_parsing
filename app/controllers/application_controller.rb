@@ -4,6 +4,7 @@ class ApplicationController < ActionController::API
   respond_to :json
 
   before_action :authenticate_user
+  before_action :set_paper_trail_whodunnit
 
   # ToDo: Global exception handling
 

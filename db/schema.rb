@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_03_112609) do
+ActiveRecord::Schema.define(version: 2019_01_07_071411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attachments", force: :cascade do |t|
+    t.string "attachable_type"
+    t.bigint "attachable_id"
+    t.string "data_file_name"
+    t.string "data_content_type"
+    t.integer "data_file_size"
+    t.datetime "data_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attachable_id", "attachable_type"], name: "index_attachments_on_attachable_id_and_attachable_type"
+    t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable_type_and_attachable_id"
+  end
 
   create_table "bol_files", force: :cascade do |t|
     t.integer "shipper_id"
@@ -47,6 +60,10 @@ ActiveRecord::Schema.define(version: 2019_01_03_112609) do
     t.string "zip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contact_name"
+    t.string "contact_email"
+    t.string "contact_phone"
+    t.string "contact_fax"
     t.index ["user_id"], name: "index_shippers_on_user_id"
   end
 
@@ -65,6 +82,16 @@ ActiveRecord::Schema.define(version: 2019_01_03_112609) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.integer "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
 end
