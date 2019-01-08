@@ -1,4 +1,5 @@
 class Api::BolTypesController < ApplicationController
+  include Api::Concerns::BolTypesApipie
   before_action :set_bol_type, except: [:create, :index]
 
   def index
