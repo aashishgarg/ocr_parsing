@@ -42,7 +42,7 @@ module Api
       desc 'Shows a specific BOL File'
       param :id, :number
       error code: 401, desc: 'Unauthorized'
-      error code: 422, desc: 'Unprocessible Entity'
+      error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
       returns code: 200, desc: 'Detailed information about BOL File' do
         param_group :bol_file
@@ -63,7 +63,7 @@ module Api
         end
       end
       error code: 401, desc: 'Unauthorized'
-      error code: 422, desc: 'Unprocessible Entity'
+      error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
       returns code: 200, desc: 'Detailed information about BOL File' do
         param_group :bol_file
@@ -87,7 +87,7 @@ module Api
         end
       end
       error code: 401, desc: 'Unauthorized'
-      error code: 422, desc: 'Unprocessible Entity'
+      error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
       returns code: 200, desc: 'Detailed information about BOL File' do
         param_group :bol_file
@@ -101,7 +101,7 @@ module Api
       desc 'Deletes a specific BOL File'
       param :id, :number
       error code: 401, desc: 'Unauthorized'
-      error code: 422, desc: 'Unprocessible Entity'
+      error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
       def destroy;end
     end

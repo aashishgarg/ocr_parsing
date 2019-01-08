@@ -36,7 +36,7 @@ module Api
       desc 'Shows a specific Shipper'
       param :id, :number, required: true
       error code: 401, desc: 'Unauthorized'
-      error code: 422, desc: 'Unprocessible Entity'
+      error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
       returns code: 200, desc: 'Detailed information about Shipper' do
         param_group :shipper
@@ -56,7 +56,7 @@ module Api
       param :contact_fax, String
       param :contact_email, /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/, desc: 'Contact email'
       error code: 401, desc: 'Unauthorized'
-      error code: 422, desc: 'Unprocessible Entity'
+      error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
       returns code: 200, desc: 'Detailed information about new Shipper' do
         param_group :shipper
@@ -70,7 +70,7 @@ module Api
       desc 'Updates a specific Shipper'
       param :id, :number, required: true
       error code: 401, desc: 'Unauthorized'
-      error code: 422, desc: 'Unprocessible Entity'
+      error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
       returns code: 200, desc: 'Detailed information about Shipper' do
         param_group :shipper
@@ -84,7 +84,7 @@ module Api
       desc 'Deletes a specific Shipper'
       param :id, :number, required: true
       error code: 401, desc: 'Unauthorized'
-      error code: 422, desc: 'Unprocessible Entity'
+      error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
       returns code: 200, desc: 'Detailed information about Shipper' do
         param_group :shipper

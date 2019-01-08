@@ -26,7 +26,7 @@ module Api
       desc 'Shows a specific BOL Type'
       param :id, :number
       error code: 401, desc: 'Unauthorized'
-      error code: 422, desc: 'Unprocessible Entity'
+      error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
       returns code: 200, desc: 'Detailed information about BOL Type' do
         param_group :bol_type
@@ -37,7 +37,7 @@ module Api
       desc 'Create a new BOL Type'
       param :name, String, desc: 'Name of the BOL Type', required: true
       error code: 401, desc: 'Unauthorized'
-      error code: 422, desc: 'Unprocessible Entity'
+      error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
       returns code: 200, desc: 'Detailed information about BOL Type' do
         param_group :bol_type
@@ -51,7 +51,7 @@ module Api
       desc 'Updates a specific BOL Type'
       param :id, :number, required: true
       error code: 401, desc: 'Unauthorized'
-      error code: 422, desc: 'Unprocessible Entity'
+      error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
       returns code: 200, desc: 'Detailed information about BOL Type' do
         param_group :bol_type
@@ -65,7 +65,7 @@ module Api
       desc 'Deletes a specific BOL Type'
       param :id, :number, required: true
       error code: 401, desc: 'Unauthorized'
-      error code: 422, desc: 'Unprocessible Entity'
+      error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
       def destroy;end
     end
