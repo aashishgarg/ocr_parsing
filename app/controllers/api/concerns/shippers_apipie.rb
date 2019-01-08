@@ -18,14 +18,14 @@ module Api
         property :contact_fax, String, desc: 'Contact Fax of Shipper'
       end
 
-      api :GET, '/api/shippers', 'Lists all Shippers present'
+      api :GET, '/shippers', 'Lists all Shippers present'
       description 'Lists all Shippers present'
       error code: 401, desc: 'Unauthorized'
       formats ['json']
       returns array_of: :shipper, code: 200, desc: 'Array of all Shippers is returned'
       def index; end
 
-      api :GET, '/api/shippers/:id', 'Shows a specific Shipper'
+      api :GET, '/shippers/:id', 'Shows a specific Shipper'
       desc 'Shows a specific Shipper'
       param :id, :number, required: true
       error code: 401, desc: 'Unauthorized'
@@ -36,7 +36,7 @@ module Api
       end
       def show; end
 
-      api :POST, '/api/shippers', 'Creates a new Shipper'
+      api :POST, '/shippers', 'Creates a new Shipper'
       desc 'Creates a new Shipper'
       param :name, String, required: true
       param :address1, String
@@ -56,7 +56,7 @@ module Api
       end
       def create; end
 
-      api :PUT, '/api/shippers/:id', 'Updates a specific Shipper'
+      api :PUT, '/shippers/:id', 'Updates a specific Shipper'
       desc 'Updates a specific Shipper'
       param :id, :number, required: true
       error code: 401, desc: 'Unauthorized'
@@ -67,7 +67,7 @@ module Api
       end
       def update; end
 
-      api :DELETE, '/api/shippers/:id', 'Deletes a specific Shipper'
+      api :DELETE, '/shippers/:id', 'Deletes a specific Shipper'
       desc 'Deletes a specific Shipper'
       param :id, :number, required: true
       error code: 401, desc: 'Unauthorized'

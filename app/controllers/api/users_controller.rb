@@ -1,9 +1,10 @@
 class Api::UsersController < ApplicationController
+  include Api::Concerns::UserApipie
   # before_action :authenticate_user!
 
    def show
    end
-  
+
   def update
     if current_user.update_attributes(user_params)
       render :show
@@ -11,7 +12,7 @@ class Api::UsersController < ApplicationController
       render json: { errors: current_user.errors }, status: :unprocessable_entity
     end
   end
-  
+
   private
 
   def user_params

@@ -1,6 +1,6 @@
 module Api
   module Concerns
-    module UsersApipie
+    module UserApipie
       extend ActiveSupport::Concern
       extend Apipie::DSL::Concern
 
@@ -15,9 +15,8 @@ module Api
         property :fax, String, desc: 'Fax of User'
       end
 
-      api :GET, '/api/user/:id', 'Shows a specific User'
+      api :GET, '/user', 'Shows a specific User'
       desc 'Shows a specific User'
-      param :id, :number
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessible Entity'
       formats ['json']

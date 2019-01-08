@@ -25,14 +25,14 @@ module Api
         end
       end
 
-      api :GET, '/api/bol_files', 'Lists all BOL Files present'
+      api :GET, '/bol_files', 'Lists all BOL Files present'
       description 'Lists all BOL Files present'
       error code: 401, desc: 'Unauthorized'
       formats ['json']
       returns array_of: :bol_file, code: 200, desc: 'Array of all BOL types is returned'
       def index;end
 
-      api :GET, '/api/bol_files/:id', 'Shows a specific BOL File'
+      api :GET, '/bol_files/:id', 'Shows a specific BOL File'
       desc 'Shows a specific BOL File'
       param :id, :number
       error code: 401, desc: 'Unauthorized'
@@ -43,7 +43,7 @@ module Api
       end
       def show;end
 
-      api :POST, '/api/bol_files', 'Creates a new BOL File'
+      api :POST, '/bol_files', 'Creates a new BOL File'
       desc 'Shows a specific BOL File'
       param :bol_file, Hash do
         param :bol_type_id, Integer
@@ -64,7 +64,7 @@ module Api
       end
       def create;end
 
-      api :PUT, '/api/bol_files/:id', 'Updates a BOL File'
+      api :PUT, '/bol_files/:id', 'Updates a BOL File'
       desc 'Updates a BOL File'
       param :bol_file, Hash, required: true do
         param :bol_type_id, Integer
@@ -85,7 +85,7 @@ module Api
       end
       def update;end
 
-      api :DELETE, '/api/bol_files/:id', 'Deletes a specific BOL File'
+      api :DELETE, '/bol_files/:id', 'Deletes a specific BOL File'
       desc 'Deletes a specific BOL File'
       param :id, :number
       error code: 401, desc: 'Unauthorized'

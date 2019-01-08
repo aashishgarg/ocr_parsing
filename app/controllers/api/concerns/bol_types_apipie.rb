@@ -9,14 +9,14 @@ module Api
         property :id, Integer, desc: 'Id of the BOL Type'
       end
 
-      api :GET, '/api/bol_types', 'Lists all BOL types present'
+      api :GET, '/bol_types', 'Lists all BOL types present'
       description 'Lists all BOL types'
       error code: 401, desc: 'Unauthorized'
       formats ['json']
       returns array_of: :bol_type, code: 200, desc: 'Array of all BOL types is returned'
       def index;end
 
-      api :GET, '/api/bol_types/:id', 'Shows a specific BOL Type'
+      api :GET, '/bol_types/:id', 'Shows a specific BOL Type'
       desc 'Shows a specific BOL Type'
       param :id, :number
       error code: 401, desc: 'Unauthorized'
@@ -27,7 +27,7 @@ module Api
       end
       def show;end
 
-      api :POST, '/api/bol_types', 'Create new BOL Type'
+      api :POST, '/bol_types', 'Create new BOL Type'
       desc 'Create a new BOL Type'
       param :name, String, desc: 'Name of the BOL Type', required: true
       error code: 401, desc: 'Unauthorized'
@@ -38,7 +38,7 @@ module Api
       end
       def create;end
 
-      api :PUT, '/api/bol_types/:id', 'Updates a specific BOL Type'
+      api :PUT, '/bol_types/:id', 'Updates a specific BOL Type'
       desc 'Updates a specific BOL Type'
       param :id, :number, required: true
       error code: 401, desc: 'Unauthorized'
@@ -49,7 +49,7 @@ module Api
       end
       def update;end
 
-      api :DELETE, '/api/bol_types/:id', 'Deletes a specific BOL Type'
+      api :DELETE, '/bol_types/:id', 'Deletes a specific BOL Type'
       desc 'Deletes a specific BOL Type'
       param :id, :number, required: true
       error code: 401, desc: 'Unauthorized'
