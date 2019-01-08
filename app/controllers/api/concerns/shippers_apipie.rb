@@ -4,6 +4,16 @@ module Api
       extend ActiveSupport::Concern
       extend Apipie::DSL::Concern
 
+      def self.superclass
+        ShippersController
+      end
+
+      resource_description do
+        resource_id 'Shippers'
+        description 'Shippers'
+        api_version 'development'
+      end
+
       def_param_group :shipper do
         property :id, Integer, desc: 'Id of Shipper'
         property :name, String, desc: 'Name of Shipper'

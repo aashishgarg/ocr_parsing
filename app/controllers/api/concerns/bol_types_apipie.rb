@@ -4,6 +4,16 @@ module Api
       extend ActiveSupport::Concern
       extend Apipie::DSL::Concern
 
+      def self.superclass
+        BolTypesController
+      end
+
+      resource_description do
+        resource_id 'BolType'
+        description 'BOL Types'
+        api_version 'development'
+      end
+
       def_param_group :bol_type do
         property :name, String, desc: 'Name of the BOL Type'
         property :id, Integer, desc: 'Id of the BOL Type'
