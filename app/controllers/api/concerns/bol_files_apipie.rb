@@ -4,16 +4,6 @@ module Api
       extend ActiveSupport::Concern
       extend Apipie::DSL::Concern
 
-      def self.superclass
-        BolFilesController
-      end
-
-      resource_description do
-        resource_id 'BolFiles'
-        description 'BOL Files containing the Shipper Information'
-        api_version 'development'
-      end
-
       def_param_group :attachment do
         property :id, Integer
         property :data_file_name, String

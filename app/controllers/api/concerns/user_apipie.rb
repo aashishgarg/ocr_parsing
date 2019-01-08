@@ -4,16 +4,6 @@ module Api
       extend ActiveSupport::Concern
       extend Apipie::DSL::Concern
 
-      def self.superclass
-        UsersController
-      end
-
-      resource_description do
-        resource_id 'Users'
-        description 'Users'
-        api_version 'development'
-      end
-
       def_param_group :user do
         property :id, Integer, desc: 'Id of User'
         property :email, String, desc: 'Email of User'
