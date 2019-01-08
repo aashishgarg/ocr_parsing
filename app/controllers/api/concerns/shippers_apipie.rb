@@ -18,6 +18,13 @@ module Api
         property :contact_fax, String, desc: 'Contact Fax of Shipper'
       end
 
+      def_param_group :errors do
+        param 'errors', Hash, required: true do
+          param :name, String
+          param :contact_email, String
+        end
+      end
+
       api :GET, '/shippers', 'Lists all Shippers present'
       description 'Lists all Shippers present'
       error code: 401, desc: 'Unauthorized'
@@ -54,6 +61,9 @@ module Api
       returns code: 200, desc: 'Detailed information about new Shipper' do
         param_group :shipper
       end
+      returns code: :unprocessable_entity, desc: 'Unprocessable Entity' do
+        param_group :errors
+      end
       def create; end
 
       api :PUT, '/shippers/:id', 'Updates a specific Shipper'
@@ -64,6 +74,9 @@ module Api
       formats ['json']
       returns code: 200, desc: 'Detailed information about Shipper' do
         param_group :shipper
+      end
+      returns code: :unprocessable_entity, desc: 'Unprocessable Entity' do
+        param_group :errors
       end
       def update; end
 

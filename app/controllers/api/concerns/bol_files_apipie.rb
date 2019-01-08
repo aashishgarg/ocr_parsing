@@ -18,10 +18,16 @@ module Api
       def_param_group :bol_file do
         property :id, Integer, desc: 'Id of BOL File'
         property :name, String, desc: 'Name of BOL File'
-        property :Status, String, desc: 'Status of BOL File'
+        property :status, %i(0 1 2 3 4 5 6), desc: 'Status of BOL File'
         property :ocr_parsed_data, Hash, desc: 'Status of BOL File'
         property :attachments, Hash do
           param_group :attachment
+        end
+      end
+
+      def_param_group :errors do
+        param 'errors', Hash, required: true do
+          param :status, %i(0 1 2 3 4 5 6)
         end
       end
 
@@ -62,6 +68,9 @@ module Api
       returns code: 200, desc: 'Detailed information about BOL File' do
         param_group :bol_file
       end
+      returns code: :unprocessable_entity, desc: 'Unprocessable Entity' do
+        param_group :errors
+      end
       def create;end
 
       api :PUT, '/bol_files/:id', 'Updates a BOL File'
@@ -82,6 +91,9 @@ module Api
       formats ['json']
       returns code: 200, desc: 'Detailed information about BOL File' do
         param_group :bol_file
+      end
+      returns code: :unprocessable_entity, desc: 'Unprocessable Entity' do
+        param_group :errors
       end
       def update;end
 

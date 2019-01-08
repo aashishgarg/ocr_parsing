@@ -5,9 +5,8 @@ Apipie.configure do |config|
   config.api_base_url = '/api'
   config.validate = false
   config.default_version = '1.0'
-  config.app_info['1.0'] = 'Pittohio API endpoints for version 1.0'
+  config.app_info = 'Pittohio API endpoints for version 1.0'
   config.translate = false
-  # where is your API defined?
   config.api_controllers_matcher = "#{Rails.root}/app/controllers/**/*.rb"
   config.authenticate = Proc.new do
     authenticate_or_request_with_http_basic do |username, password|

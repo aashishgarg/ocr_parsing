@@ -9,6 +9,12 @@ module Api
         property :id, Integer, desc: 'Id of the BOL Type'
       end
 
+      def_param_group :errors do
+        param 'errors', Hash, required: true do
+          param :name, String
+        end
+      end
+
       api :GET, '/bol_types', 'Lists all BOL types present'
       description 'Lists all BOL types'
       error code: 401, desc: 'Unauthorized'
@@ -36,6 +42,9 @@ module Api
       returns code: 200, desc: 'Detailed information about BOL Type' do
         param_group :bol_type
       end
+      returns code: :unprocessable_entity, desc: 'Unprocessable Entity', required: true do
+        param_group :errors
+      end
       def create;end
 
       api :PUT, '/bol_types/:id', 'Updates a specific BOL Type'
@@ -46,6 +55,9 @@ module Api
       formats ['json']
       returns code: 200, desc: 'Detailed information about BOL Type' do
         param_group :bol_type
+      end
+      returns code: :unprocessable_entity, desc: 'Unprocessable Entity', required: true do
+        param_group :errors
       end
       def update;end
 
