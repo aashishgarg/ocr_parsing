@@ -10,7 +10,7 @@ module Api
       end
 
       api :GET, '/api/bol_types', 'Lists all BOL types present'
-      description 'Lists all BOL types present in the system'
+      description 'Lists all BOL types'
       error code: 401, desc: 'Unauthorized'
       formats ['json']
       returns array_of: :bol_type, code: 200, desc: 'Array of all BOL types is returned'
@@ -36,11 +36,25 @@ module Api
       returns code: 200, desc: 'Detailed information about BOL Type' do
         param_group :bol_type
       end
-
       def create;end
 
+      api :PUT, '/api/bol_types/:id', 'Updates a specific BOL Type'
+      desc 'Updates a specific BOL Type'
+      param :id, :number, required: true
+      error code: 401, desc: 'Unauthorized'
+      error code: 422, desc: 'Unprocessible Entity'
+      formats ['json']
+      returns code: 200, desc: 'Detailed information about BOL Type' do
+        param_group :bol_type
+      end
       def update;end
 
+      api :DELETE, '/api/bol_types/:id', 'Deletes a specific BOL Type'
+      desc 'Deletes a specific BOL Type'
+      param :id, :number, required: true
+      error code: 401, desc: 'Unauthorized'
+      error code: 422, desc: 'Unprocessible Entity'
+      formats ['json']
       def destroy;end
     end
   end
