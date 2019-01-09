@@ -54,7 +54,10 @@ gem "paperclip", "~> 6.0.0"
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-gem 'apipie-rails' # For API Documentation
+gem 'apipie-rails' #For API Documentation
+gem 'cancancan', '~> 2.0' #For Authorization
+gem 'rolify' #For Roles implementation
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
