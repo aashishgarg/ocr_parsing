@@ -1,4 +1,5 @@
 class Api::BolFilesController < ApplicationController
+  include Api::Concerns::BolFilesApipie
   before_action :set_bol_file, except: [:create, :index]
 
   def index

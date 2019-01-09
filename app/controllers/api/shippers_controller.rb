@@ -1,4 +1,5 @@
 class Api::ShippersController < ApplicationController
+  include Api::Concerns::ShippersApipie
   before_action :set_shipper, except: [:create, :index]
 
   def index
