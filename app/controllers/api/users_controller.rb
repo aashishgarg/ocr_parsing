@@ -6,6 +6,7 @@ class Api::UsersController < ApplicationController
    end
 
   def update
+    authorize! :update, User
     if current_user.update_attributes(user_params)
       render :show
     else
