@@ -59,5 +59,6 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+  config.render_views #By default, RSpec-rails configuration disables rendering of templates for controller specs
   config.include Devise::Test::ControllerHelpers, type: :controller
 end
