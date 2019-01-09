@@ -17,6 +17,8 @@ module Api
 
       api :GET, '/bol_types', 'Lists all BOL types present'
       description 'Lists all BOL types'
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       formats ['json']
       returns array_of: :bol_type, code: 200, desc: 'Array of all BOL types is returned'
@@ -25,6 +27,8 @@ module Api
       api :GET, '/bol_types/:id', 'Shows a specific BOL Type'
       desc 'Shows a specific BOL Type'
       param :id, :number
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
@@ -36,6 +40,8 @@ module Api
       api :POST, '/bol_types', 'Create new BOL Type'
       desc 'Create a new BOL Type'
       param :name, String, desc: 'Name of the BOL Type', required: true
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
@@ -50,6 +56,8 @@ module Api
       api :PUT, '/bol_types/:id', 'Updates a specific BOL Type'
       desc 'Updates a specific BOL Type'
       param :id, :number, required: true
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
@@ -64,6 +72,8 @@ module Api
       api :DELETE, '/bol_types/:id', 'Deletes a specific BOL Type'
       desc 'Deletes a specific BOL Type'
       param :id, :number, required: true
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']

@@ -22,6 +22,8 @@ module Api
 
       api :GET, '/user', 'Shows a specific User'
       desc 'Shows a specific User'
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
@@ -32,6 +34,17 @@ module Api
 
       api :PUT, '/user', 'Update a user'
       desc 'Update a user'
+      param :users, Hash, required: true do
+        param :email, String, required: true
+        param :password, String, required: true
+        param :first_name, String
+        param :last_name, String
+        param :company, String
+        param :phone, String
+        param :fax, String
+      end
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']

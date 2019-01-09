@@ -23,6 +23,7 @@ module Api
       api :GET, '/api/users/login', 'Login Endpoint'
       description 'Login Endpoint'
       header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']

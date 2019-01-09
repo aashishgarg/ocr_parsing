@@ -27,6 +27,8 @@ module Api
 
       api :GET, '/shippers', 'Lists all Shippers present'
       description 'Lists all Shippers present'
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       formats ['json']
       returns array_of: :shipper, code: 200, desc: 'Array of all Shippers is returned'
@@ -35,6 +37,8 @@ module Api
       api :GET, '/shippers/:id', 'Shows a specific Shipper'
       desc 'Shows a specific Shipper'
       param :id, :number, required: true
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
@@ -55,6 +59,8 @@ module Api
       param :contact_phone, String
       param :contact_fax, String
       param :contact_email, /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/, desc: 'Contact email'
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
@@ -69,6 +75,8 @@ module Api
       api :PUT, '/shippers/:id', 'Updates a specific Shipper'
       desc 'Updates a specific Shipper'
       param :id, :number, required: true
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
@@ -83,6 +91,8 @@ module Api
       api :DELETE, '/shippers/:id', 'Deletes a specific Shipper'
       desc 'Deletes a specific Shipper'
       param :id, :number, required: true
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
