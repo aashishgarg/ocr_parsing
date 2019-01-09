@@ -9,6 +9,7 @@ RSpec.describe Api::BolTypesController, type: :controller do
     request.headers.merge!('content-type' => 'application/json')
     request.headers.merge!('Accept' => 'application/json')
   end
+
   context '#index' do
     it 'returns http Unauthorized' do
       request.headers.merge!('Authorization' => "Bearer #{@token}111111")
