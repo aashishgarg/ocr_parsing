@@ -16,6 +16,7 @@ class ApplicationController < ActionController::API
       authenticate_or_request_with_http_token do |token|
         begin
           jwt_payload = JWT.decode(token, ENV['DEVISE_JWT_SECRET_KEY']).first
+
           @current_user_id = jwt_payload['id']
         rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
           head :unauthorized
