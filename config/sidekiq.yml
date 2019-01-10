@@ -2,12 +2,13 @@
 :pidfile: tmp/pids/sidekiq.pid
 :logfile: log/sidekiq.log
 development:
-  :concurrency: 2
+  :concurrency: 8
 production:
   :concurrency: 10
 :queues:
   - development_ocr_queue
   - production_ocr_queue
+  - development_file_queue
 
 tasks: &tasks
   NotifierJob:

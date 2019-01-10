@@ -31,6 +31,6 @@ class BolFile < ApplicationRecord
   private
 
   def queue_files
-    PushFilesToOcrJob.perform_later(self)
+    ProcessFilesJob.perform_later(self)
   end
 end

@@ -15,18 +15,22 @@ module Ocr
 
     def convert_files
       @local_files.each do |path|
-        `convert "#{path}" "#{File.dirname(path)}/#{File.basename(path, File.extname(path))}.#{BolFile::BOL_EXT}"` unless File.extname(path) == BolFile::BOL_EXT
+        new_file_path = "#{File.dirname(path)}/#{File.basename(path, File.extname(path))}.#{BolFile::BOL_EXT}"
+        if system("convert #{path} #{new_file_path}")
+          PushFilesToOcrJob.perform_later(@bol_file, new_file_path) if File.exist?(new_file_path)
+        end unless (File.extname(path) == BolFile::BOL_EXT)
       end
     end
 
-    def push
-      # header = {"Content-type": "application/json"}
-      # response = open(bol_file_object) {|f| f.read }
-      # base64_encoded_image = Base64.encode64(response)
-      # http = Net::HTTP.new(@uri.host, @uri.port)
-      # request = Net::HTTP::Post.new(@uri.request_uri, header)
-      # request.body = base64_encoded_image
-      # response = http.request(request)
+    def push_file(file_path)
+      header = {"Content-type": "application/json"}
+      response = open(file_path) {|f| f.read }
+      base64_encoded_image = Base64.encode64(response)
+      http = Net::HTTP.new(@uri.host, @uri.port)
+      request = Net::HTTP::Post.new(@uri.request_uri, header)
+      request.body = base64_encoded_image
+      response = http.request(request)
+      puts response.inspect
     end
   end
 end
