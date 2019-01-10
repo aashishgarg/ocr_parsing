@@ -32,7 +32,7 @@ class Api::BolFilesController < ApplicationController
   end
 
   def bol_file_params
-    params.require(:bol_file).permit(:bol_type_id, :name, :status, :ocr_parsed_data, :status_updated_by,
+    params.require(:bol_file).permit(:bol_type_id, :name, :status, :status_updated_by,
                                      attachments_attributes: [:data])
   end
 end
