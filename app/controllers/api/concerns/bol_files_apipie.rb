@@ -10,6 +10,7 @@ module Api
         property :data_content_type, String
         property :data_file_size, Integer
         property :data_updated_at, DateTime
+        property :ocr_parsed_data, Hash, desc: 'OCR data hash'
         property :created_at, DateTime
         property :updated_at, DateTime
         property :url, String
@@ -19,7 +20,6 @@ module Api
         property :id, Integer, desc: 'Id of BOL File'
         property :name, String, desc: 'Name of BOL File'
         property :status, %i(0 1 2 3 4 5 6), desc: 'Status of BOL File'
-        property :ocr_parsed_data, Hash, desc: 'Status of BOL File'
         property :attachments, Hash do
           param_group :attachment
         end
@@ -59,7 +59,6 @@ module Api
         param :bol_type_id, Integer
         param :name, String
         param :status, String
-        param :ocr_parsed_data, Hash
         param :status_updated_by, Integer
         param :status_updated_by, Integer
         param :attachments_attributes, Hash do
@@ -85,7 +84,6 @@ module Api
         param :bol_type_id, Integer
         param :name, String
         param :status, String
-        param :ocr_parsed_data, Hash
         param :status_updated_by, Integer
         param :status_updated_by, Integer
         param :attachments_attributes, Hash do
