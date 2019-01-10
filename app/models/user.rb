@@ -33,7 +33,5 @@ class User < ApplicationRecord
 
   private
 
-  def assign_default_role
-
-  end
+  def assign_default_role; end
 end
