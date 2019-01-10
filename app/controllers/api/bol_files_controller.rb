@@ -9,6 +9,7 @@ class Api::BolFilesController < ApplicationController
   def show; end
 
   def create
+    authorize! :create, BolFile
     shipper = Shipper.find(params[:shipper_id])
     @bol_file = shipper.bol_files.new(bol_file_params)
 
@@ -18,6 +19,7 @@ class Api::BolFilesController < ApplicationController
   end
 
   def update
+    authorize! :update, @bol_file
     if @bol_file.update(bol_file_params)
       render 'create'
     else
@@ -26,6 +28,7 @@ class Api::BolFilesController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @bol_file
     @bol_file.destroy
   end
 
