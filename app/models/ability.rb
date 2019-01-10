@@ -3,7 +3,7 @@ class Ability
 
   def initialize(user)
     if user.is_admin?
-      can :manage, User
+      can :manage, :all
     elsif user.is_customer?
       can :read, User
     elsif user.is_support?

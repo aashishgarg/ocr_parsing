@@ -25,8 +25,30 @@ RSpec.describe Api::BolFilesController, type: :controller do
   end
 
   context '#show' do
-    it '' do
+    before do
+      @bol_file = FactoryBot.create(:bol_file)
+    end
 
+    it 'returns http Unauthorized' do
+      request.headers.merge!('Authorization' => "Bearer #{@token}111111")
+      get :show, params: {shipper_id: @shipper.id, id: @bol_file.id}, format: 'json'
+      expect(response.status).to eq 401
+    end
+
+    it 'returns http success' do
+      get :show, params: {shipper_id: @shipper.id, id: @bol_file.id}, format: 'json'
+      expect(response.status).to eq 200
+    end
+  end
+
+  context '#update' do
+    before do
+      @bol_file = FactoryBot.create(:bol_file)
+    end
+
+    it 'allowed for user role :customer and :support' do
+      put :update, params: {shipper_id: @shipper.id, id: @bol_file.id, bol_file: {name: 'NewTestName'}}, format: 'json'
+      expect(response.status).to eq 200
     end
   end
 end
