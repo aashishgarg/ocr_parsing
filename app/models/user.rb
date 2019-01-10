@@ -1,11 +1,13 @@
 class User < ApplicationRecord
+  # Module Inclusions
   include Attachable
-
   devise :database_authenticatable, :registerable, :recoverable, :validatable
 
-  validates :email, uniqueness: true, presence: true, allow_blank: false#, format: { with: /\A[a-zA-Z0-9]+\z/ }
+  # Associations
+  has_many :bol_files, inverse_of: :user
 
-  has_many :bol_files
+  # Validations
+  validates :email, uniqueness: true, presence: true, allow_blank: false#, format: { with: /\A[a-zA-Z0-9]+\z/ }
 
   # Get current user
   def self.current
