@@ -38,3 +38,6 @@
 
 # Database files
 /config/database.yml
+
+# ocr processing folder
+/public/bol_files/*
