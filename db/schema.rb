@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2019_01_09_152707) do
     t.datetime "data_updated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "ocr_parsed_data"
     t.index ["attachable_id", "attachable_type"], name: "index_attachments_on_attachable_id_and_attachable_type"
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable_type_and_attachable_id"
   end
@@ -35,7 +36,6 @@ ActiveRecord::Schema.define(version: 2019_01_09_152707) do
     t.integer "status", default: 0
     t.integer "status_updated_by"
     t.datetime "status_updated_at"
-    t.jsonb "ocr_parsed_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bol_type_id"], name: "index_bol_files_on_bol_type_id"
