@@ -6,6 +6,5 @@ FactoryBot.define do
     status { 'uploaded' }
     status_updated_by { FactoryBot.create(:user).id }
     status_updated_at { DateTime.now }
-    ocr_parsed_data { 'OCR parsed data' }
   end
 end

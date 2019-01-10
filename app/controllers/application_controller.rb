@@ -2,6 +2,7 @@ class ApplicationController < ActionController::API
   include ActionController::MimeResponds
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
+  check_authorization
   respond_to :json
 
   # Before Actions

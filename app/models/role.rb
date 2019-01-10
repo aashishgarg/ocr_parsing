@@ -1,6 +1,6 @@
 class Role < ApplicationRecord
   # Constants
-  ALL = %i(admin customer support)
+  ALL = %w(admin customer support)
 
   # Modules Inclusions
   scopify

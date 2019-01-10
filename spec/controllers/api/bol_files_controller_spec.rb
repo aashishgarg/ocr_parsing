@@ -4,6 +4,7 @@ require 'jwt'
 RSpec.describe Api::BolFilesController, type: :controller do
   before do
     @user = FactoryBot.create(:user)
+    @user.add_role :admin
     @token = JWT.encode({id: @user.id}, ENV['DEVISE_JWT_SECRET_KEY'])
     request.headers.merge!('Authorization' => "Bearer #{@token}")
     request.headers.merge!('Content-Type' => 'application/json')
