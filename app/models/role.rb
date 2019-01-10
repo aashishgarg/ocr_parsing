@@ -11,4 +11,5 @@ class Role < ApplicationRecord
 
   # Validations
   validates :resource_type, :inclusion => {:in => Rolify.resource_types}, :allow_nil => true
+  validates :name, presence: true, inclusion: {in: ALL, message: "is not included in the list #{ALL}"}
 end
