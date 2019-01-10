@@ -64,4 +64,8 @@ Rails.application.configure do
 
   # To render debugging information preserving the response format
   config.debug_exception_response_format = :api
+
+  # ImageMagick path for file alteration
+  Paperclip.options[:command_path] = "/usr/bin/convert"
+
 end
