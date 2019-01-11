@@ -31,7 +31,9 @@ module Ocr
       http = Net::HTTP.new(@uri.host, @uri.port)
       request = Net::HTTP::Post.new(@uri.request_uri, header)
       request.body = base64_encoded_image
+      @bol_file.sent_to_ocr
       response = http.request(request)
+      @bol_file.parsed if response.ok?
     end
   end
 end
