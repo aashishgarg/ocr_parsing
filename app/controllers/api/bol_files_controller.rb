@@ -1,6 +1,5 @@
 class Api::BolFilesController < ApplicationController
   include Api::Concerns::BolFilesApipie
-  skip_authorization_check only: %i[show index]
 
   # Before Actions
   authorize_resource

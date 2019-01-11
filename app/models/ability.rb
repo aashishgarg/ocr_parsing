@@ -8,9 +8,13 @@ class Ability
       can :read, User
       can :create, BolFile
       can :update, BolFile
+      can :index, BolFile
+      can :show, BolFile
     elsif user.is_customer?
       can :read, User
       can :update, BolFile
+      can :index, BolFile
+      can :show, BolFile
     end
   end
 end
