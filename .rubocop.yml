@@ -1,0 +1,32 @@
+AllCops:
+  Rails:
+    Enabled: true
+
+# removed listed file from rubocop
+AllCops:
+  Exclude:
+    - '**/Gemfile'
+    - 'db/**/**'
+    - 'config/initializers/devise.rb'
+
+# can use self explainatory names. no need for comments
+Documentation:
+  Enabled: false
+
+# Commonly used screens these days easily fit more than 80 characters.
+Metrics/LineLength:
+  Max: 120
+
+# Too short methods lead to extraction of single-use methods, which can make
+# the code easier to read (by naming things), but can also clutter the class
+Metrics/MethodLength:
+  Max: 30
+
+# The guiding principle of classes is SRP, SRP can't be accurately measured by LoC
+Metrics/ClassLength:
+  Max: 1500
+
+# going to be enabled by default in ruby 3. I do not need it now
+# https://wyeworks.com/blog/2015/12/1/immutable-strings-in-ruby-2-dot-3
+Style/FrozenStringLiteralComment:
+  Enabled: false
