@@ -10,9 +10,6 @@ class User < ApplicationRecord
   # Validations
   validates :email, uniqueness: true, presence: true, allow_blank: false#, format: { with: /\A[a-zA-Z0-9]+\z/ }
 
-  # Callbacks
-  after_create :assign_default_role
-
   # Get current user
   def self.current
     Thread.current[:user]
@@ -32,8 +29,4 @@ class User < ApplicationRecord
         ENV['DEVISE_JWT_SECRET_KEY']
     )
   end
-
-  private
-
-  def assign_default_role; end
 end
