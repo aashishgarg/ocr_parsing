@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   apipie
 
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+
   scope :api, defaults: { format: :json } do
     devise_for :users, controllers: { sessions: :sessions, registrations: :registrations },
                path_names: { sign_in: :login }

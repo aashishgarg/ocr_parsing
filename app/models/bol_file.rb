@@ -1,4 +1,7 @@
 class BolFile < ApplicationRecord
+  # Constants
+  BOL_EXT = 'png'.freeze
+
   # Modules Inclusions
   include Attachable
 
@@ -11,7 +14,7 @@ class BolFile < ApplicationRecord
 
   # Validations
   validates :status, presence: true
-  # ToDo: Add file size validation
+  # TODO: Add file size validation
 
   # Callbacks
   before_validation do
@@ -19,5 +22,17 @@ class BolFile < ApplicationRecord
       self.status_updated_by = User.current.id
       self.status_updated_at = Time.now
     end
+  end
+
+  after_create_commit :queue_files, if: proc { attachments.exists? }
+
+  def attachment_urls
+    attachments.collect(&:url)
+  end
+
+  private
+
+  def queue_files
+    ProcessFilesJob.perform_later(self)
   end
 end
