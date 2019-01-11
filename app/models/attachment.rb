@@ -1,6 +1,6 @@
 class Attachment < ApplicationRecord
   # Constants
-  PAPERCLIP_IMAGE_CONTENT_TYPE = ["image/jpg", "image/jpeg", "image/png", "application/json"]
+  PAPERCLIP_IMAGE_CONTENT_TYPE = [/\Aimage\/.*\z/, "application/json"]
 
   # Associations
   belongs_to :attachable, polymorphic: true
