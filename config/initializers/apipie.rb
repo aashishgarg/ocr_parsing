@@ -4,7 +4,7 @@ Apipie.configure do |config|
   config.doc_base_url = '/apidocs'
   config.api_base_url = '/api'
   config.validate = false
-  config.default_version = ''
+  # config.default_version = ''
   config.app_info = 'PittOhio API Endpoints Documentation'
   config.translate = false
   config.api_controllers_matcher = "#{Rails.root}/app/controllers/**/*.rb"
