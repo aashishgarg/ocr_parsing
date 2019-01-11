@@ -344,7 +344,7 @@ DEPENDENCIES
   rubocop
   sass-rails (~> 5.0)
   selenium-webdriver
-  sidekiq
+  sidekiq (~> 5.2)
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)

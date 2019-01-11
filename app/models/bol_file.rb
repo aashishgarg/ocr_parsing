@@ -24,7 +24,7 @@ class BolFile < ApplicationRecord
 
   after_create_commit :queue_files, if: proc { attachments.exists? }
 
-  def get_attachment_urls
+  def attachment_urls
     attachments.collect(&:url)
   end
 

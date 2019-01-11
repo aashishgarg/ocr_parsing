@@ -6,7 +6,7 @@ module S3
     end
 
     def process_s3_request
-      file_urls = bol_file.get_attachment_urls
+      file_urls = bol_file.attachment_urls
       @urls.each {|url| download_s3_file(url)}
     end
 

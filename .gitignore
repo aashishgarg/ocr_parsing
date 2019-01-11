@@ -37,7 +37,7 @@
 .env
 
 # Database files
-/config/database.yml
+/config/database*.yml
 
-# ocr processing folder
+# OCR processing folder
 /public/bol_files/*

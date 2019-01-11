@@ -26,12 +26,6 @@ module Pittohio
     # Use Sidekiq as queuing background
     config.active_job.queue_adapter = :sidekiq
 
-    # All jobs will run based on app environment 
-    # queue production_ocr_queue on production environment
-    # staging_ocr_queue on staging environment
-    # development_ocr_queue on development environment
-    config.active_job.queue_name_prefix = Rails.env
-
     # File storage on Amazon S3
     # config.active_storage.service = :amazon
 

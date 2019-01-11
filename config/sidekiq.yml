@@ -6,9 +6,7 @@ development:
 production:
   :concurrency: 10
 :queues:
-  - development_ocr_queue
-  - production_ocr_queue
-  - development_file_queue
+  - ocr_queue
 
 tasks: &tasks
   NotifierJob:
