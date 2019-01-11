@@ -58,9 +58,9 @@ RSpec.describe Api::UsersController, type: :controller do
     it 'returns user details' do
       get :show, format: 'json'
       hash_body = JSON.parse(response.body).with_indifferent_access
-      expect(hash_body.keys.include?('user')).to eq true
-      %w(id email first_name last_name company phone fax token).each do |key|
-        expect(hash_body['user'].keys.include?(key)).to eq true
+      expect(hash_body.keys?('user')).to eq true
+      %w[id email first_name last_name company phone fax token].each do |key|
+        expect(hash_body['user'].keys?(key)).to eq true
       end
     end
   end
