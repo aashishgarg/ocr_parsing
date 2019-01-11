@@ -31,7 +31,7 @@ module Ocr
       request.body = { data: Base64.encode64(File.read(file_path)).delete('\n') }.to_json
       @bol_file.sent_to_ocr
       response = http.request(request)
-      @bol_file.parsed if response.ok?
+      @bol_file.parsed if response.code.eql? '200'
       @current_attachment.update(ocr_parsed_data: response.body)
     end
   end
