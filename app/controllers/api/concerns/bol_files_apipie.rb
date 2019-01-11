@@ -19,7 +19,7 @@ module Api
       def_param_group :bol_file do
         property :id, Integer, desc: 'Id of BOL File'
         property :name, String, desc: 'Name of BOL File'
-        property :status, %i(0 1 2 3 4 5 6), desc: 'Status of BOL File'
+        property :status, %w[0 1 2 3 4 5 6], desc: 'Status of BOL File'
         property :attachments, Hash do
           param_group :attachment
         end
