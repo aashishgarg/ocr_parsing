@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   # Module Inclusions
+  rolify
   include Attachable
   devise :database_authenticatable, :registerable, :recoverable, :validatable
 
