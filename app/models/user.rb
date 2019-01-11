@@ -36,6 +36,6 @@ class User < ApplicationRecord
   private
 
   def assign_default_role
-    add_role(:support) if self.roles.blank?
+    add_role(:support) if roles.blank?
   end
 end
