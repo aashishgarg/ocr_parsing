@@ -1,7 +1,7 @@
 # Create Users
 User.create([
-                {email: 'pittohio@trantorinc.com', password: 'trantorpwd', first_name: 'Pittohio', last_name: 'User', company: 'Pittohio'},
-                {email: 'trantor@trantorinc.com', password: 'trantorpwd', first_name: 'Trantor', last_name: 'User', company: 'Trantor, Inc.'}
+                { email: 'pittohio@trantorinc.com', password: 'trantorpwd', first_name: 'Pittohio', last_name: 'User' },
+                { email: 'trantor@trantorinc.com', password: 'trantorpwd', first_name: 'Trantor', last_name: 'User' }
             ])
 
 # Create Roles Master
