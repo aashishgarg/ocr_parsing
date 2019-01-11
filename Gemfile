@@ -55,6 +55,7 @@ gem 'paperclip', '~> 6.0.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'apipie-rails' # For API Documentation
+gem 'state_machines-activerecord' # For adding states to BolFile
 gem 'cancancan', '~> 2.0' # For Authorization
 gem 'rolify' # For Roles implementation
 gem 'sidekiq', '~> 5.2' # Backgound jobs

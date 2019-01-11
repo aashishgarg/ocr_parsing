@@ -83,7 +83,7 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
@@ -93,15 +93,15 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # ImageMagick path for file alteration
-  # Paperclip.options[:command_path] = "/usr/bin/convert"
+  Paperclip.options[:command_path] = '/usr/bin/convert'
 
   # Sidekiq server configuration
-  # Sidekiq.configure_server do |config|
-  #   config.redis = { url: 'redis://127.0.0.1:6379' }
-  # end
+  Sidekiq.configure_server do |config|
+    config.redis = { url: ENV['REDIS_URL'] }
+  end
 
-  # Sidekiq.configure_client do |config|
-  #   config.redis = { url: 'redis://127.0.0.1:6379' }
-  # end
+  Sidekiq.configure_client do |config|
+    config.redis = { url: ENV['REDIS_URL'] }
+  end
 
 end

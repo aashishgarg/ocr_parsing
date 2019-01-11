@@ -20,7 +20,7 @@ module Api
         end
       end
 
-      api :GET, '/api/users/login', 'Login Endpoint'
+      api :POST, '/api/users/login', 'Login Endpoint'
       description 'Login Endpoint'
       header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
       header 'Content-Type', 'application/json', required: true

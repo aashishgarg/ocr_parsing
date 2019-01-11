@@ -5,11 +5,8 @@ class BolFile < ApplicationRecord
   # Modules Inclusions
   include Attachable
 
-  enum status: { uploaded: 0, pending_parsing: 1, done_parsing: 2, qa_rejected: 3, qa_approved: 4, uat_rejected: 5,
-                 uat_approved: 5, released: 6 }
-
   # Associations
-  belongs_to :user, foreign_key: :status_updated_by, inverse_of: :bol_files
+  belongs_to :user, foreign_key: :status_updated_by
   accepts_nested_attributes_for :attachments
 
   # Validations
@@ -21,6 +18,34 @@ class BolFile < ApplicationRecord
     if status_changed? || new_record?
       self.status_updated_by = User.current.id
       self.status_updated_at = Time.now
+    end
+  end
+
+  # States: uploaded pending_parsing done_parsing qa_rejected qa_approved
+  #         uat_rejected uat_approved released
+  state_machine :state, initial: :uploaded do
+    event :sent_to_ocr do
+      transition uploaded: :pending_parsing
+    end
+
+    event :parsed do
+      transition pending_parsing: :done_parsing
+    end
+
+    event :qa_approved do
+      transition %i[done_parsing qa_rejected] => :qa_approved
+    end
+
+    event :qa_rejected do
+      transition done_parsing: :qa_rejected
+    end
+
+    event :uat_approved do
+      transition %i[done_parsing qa_approved] => :done_parsing
+    end
+
+    event :uat_rejected do
+      transition %i[done_parsing qa_approved] => :done_parsing
     end
   end
 
