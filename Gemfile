@@ -46,7 +46,7 @@ gem 'rack-cors', :require => 'rack/cors'
 # gem 'mini_magick', '~> 4.8'
 
 # File upload operations
-gem "paperclip", "~> 6.0.0"
+gem 'paperclip', '~> 6.0.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -54,9 +54,10 @@ gem "paperclip", "~> 6.0.0"
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-gem 'apipie-rails' #For API Documentation
+gem 'apipie-rails' # For API Documentation
 gem 'cancancan', '~> 2.0' #For Authorization
 gem 'rolify' #For Roles implementation
+gem 'sidekiq', '~> 5.2' # Backgound jobs
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -64,7 +65,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.8'
   gem 'factory_bot_rails'
   gem 'ffaker'
-  gem 'rubocop', require: false
 end
 
 group :development do
@@ -75,6 +75,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rails-erd'
+  gem 'rubocop', require: false
 end
 
 group :test do

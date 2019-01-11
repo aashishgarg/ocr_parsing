@@ -64,4 +64,17 @@ Rails.application.configure do
 
   # To render debugging information preserving the response format
   config.debug_exception_response_format = :api
+
+  # ImageMagick path for file alteration
+  Paperclip.options[:command_path] = '/usr/bin/convert'
+
+  # Sidekiq server configuration
+  Sidekiq.configure_server do |config|
+    config.redis = { url: 'redis://127.0.0.1:6379' }
+  end
+
+  Sidekiq.configure_client do |config|
+    config.redis = { url: 'redis://127.0.0.1:6379' }
+  end
+
 end

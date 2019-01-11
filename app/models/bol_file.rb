@@ -1,4 +1,6 @@
 class BolFile < ApplicationRecord
+  BOL_EXT = 'png'.freeze
+
   include Attachable
 
   enum status: { uploaded: 0, pending_parsing: 1, done_parsing: 2, qa_rejected: 3, qa_approved: 4, uat_rejected: 5,
@@ -18,5 +20,17 @@ class BolFile < ApplicationRecord
       self.status_updated_by = User.current.id
       self.status_updated_at = Time.now
     end
+  end
+
+  after_create_commit :queue_files, if: proc { attachments.exists? }
+
+  def attachment_urls
+    attachments.collect(&:url)
+  end
+
+  private
+
+  def queue_files
+    ProcessFilesJob.perform_later(self)
   end
 end
