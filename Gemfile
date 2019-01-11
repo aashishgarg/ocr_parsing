@@ -56,9 +56,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'apipie-rails' # For API Documentation
 gem 'state_machines-activerecord' # For adding states to BolFile
-
-# Backgound jobs
-gem 'sidekiq', '~> 5.2'
+gem 'cancancan', '~> 2.0' # For Authorization
+gem 'rolify' # For Roles implementation
+gem 'sidekiq', '~> 5.2' # Backgound jobs
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -76,7 +76,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rails-erd'
-  gem 'rubocop'
+  gem 'rubocop', require: false
 end
 
 group :test do

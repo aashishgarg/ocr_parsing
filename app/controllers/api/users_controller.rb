@@ -1,6 +1,7 @@
 class Api::UsersController < ApplicationController
   include Api::Concerns::UserApipie
   # before_action :authenticate_user!
+  authorize_resource
 
    def show
    end

@@ -1,5 +1,8 @@
 class Api::BolFilesController < ApplicationController
   include Api::Concerns::BolFilesApipie
+
+  # Before Actions
+  authorize_resource
   before_action :set_bol_file, except: [:create, :index]
 
   def index
