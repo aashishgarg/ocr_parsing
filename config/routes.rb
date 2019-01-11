@@ -11,10 +11,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resource :user, only: [:show, :update]
-    resources :shippers do |shipper|
-      resources :bol_files
-    end
-    resources :bol_types
+    resources :bol_files
   end
 
   root to: redirect('/apidocs')
