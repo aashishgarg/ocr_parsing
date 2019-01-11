@@ -9,4 +9,4 @@
 puser = User.create(email: 'pittohio@trantorinc.com', password: 'trantorpwd', first_name: 'Pittohio', last_name: 'User', company: 'Pittohio')
 User.create(email: 'trantor@trantorinc.com', password: 'trantorpwd', first_name: 'Trantor', last_name: 'User', company: 'Trantor, Inc.')
 
-Shipper.create(name: 'Shipper 1', address1: '15 Pine St, San Francisco, CA', user: puser)
+Role::ALL.each { |role| Role.create(name: role) unless Role.find_by(name: role).present? }
