@@ -27,13 +27,13 @@ module Api
 
       def_param_group :errors do
         param 'errors', Hash, required: true do
-          param :status, %i(0 1 2 3 4 5 6)
+          param :status, %w(0 1 2 3 4 5 6)
         end
       end
 
       api :GET, '/bol_files', 'Lists all BOL Files present'
       description 'Lists all BOL Files present'
-      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       formats ['json']
@@ -43,7 +43,7 @@ module Api
       api :GET, '/bol_files/:id', 'Shows a specific BOL File'
       desc 'Shows a specific BOL File'
       param :id, :number
-      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
@@ -65,7 +65,7 @@ module Api
           param :data, String
         end
       end
-      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
@@ -90,7 +90,7 @@ module Api
           param :data, String
         end
       end
-      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
@@ -106,7 +106,7 @@ module Api
       api :DELETE, '/bol_files/:id', 'Deletes a specific BOL File'
       desc 'Deletes a specific BOL File'
       param :id, :number
-      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'

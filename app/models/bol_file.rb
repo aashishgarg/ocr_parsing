@@ -1,16 +1,25 @@
 class BolFile < ApplicationRecord
+  # Constants
   BOL_EXT = 'png'.freeze
 
+  # Modules Inclusions
   include Attachable
 
+  # Associations
   belongs_to :user, foreign_key: :status_updated_by
-  belongs_to :shipper
-  belongs_to :bol_type
-
   accepts_nested_attributes_for :attachments
 
+  # Validations
   validates :status, presence: true
-  # ToDo: Add file size validation
+  # TODO: Add file size validation
+
+  # Callbacks
+  before_validation do
+    if status_changed? || new_record?
+      self.status_updated_by = User.current.id
+      self.status_updated_at = Time.now
+    end
+  end
 
   # States: uploaded pending_parsing done_parsing qa_rejected qa_approved
   #         uat_rejected uat_approved released
@@ -37,13 +46,6 @@ class BolFile < ApplicationRecord
 
     event :uat_rejected do
       transition %i[done_parsing qa_approved] => :done_parsing
-    end
-  end
-
-  before_validation do
-    if status_changed? || new_record?
-      self.status_updated_by = User.current.id
-      self.status_updated_at = Time.now
     end
   end
 

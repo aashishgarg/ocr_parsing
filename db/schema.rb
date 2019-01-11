@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_10_070942) do
+ActiveRecord::Schema.define(version: 2019_01_10_112740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,30 +41,6 @@ ActiveRecord::Schema.define(version: 2019_01_10_070942) do
     t.index ["bol_type_id"], name: "index_bol_files_on_bol_type_id"
     t.index ["shipper_id"], name: "index_bol_files_on_shipper_id"
     t.index ["status_updated_by"], name: "index_bol_files_on_status_updated_by"
-  end
-
-  create_table "bol_types", force: :cascade do |t|
-    t.integer "shipper_id"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "shippers", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "name"
-    t.string "address1"
-    t.string "address2"
-    t.string "city"
-    t.string "state"
-    t.string "zip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "contact_name"
-    t.string "contact_email"
-    t.string "contact_phone"
-    t.string "contact_fax"
-    t.index ["user_id"], name: "index_shippers_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
