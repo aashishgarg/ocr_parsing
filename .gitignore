@@ -35,3 +35,9 @@
 
 # Dotenv files
 .env
+
+# Database files
+/config/database*.yml
+
+# OCR processing folder
+/public/bol_files/*

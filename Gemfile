@@ -46,7 +46,7 @@ gem 'rack-cors', :require => 'rack/cors'
 # gem 'mini_magick', '~> 4.8'
 
 # File upload operations
-gem "paperclip", "~> 6.0.0"
+gem 'paperclip', '~> 6.0.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -55,6 +55,10 @@ gem "paperclip", "~> 6.0.0"
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'apipie-rails' # For API Documentation
+
+# Backgound jobs
+gem 'sidekiq', '~> 5.2'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -71,6 +75,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rails-erd'
+  gem 'rubocop'
 end
 
 group :test do

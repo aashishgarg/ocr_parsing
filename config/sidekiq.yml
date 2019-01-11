@@ -1,0 +1,18 @@
+:concurrency: 1
+:pidfile: tmp/pids/sidekiq.pid
+:logfile: log/sidekiq.log
+development:
+  :concurrency: 8
+production:
+  :concurrency: 10
+:queues:
+  - ocr_queue
+
+tasks: &tasks
+  NotifierJob:
+    every: ["2s"]
+    queue: notifier
+    description: 'Send pending notifications'
+
+:schedule:
+  <<: *tasks
