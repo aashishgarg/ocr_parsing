@@ -27,7 +27,7 @@ module Api
 
       def_param_group :errors do
         param 'errors', Hash, required: true do
-          param :status, %i(0 1 2 3 4 5 6)
+          param :status, %w(0 1 2 3 4 5 6)
         end
       end
 

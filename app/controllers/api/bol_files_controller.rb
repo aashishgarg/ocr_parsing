@@ -12,12 +12,8 @@ class Api::BolFilesController < ApplicationController
   def show; end
 
   def create
-    shipper = Shipper.find(params[:shipper_id])
-    @bol_file = shipper.bol_files.new(bol_file_params)
-
-    unless @bol_file.save
-      render json: { errors: @bol_file.errors }, status: :unprocessable_entity
-    end
+    @bol_file = BolFile.new(bol_file_params)
+    render json: { errors: @bol_file.errors }, status: :unprocessable_entity unless @bol_file.save
   end
 
   def update
