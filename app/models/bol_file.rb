@@ -1,6 +1,15 @@
 class BolFile < ApplicationRecord
   # Constants
   BOL_EXT = 'png'.freeze
+  enum status: {
+    uploaded: 0,
+    ocr_pending: 1,
+    ocr_done: 2,
+    qa_approved: 3,
+    qa_rejected: 4,
+    uat_rejected: 5,
+    released: 6
+  }
 
   # Modules Inclusions
   include Attachable
@@ -18,34 +27,6 @@ class BolFile < ApplicationRecord
     if status_changed? || new_record?
       self.status_updated_by = User.current.id
       self.status_updated_at = Time.now
-    end
-  end
-
-  # States: uploaded pending_parsing done_parsing qa_rejected qa_approved
-  #         uat_rejected uat_approved released
-  state_machine :state, initial: :uploaded do
-    event :sent_to_ocr do
-      transition uploaded: :pending_parsing
-    end
-
-    event :parsed do
-      transition pending_parsing: :done_parsing
-    end
-
-    event :qa_approved do
-      transition %i[done_parsing qa_rejected] => :qa_approved
-    end
-
-    event :qa_rejected do
-      transition done_parsing: :qa_rejected
-    end
-
-    event :uat_approved do
-      transition %i[done_parsing qa_approved] => :done_parsing
-    end
-
-    event :uat_rejected do
-      transition %i[done_parsing qa_approved] => :done_parsing
     end
   end
 

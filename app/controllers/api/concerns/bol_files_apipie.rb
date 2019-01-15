@@ -4,6 +4,15 @@ module Api
       extend ActiveSupport::Concern
       extend Apipie::DSL::Concern
 
+      def_param_group :bol_file do
+        property :id, Integer, desc: 'Id of BOL File'
+        property :name, String, desc: 'Name of BOL File'
+        # property :status, BolFile.statuses.keys, desc: 'Status of BOL File'
+        property :attachments, Array do
+          param_group :attachment
+        end
+      end
+
       def_param_group :attachment do
         property :id, Integer
         property :data_file_name, String
@@ -16,57 +25,51 @@ module Api
         property :url, String
       end
 
-      def_param_group :bol_file do
-        property :id, Integer, desc: 'Id of BOL File'
-        property :name, String, desc: 'Name of BOL File'
-        property :status, %w[0 1 2 3 4 5 6], desc: 'Status of BOL File'
-        property :attachments, Hash do
-          param_group :attachment
-        end
-      end
-
       def_param_group :errors do
         param 'errors', Hash, required: true do
-          param :status, %w(0 1 2 3 4 5 6)
+          # param :status, BolFile.statuses.keys
         end
       end
 
-      api :GET, '/bol_files', 'Lists all BOL Files present'
-      description 'Lists all BOL Files present'
+      api :GET, '/bol_files', 'Lists all BOL Files'
+      description 'Lists all BOL Files'
       header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       formats ['json']
       returns array_of: :bol_file, code: 200, desc: 'Array of all BOL types is returned'
-      def index;end
+      def index; end
 
       api :GET, '/bol_files/:id', 'Shows a specific BOL File'
       desc 'Shows a specific BOL File'
-      param :id, :number
       header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true
+      param :id, :number
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
       returns code: 200, desc: 'Detailed information about BOL File' do
         param_group :bol_file
       end
-      def show;end
+      def show; end
 
       api :POST, '/bol_files', 'Creates a new BOL File'
       desc 'Shows a specific BOL File'
-      param :bol_file, Hash do
-        param :bol_type_id, Integer
-        param :name, String
-        param :status, String
-        param :status_updated_by, Integer
-        param :status_updated_by, Integer
-        param :attachments_attributes, Hash do
-          param :data, String
-        end
-      end
       header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true
+      param :bol_file, Hash do
+        param :name, String
+        param :status, String
+        param :status_updated_by, Integer, desc: 'ID of the user'
+        param :attachments_attributes, Hash do
+          param :number, Hash do
+            param :data, String
+          end
+          param :number, Hash do
+            param :data, String
+          end
+        end
+      end
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
@@ -76,22 +79,26 @@ module Api
       returns code: :unprocessable_entity, desc: 'Unprocessable Entity' do
         param_group :errors
       end
-      def create;end
+      def create; end
 
       api :PUT, '/bol_files/:id', 'Updates a BOL File'
       desc 'Updates a BOL File'
+      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
+      header 'Content-Type', 'application/json', required: true
       param :bol_file, Hash, required: true do
         param :bol_type_id, Integer
         param :name, String
         param :status, String
-        param :status_updated_by, Integer
-        param :status_updated_by, Integer
+        param :status_updated_by, Integer, desc: 'ID of the user'
         param :attachments_attributes, Hash do
-          param :data, String
+          param :number, Hash do
+            param :data, String
+          end
+          param :number, Hash do
+            param :data, String
+          end
         end
       end
-      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
-      header 'Content-Type', 'application/json', required: true
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
@@ -101,17 +108,17 @@ module Api
       returns code: :unprocessable_entity, desc: 'Unprocessable Entity' do
         param_group :errors
       end
-      def update;end
+      def update; end
 
       api :DELETE, '/bol_files/:id', 'Deletes a specific BOL File'
       desc 'Deletes a specific BOL File'
-      param :id, :number
       header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true
+      param :id, :number
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
       formats ['json']
-      def destroy;end
+      def destroy; end
     end
   end
 end

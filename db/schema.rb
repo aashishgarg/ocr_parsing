@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_11_172222) do
+ActiveRecord::Schema.define(version: 2019_01_15_115810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 2019_01_11_172222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "ocr_parsed_data"
+    t.integer "status"
+    t.jsonb "processed_data"
     t.index ["attachable_id", "attachable_type"], name: "index_attachments_on_attachable_id_and_attachable_type"
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable_type_and_attachable_id"
   end
@@ -38,7 +40,6 @@ ActiveRecord::Schema.define(version: 2019_01_11_172222) do
     t.datetime "status_updated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "state"
     t.index ["bol_type_id"], name: "index_bol_files_on_bol_type_id"
     t.index ["shipper_id"], name: "index_bol_files_on_shipper_id"
     t.index ["status_updated_by"], name: "index_bol_files_on_status_updated_by"
