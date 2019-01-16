@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(version: 2019_01_16_124020) do
   end
 
   create_table "bol_files", force: :cascade do |t|
-    t.integer "shipper_id"
     t.integer "bol_type_id"
     t.string "name"
     t.integer "status", default: 0
@@ -41,7 +40,6 @@ ActiveRecord::Schema.define(version: 2019_01_16_124020) do
     t.bigint "user_id"
     t.datetime "extracted_at"
     t.index ["bol_type_id"], name: "index_bol_files_on_bol_type_id"
-    t.index ["shipper_id"], name: "index_bol_files_on_shipper_id"
     t.index ["user_id"], name: "index_bol_files_on_user_id"
   end
 
