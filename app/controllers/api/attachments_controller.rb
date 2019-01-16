@@ -27,7 +27,7 @@ module Api
     end
 
     def attachment_params
-      params.require(:attachment).permit!
+      params.require(:attachment).require(:ocr_data).permit!
     end
   end
 end
