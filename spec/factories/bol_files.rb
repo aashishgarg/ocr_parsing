@@ -4,7 +4,5 @@ FactoryBot.define do
     bol_type_id 1
     name { FFaker::Name.name }
     status { 'uploaded' }
-    status_updated_by { FactoryBot.create(:user).id }
-    status_updated_at { DateTime.now }
   end
 end
