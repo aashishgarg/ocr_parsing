@@ -38,20 +38,15 @@ class BolFile < ApplicationRecord
   end
 
   def self.search(params)
-    order = params[:order].present? ? params[:order] : 'desc'
-    if params[:filter_column].present? && params[:order_column].present?
-      where("#{params['filter_column']} = ?", params[:filter_value]).order("#{params['order_column']} #{order}").page(params[:page])
-    elsif params[:filter_column].present? && params[:order_column].blank?
-      where("#{params['filter_column']} = ?", params[:filter_value]).page(params[:page])
-    elsif params[:filter_column].blank? && params[:order_column].present?
-      order("#{params['order_column']} #{order}").page(params[:page])
-    else
-      if params[:order_column].present?
-        order("#{params['order_column']} #{order}").page(params[:page])
-      else
-        page(params[:page])
-      end
-    end
+    filter(params[:filter_column], params[:filter_value]).ordering(params[:order_column], params[:order]).page(params[:page])
+  end
+
+  def self.filter(name, value=nil)
+    name.present? ? where(name => value) : all
+  end
+
+  def self.ordering(name, value=nil)
+    name.present? ? order(name => value) : order(created_at: :desc)
   end
 
   def self.counts
