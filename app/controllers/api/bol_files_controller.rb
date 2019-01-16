@@ -4,9 +4,10 @@ class Api::BolFilesController < ApplicationController
   # Before Actions
   authorize_resource
   before_action :set_bol_file, except: %i[create index]
+  after_action :set_line_status, only: %i[update], if: proc { params[:bol_file][:attachments_attributes].present? }
 
   def index
-    @bol_files = BolFile.all # ToDo: Apply pagination
+    @bol_files = BolFile.all # TODO: Apply pagination
   end
 
   def show; end
@@ -34,7 +35,19 @@ class Api::BolFilesController < ApplicationController
     @bol_file = BolFile.find(params[:id])
   end
 
+  def set_line_status
+    params[:bol_file][:attachments_attributes].each do |number, attachment_params|
+      next unless attachment_params[:id].present?
+
+      attachment = @bol_file.attachments.find_by(id: attachment_params[:id])
+      data = JSON.parse(attachment.processed_data)
+      attachment_params[:ocr_data].each { |key, value| data[key] = { value: value, status: Attachment.key_status } }
+      attachment.update(processed_data: data.to_json)
+      render json: { errors: attachment.errors }, status: :unprocessable_entity unless attachment.valid?
+    end
+  end
+
   def bol_file_params
-    params.require(:bol_file).permit(:bol_type_id, :name, :status, attachments_attributes: [:data])
+    params.require(:bol_file).permit(:bol_type_id, :name, :status, attachments_attributes: %i[id data _destroy])
   end
 end
