@@ -41,7 +41,7 @@ class Attachment < ApplicationRecord
       transitions from: :uploaded, to: :ocr_pending
     end
 
-    event :parsed do
+    event :parsed, after: :update_bol_extracted do
       transitions from: :ocr_pending, to: :ocr_done
     end
 
@@ -70,9 +70,15 @@ class Attachment < ApplicationRecord
     (User.current.is_customer? || User.current.is_admin?) ? 'uat_approved' : 'qa_approved'
   end
 
+  private
+
   def set_bol_status
     bol_status = []
     attachable.attachments.pluck(:status).each { |status| bol_status << Attachment.statuses[status]}
     attachable.method((Attachment.statuses.key(bol_status.min) + '!').to_sym).call
+  end
+
+  def update_bol_extracted
+    attachable.update(extracted_at: updated_at) if attachable.attachments.pluck(:status).uniq == %w[ocr_done]
   end
 end
