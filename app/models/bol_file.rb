@@ -59,6 +59,8 @@ class BolFile < ApplicationRecord
     order = params[:order].present? ? params[:order] : 'desc'
     if params[:filter_column].present? && params[:order_column].present?
       where("#{params['filter_column']} = ?", params[:filter_value]).order("#{params['order_column']} #{order}").page(params[:page])
+    elsif params[:filter_column].present? && params[:order_column].blank?
+      where("#{params['filter_column']} = ?", params[:filter_value]).page(params[:page])
     elsif params[:filter_column].blank? && params[:order_column].present?
       order("#{params['order_column']} #{order}").page(params[:page])
     else
