@@ -1,4 +1,8 @@
 class BolFile < ApplicationRecord
+  # Modules Inclusions
+  include Attachable
+  include SidekiqMediator
+
   # Constants
   BOL_EXT = 'png'.freeze
   enum status: {
@@ -10,9 +14,6 @@ class BolFile < ApplicationRecord
     uat_rejected: 5,
     released: 6
   }
-
-  # Modules Inclusions
-  include Attachable
 
   # Associations
   belongs_to :user, foreign_key: :status_updated_by
@@ -39,6 +40,6 @@ class BolFile < ApplicationRecord
   private
 
   def queue_files
-    ProcessFilesJob.perform_later(self)
+    perform_later(ProcessFilesJob, self)
   end
 end

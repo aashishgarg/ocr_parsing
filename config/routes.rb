@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   apipie
-
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
 
@@ -10,10 +9,11 @@ Rails.application.routes.draw do
   end
 
   namespace :api, defaults: { format: :json } do
-    resource :user, only: [:show, :update]
-    resources :bol_files
+    resource :user, only: %i[show update]
+    resources :bol_files do
+      resources :attachments, only: %i[update]
+    end
   end
 
   root to: redirect('/apidocs')
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

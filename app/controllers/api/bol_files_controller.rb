@@ -3,7 +3,7 @@ class Api::BolFilesController < ApplicationController
 
   # Before Actions
   authorize_resource
-  before_action :set_bol_file, except: [:create, :index]
+  before_action :set_bol_file, except: %i[create index]
 
   def index
     @bol_files = BolFile.all # ToDo: Apply pagination
@@ -35,7 +35,6 @@ class Api::BolFilesController < ApplicationController
   end
 
   def bol_file_params
-    params.require(:bol_file).permit(:bol_type_id, :name, :status, :status_updated_by,
-                                     attachments_attributes: [:data])
+    params.require(:bol_file).permit(:bol_type_id, :name, :status, :status_updated_by, attachments_attributes: [:data])
   end
 end

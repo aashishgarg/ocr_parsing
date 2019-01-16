@@ -1,25 +1,24 @@
 class Attachment < ApplicationRecord
-  # Constants
-  REQUIRED_FIELDS = ['shipperName', 'shipper Address', 'shipperState', 'shipperZip', 'consigneeName', 'consigneeAddress',
-                'consigneeCity', 'consigneeState', 'consignee Zip', 'consignee Contact Phone', 'special Instructions',
-                'emergencyContactInfo', 'Table'].freeze
-
   # Modules Inclusion
   include AASM
 
   # Constants
-  PAPERCLIP_IMAGE_CONTENT_TYPE = [/\Aimage\/.*\z/, "application/json"]
-
-  # Associations
-  belongs_to :attachable, polymorphic: true
-  has_attached_file :data
-
-  # Validations
-  validates_attachment_presence :data
-  validates_attachment :data, content_type: { content_type: PAPERCLIP_IMAGE_CONTENT_TYPE }
-
-  # Callbacks
-  after_update :update_bol_file_status, if: proc { previous_changes.has_key?(:status) }
+  PAPERCLIP_IMAGE_CONTENT_TYPE = [/\Aimage\/.*\z/, 'application/json'].freeze
+  REQUIRED_FIELDS = [
+    'shipperName',
+    'shipper Address',
+    'shipperState',
+    'shipperZip',
+    'consigneeName',
+    'consigneeAddress',
+    'consigneeCity',
+    'consigneeState',
+    'consignee Zip',
+    'consignee Contact Phone',
+    'special Instructions',
+    'emergencyContactInfo',
+    'Table'
+  ].freeze
 
   enum status: {
     uploaded: 0,
@@ -31,6 +30,18 @@ class Attachment < ApplicationRecord
     released: 6
   }
 
+  # Associations
+  belongs_to :attachable, polymorphic: true
+  has_attached_file :data
+
+  # Validations
+  validates_attachment_presence :data
+  validates_attachment :data, content_type: { content_type: PAPERCLIP_IMAGE_CONTENT_TYPE }
+
+  # Callbacks
+  after_update :set_bol_status, if: proc { previous_changes.has_key?(:status) }
+
+  # State Machine
   aasm column: 'status', enum: true, whiny_transitions: false do
     state :uploaded, initial: true
     state :ocr_pending, :ocr_done, :qa_approved, :qa_rejected
@@ -64,7 +75,11 @@ class Attachment < ApplicationRecord
     data.path
   end
 
-  def update_bol_file_status
+  def self.key_status
+    User.current.is_customer? ? 'uat_approved' : 'qa_approved'
+  end
+
+  def set_bol_status
     bol_status = []
     attachable.attachments.pluck(:status).each { |status| bol_status << Attachment.statuses[status]}
     attachable.method((Attachment.statuses.key(bol_status.min) + '!').to_sym).call

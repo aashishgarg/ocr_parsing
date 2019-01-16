@@ -1,10 +1,11 @@
 module Ocr
   class ProcessFiles < Base
-    def initialize(bol_file)
+    def initialize(bol_file, user = nil)
       @bol_file = bol_file
       @local_file = nil
       @uri = URI.parse(ENV['OCR_SERVICE_URL'])
       @current_attachment = nil
+      User.current = user if user
     end
 
     def process_s3_file
@@ -31,11 +32,9 @@ module Ocr
       request.body = { data: Base64.encode64(File.read(file_path)).delete('\n') }.to_json
       @current_attachment.sent_to_ocr!
       response = http.request(request)
-      response_body = response.body
       @current_attachment.ocr_done! if response.code.eql? '200'
-      @current_attachment.update(ocr_parsed_data: response_body)#,
-                                 # processed_data: Ocr::Parser.new(JSON.parse(response_body),
-                                 #                                 Attachment::REQUIRED_FIELDS).add_status_keys.to_json)
+      processed_data = Ocr::Parser.new(JSON.parse(response.body)['data'], Attachment::REQUIRED_FIELDS).add_status_keys.to_json
+      @current_attachment.update(ocr_parsed_data: response.body, processed_data: processed_data)
     end
   end
 end
