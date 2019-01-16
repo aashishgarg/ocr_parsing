@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_15_115810) do
+ActiveRecord::Schema.define(version: 2019_01_16_102918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,13 +36,13 @@ ActiveRecord::Schema.define(version: 2019_01_15_115810) do
     t.integer "bol_type_id"
     t.string "name"
     t.integer "status", default: 0
-    t.integer "status_updated_by"
     t.datetime "status_updated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["bol_type_id"], name: "index_bol_files_on_bol_type_id"
     t.index ["shipper_id"], name: "index_bol_files_on_shipper_id"
-    t.index ["status_updated_by"], name: "index_bol_files_on_status_updated_by"
+    t.index ["user_id"], name: "index_bol_files_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -89,4 +89,5 @@ ActiveRecord::Schema.define(version: 2019_01_15_115810) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "bol_files", "users"
 end

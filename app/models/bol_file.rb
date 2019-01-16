@@ -1,7 +1,6 @@
 class BolFile < ApplicationRecord
   # Modules Inclusions
   include Attachable
-  include SidekiqMediator
 
   # Constants
   BOL_EXT = 'png'.freeze
@@ -16,20 +15,12 @@ class BolFile < ApplicationRecord
   }
 
   # Associations
-  belongs_to :user, foreign_key: :status_updated_by
+  belongs_to :user, inverse_of: :bol_files
   accepts_nested_attributes_for :attachments
 
   # Validations
   validates :status, presence: true
   # TODO: Add file size validation
-
-  # Callbacks
-  before_validation do
-    if status_changed? || new_record?
-      self.status_updated_by = User.current.id
-      self.status_updated_at = Time.now
-    end
-  end
 
   after_create_commit :queue_files, if: proc { attachments.exists? }
 
@@ -64,6 +55,6 @@ class BolFile < ApplicationRecord
   private
 
   def queue_files
-    perform_later(ProcessFilesJob, self)
+    ProcessFilesJob.perform_later(self)
   end
 end

@@ -62,7 +62,7 @@ module Api
       param :bol_file, Hash do
         param :name, String
         param :status, String
-        param :status_updated_by, Integer, desc: 'ID of the user'
+        param :user_id, Integer, desc: 'ID of the user'
         param :attachments_attributes, Hash do
           param :number, Hash do
             param :data, String
@@ -91,7 +91,7 @@ module Api
         param :bol_type_id, Integer
         param :name, String
         param :status, String
-        param :status_updated_by, Integer, desc: 'ID of the user'
+        param :user_id, Integer, desc: 'ID of the user'
         param :attachments_attributes, Hash do
           param :number, Hash do
             param :data, String

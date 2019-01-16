@@ -1,11 +1,10 @@
 module Ocr
   class ProcessFiles < Base
-    def initialize(bol_file, user = nil)
+    def initialize(bol_file)
       @bol_file = bol_file
       @local_file = nil
       @uri = URI.parse(ENV['OCR_SERVICE_URL'])
       @current_attachment = nil
-      User.current = user if user
     end
 
     def process_s3_file

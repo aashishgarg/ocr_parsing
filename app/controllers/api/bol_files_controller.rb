@@ -12,7 +12,7 @@ class Api::BolFilesController < ApplicationController
   def show; end
 
   def create
-    @bol_file = BolFile.new(bol_file_params)
+    @bol_file = current_user.bol_files.build(bol_file_params)
     render json: { errors: @bol_file.errors }, status: :unprocessable_entity unless @bol_file.save
   end
 
@@ -35,6 +35,6 @@ class Api::BolFilesController < ApplicationController
   end
 
   def bol_file_params
-    params.require(:bol_file).permit(:bol_type_id, :name, :status, :status_updated_by, attachments_attributes: [:data])
+    params.require(:bol_file).permit(:bol_type_id, :name, :status, attachments_attributes: [:data])
   end
 end
