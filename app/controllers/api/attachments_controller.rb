@@ -1,6 +1,6 @@
 module Api
   class AttachmentsController < ApplicationController
-    include Api::Concerns::BolFilesApipie
+    include Api::Concerns::AttachmentsApipie
 
     # Before Actions
     before_action :set_bol_file, only: %i[update]

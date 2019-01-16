@@ -7,7 +7,7 @@ module Api
       def_param_group :bol_file do
         property :id, Integer, desc: 'Id of BOL File'
         property :name, String, desc: 'Name of BOL File'
-        # property :status, BolFile.statuses.keys, desc: 'Status of BOL File'
+        property :status, BolFile.statuses.keys, desc: 'Status of BOL File'
         property :attachments, Array do
           param_group :attachment
         end
@@ -20,6 +20,7 @@ module Api
         property :data_file_size, Integer
         property :data_updated_at, DateTime
         property :ocr_parsed_data, Hash, desc: 'OCR data hash'
+        property :processed_data, Hash, desc: 'Processed data of OCR'
         property :created_at, DateTime
         property :updated_at, DateTime
         property :url, String
@@ -27,7 +28,7 @@ module Api
 
       def_param_group :errors do
         param 'errors', Hash, required: true do
-          # param :status, BolFile.statuses.keys
+          param :status, BolFile.statuses.keys
         end
       end
 
