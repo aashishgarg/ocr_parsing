@@ -25,7 +25,7 @@ class BolFile < ApplicationRecord
   end
 
   def self.filter(names, values = [])
-    names_array = names[0].split(',')
+    names_array = (names.is_a?(Array) ? names[0]&.split(',') : false)
     if names_array.present?
       condition = ''
       names_array.each_with_index do |name, index|
