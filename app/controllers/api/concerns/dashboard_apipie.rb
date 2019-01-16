@@ -25,6 +25,10 @@ module Api
       description 'Lists all dashboard data'
       header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true
+      param :filter_column, %w[name status]
+      param :filter_value, Array
+      param :order_column, %w[name status]
+      param :order, %w[asc desc]
       error code: 401, desc: 'Unauthorized'
       formats ['json']
       returns array_of: :dashboard_params, code: 200, desc: 'Data for dashboard'
