@@ -41,21 +41,21 @@ class BolFile < ApplicationRecord
     filter(params[:filter_column], params[:filter_value]).ordering(params[:order_column], params[:order]).page(params[:page])
   end
 
-  def self.filter(name, value=nil)
+  def self.filter(name, value = nil)
     name.present? ? where(name => value) : all
   end
 
-  def self.ordering(name, value=nil)
+  def self.ordering(name, value = nil)
     name.present? ? order(name => value) : order(created_at: :desc)
   end
 
   def self.counts
     all = BolFile.all
     {
-        total: count,
-        file_verified: all.group_by(&:status)[:ocr_done]&.count || 0,
-        waiting_for_approval: all.group_by(&:status)[:qa_approved]&.count || 0,
-        file_approved: all.group_by(&:status)[:released]&.count || 0
+      total: count,
+      file_verified: all.group_by(&:status)[:ocr_done]&.count || 0,
+      waiting_for_approval: all.group_by(&:status)[:qa_approved]&.count || 0,
+      file_approved: all.group_by(&:status)[:released]&.count || 0
     }
   end
 
