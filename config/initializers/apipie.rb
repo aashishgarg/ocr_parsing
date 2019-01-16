@@ -9,8 +9,8 @@ Apipie.configure do |config|
   config.translate = false
   config.api_controllers_matcher = "#{Rails.root}/app/controllers/**/*.rb"
   config.authenticate = Proc.new do
+    # TODO: change the username and password to rails credentials.
     authenticate_or_request_with_http_basic do |username, password|
-      ## ToDo change the username and password to rails credentials.
       username == 'trantorinc' && password == 'trantorpwd'
     end
   end

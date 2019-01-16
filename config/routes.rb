@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   apipie
-
   require "sidekiq/web"
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|
     ## ToDo change the username and password to rails credentials.
@@ -15,10 +14,12 @@ Rails.application.routes.draw do
   end
 
   namespace :api, defaults: { format: :json } do
-    resource :user, only: [:show, :update]
-    resources :bol_files
+    resource :user, only: %i[show update]
+    resources :bol_files do
+      resources :attachments, only: %i[update]
+    end
+    resources :dashboard, only: [:index]
   end
 
   root to: redirect('/apidocs')
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

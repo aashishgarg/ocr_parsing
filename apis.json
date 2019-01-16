@@ -1,0 +1,485 @@
+{
+	"_type": "export",
+	"__export_format": 3,
+	"__export_date": "2019-01-16T09:32:21.990Z",
+	"__export_source": "insomnia.desktop.app:v6.0.2",
+	"resources": [
+		{
+			"_id": "wrk_6b5054400899430b8aea7909f77408c7",
+			"created": 1547523919757,
+			"description": "",
+			"modified": 1547523919757,
+			"name": "Pittohio",
+			"parentId": null,
+			"_type": "workspace"
+		},
+		{
+			"_id": "env_535ece31ff754f3888ece148a25b5a0c",
+			"color": null,
+			"created": 1547523919781,
+			"data": {},
+			"isPrivate": false,
+			"metaSortKey": 1547523919781,
+			"modified": 1547524025078,
+			"name": "New Environment",
+			"parentId": "wrk_6b5054400899430b8aea7909f77408c7",
+			"_type": "environment"
+		},
+		{
+			"_id": "jar_43e2402b3b164aab89af9309d342ec7a",
+			"cookies": [],
+			"created": 1547523919786,
+			"modified": 1547523919786,
+			"name": "Default Jar",
+			"parentId": "wrk_6b5054400899430b8aea7909f77408c7",
+			"_type": "cookie_jar"
+		},
+		{
+			"_id": "fld_d8daf7a9903a45a6af878a30fb11887f",
+			"created": 1547523939788,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1547523961886,
+			"modified": 1547523965694,
+			"name": "Sessions",
+			"parentId": "wrk_6b5054400899430b8aea7909f77408c7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_0e89a3247955476a904e3b3b1c3f9c69",
+			"created": 1547523946436,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1547523946436,
+			"modified": 1547523946436,
+			"name": "BOL Files",
+			"parentId": "wrk_6b5054400899430b8aea7909f77408c7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_8ccb4b422f8941d889cf3b8cfa7b4931",
+			"created": 1547523961836,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1547523961836,
+			"modified": 1547523961836,
+			"name": "Users",
+			"parentId": "wrk_6b5054400899430b8aea7909f77408c7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_955b4107f61947068905e9515dfedb15",
+			"created": 1547524422743,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1547524422743,
+			"modified": 1547524422743,
+			"name": "Registration",
+			"parentId": "wrk_6b5054400899430b8aea7909f77408c7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_5481503264464367ac5b5a160ea384b2",
+			"created": 1547616828972,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1547523946386,
+			"modified": 1547622169494,
+			"name": "Attachments",
+			"parentId": "wrk_6b5054400899430b8aea7909f77408c7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_c95cbfeb5378433481b497cec2d64bb5",
+			"created": 1547619518533,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1547523961861,
+			"modified": 1547622175314,
+			"name": "Dashboard",
+			"parentId": "wrk_6b5054400899430b8aea7909f77408c7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "env_639f9a8cfdc840adb894d3d3b72cde74",
+			"color": "#7d69cb",
+			"created": 1547524036400,
+			"data": {
+				"base_url": "http://localhost:3000/api"
+			},
+			"isPrivate": false,
+			"metaSortKey": 1547524036400,
+			"modified": 1547627773159,
+			"name": "Development",
+			"parentId": "env_535ece31ff754f3888ece148a25b5a0c",
+			"_type": "environment"
+		},
+		{
+			"_id": "env_1d80dad4c5ee43e6814698deccf465a2",
+			"color": "#ff004d",
+			"created": 1547526573289,
+			"data": {},
+			"isPrivate": false,
+			"metaSortKey": 1547526573289,
+			"modified": 1547627778024,
+			"name": "Production",
+			"parentId": "env_535ece31ff754f3888ece148a25b5a0c",
+			"_type": "environment"
+		},
+		{
+			"_id": "req_7bb4270f408540978fdf6e82eb0c49af",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"user\": {\n\t\t\"email\": \"{% response 'body', 'req_fa89a17e1c184c5995023526fdc8fa72', '$.user.email' %}\",\n\t\t\"password\": \"Welcome@123\"\n\t}\n}"
+			},
+			"created": 1547524294285,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_b1d32552cc934200b9258187d3462fc1",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1547524294285,
+			"method": "POST",
+			"modified": 1547627742199,
+			"name": "Login",
+			"parameters": [],
+			"parentId": "fld_d8daf7a9903a45a6af878a30fb11887f",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ base_url  }}/users/login",
+			"_type": "request"
+		},
+		{
+			"_id": "req_6cea22cd456f4f6b9c4d604b56f4749c",
+			"authentication": {
+				"prefix": "",
+				"token": "{% response 'body', 'req_7bb4270f408540978fdf6e82eb0c49af', '$.user.token' %}",
+				"type": "bearer"
+			},
+			"body": {
+				"mimeType": "multipart/form-data",
+				"params": [
+					{
+						"id": "pair_9aabd62f0a564a5ebd706b992c227cab",
+						"name": "bol_file[name]",
+						"value": "BOL File 2"
+					},
+					{
+						"fileName": "/home/ashish/Downloads/logo.png",
+						"id": "pair_7c6af7d5b32d4c8ebc5e92d76974934d",
+						"name": "bol_file[attachments_attributes][0][data]",
+						"type": "file",
+						"value": ""
+					}
+				]
+			},
+			"created": 1547526226742,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_32dfd8fc081a4f8ab568f74f55c644ba",
+					"name": "Content-Type",
+					"value": "multipart/form-data"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1547526645811,
+			"method": "POST",
+			"modified": 1547622404234,
+			"name": "CREATE",
+			"parameters": [],
+			"parentId": "fld_0e89a3247955476a904e3b3b1c3f9c69",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ base_url  }}/bol_files",
+			"_type": "request"
+		},
+		{
+			"_id": "req_e285a4cd1c3f41ebae414ef3b06b93b2",
+			"authentication": {
+				"prefix": "",
+				"token": "{% response 'body', 'req_7bb4270f408540978fdf6e82eb0c49af', '$.user.token' %}",
+				"type": "bearer"
+			},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"bol_file\": {\n\t\t\"name\": \"updated BOL File with id {% response 'body', 'req_6cea22cd456f4f6b9c4d604b56f4749c', '$.bol_file.id' %}\"\n\t}\n}"
+			},
+			"created": 1547526645761,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_737cad63738749ec842e9bdc90d26da3",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1547526645761,
+			"method": "PATCH",
+			"modified": 1547631100288,
+			"name": "UPDATE",
+			"parameters": [],
+			"parentId": "fld_0e89a3247955476a904e3b3b1c3f9c69",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ base_url  }}/bol_files/{% response 'body', 'req_6cea22cd456f4f6b9c4d604b56f4749c', '$.bol_file.id' %}",
+			"_type": "request"
+		},
+		{
+			"_id": "req_a8b425a6420a4cc0a8819e1f809acc9e",
+			"authentication": {
+				"prefix": "",
+				"token": "{% response 'body', 'req_7bb4270f408540978fdf6e82eb0c49af', '$.user.token' %}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1547526844140,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1547526226692,
+			"method": "DELETE",
+			"modified": 1547618058926,
+			"name": "DELETE",
+			"parameters": [],
+			"parentId": "fld_0e89a3247955476a904e3b3b1c3f9c69",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ base_url  }}/bol_files/{% response 'body', 'req_6cea22cd456f4f6b9c4d604b56f4749c', '$.bol_file.id' %}",
+			"_type": "request"
+		},
+		{
+			"_id": "req_806d9fcd82224cf4b58e4ac4b8701c0d",
+			"authentication": {
+				"prefix": "",
+				"token": "{% response 'body', 'req_7bb4270f408540978fdf6e82eb0c49af', '$.user.token' %}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1547531397411,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1547531397411,
+			"method": "GET",
+			"modified": 1547622407996,
+			"name": "SHOW",
+			"parameters": [],
+			"parentId": "fld_0e89a3247955476a904e3b3b1c3f9c69",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ base_url  }}/bol_files/{% response 'body', 'req_6cea22cd456f4f6b9c4d604b56f4749c', '$.bol_file.id' %}",
+			"_type": "request"
+		},
+		{
+			"_id": "req_8c446df7b077406ea0e0cc3733409f51",
+			"authentication": {
+				"prefix": "",
+				"token": "{% response 'body', 'req_7bb4270f408540978fdf6e82eb0c49af', '$.user.token' %}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1547531566304,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1547531566304,
+			"method": "GET",
+			"modified": 1547622365484,
+			"name": "INDEX",
+			"parameters": [],
+			"parentId": "fld_0e89a3247955476a904e3b3b1c3f9c69",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ base_url  }}/bol_files",
+			"_type": "request"
+		},
+		{
+			"_id": "req_0c3d258f00b640d6840e2c7302732a32",
+			"authentication": {
+				"prefix": "",
+				"token": "{% response 'body', 'req_7bb4270f408540978fdf6e82eb0c49af', '$.user.token' %}",
+				"type": "bearer"
+			},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"user\": {\n\t\t\"email\": \"email882@email.com\",\n\t\t\"first_name\": \"email name\"\n\t}\n}"
+			},
+			"created": 1547524502251,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_128331058992445bb5e34f7128493ea5",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1547526102502,
+			"method": "PATCH",
+			"modified": 1547627948564,
+			"name": "UPDATE",
+			"parameters": [],
+			"parentId": "fld_8ccb4b422f8941d889cf3b8cfa7b4931",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ base_url  }}/user",
+			"_type": "request"
+		},
+		{
+			"_id": "req_5bb27f07f43c44e9bf819581451a0bfc",
+			"authentication": {
+				"prefix": "",
+				"token": "{% response 'body', 'req_7bb4270f408540978fdf6e82eb0c49af', '$.user.token' %}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1547526102452,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1547526102452,
+			"method": "GET",
+			"modified": 1547627744171,
+			"name": "SHOW",
+			"parameters": [],
+			"parentId": "fld_8ccb4b422f8941d889cf3b8cfa7b4931",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ base_url  }}/user",
+			"_type": "request"
+		},
+		{
+			"_id": "req_fa89a17e1c184c5995023526fdc8fa72",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"user\": {\n\t\t\"email\": \"email9@email.com\",\n\t\t\"password\": \"Welcome@123\"\n\t}\n}"
+			},
+			"created": 1547523996719,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_0ff2a655d6294fc9b82fcacf92663491",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1547523996720,
+			"method": "POST",
+			"modified": 1547627955100,
+			"name": "CREATE User",
+			"parameters": [],
+			"parentId": "fld_955b4107f61947068905e9515dfedb15",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ base_url  }}/users",
+			"_type": "request"
+		},
+		{
+			"_id": "req_3ceab8d4259a4d2ea412247c958246b0",
+			"authentication": {
+				"token": "{% response 'body', 'req_7bb4270f408540978fdf6e82eb0c49af', '$.user.token' %}",
+				"type": "bearer"
+			},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"attachment\": {\n\t\t\"ocr_data\": {\n\t\t\t\"shipperName\": \"Hello2\"\n\t\t}\n\t}\n}"
+			},
+			"created": 1547616839608,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_234d27007c794015b2c35d3c9a2fe946",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1547616839608,
+			"method": "PUT",
+			"modified": 1547622668781,
+			"name": "UPDATE",
+			"parameters": [],
+			"parentId": "fld_5481503264464367ac5b5a160ea384b2",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ base_url  }}/bol_files/{% response 'body', 'req_6cea22cd456f4f6b9c4d604b56f4749c', '$.bol_file.id' %}/attachments/{% response 'body', 'req_6cea22cd456f4f6b9c4d604b56f4749c', '$.bol_file.attachments[0].id' %}",
+			"_type": "request"
+		},
+		{
+			"_id": "req_4f590b43ee6b4d0b8ee0ca6dc06c3e2a",
+			"authentication": {
+				"prefix": "",
+				"token": "{% response 'body', 'req_7bb4270f408540978fdf6e82eb0c49af', '$.user.token' %}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1547619530533,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1547619530533,
+			"method": "GET",
+			"modified": 1547628752266,
+			"name": "DASHBOARD",
+			"parameters": [],
+			"parentId": "fld_c95cbfeb5378433481b497cec2d64bb5",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ base_url  }}/dashboard?order=asc&order_column=&filter_column=name&filter_value=sdfsd",
+			"_type": "request"
+		}
+	]
+}

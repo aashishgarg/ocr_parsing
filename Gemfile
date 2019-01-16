@@ -55,10 +55,11 @@ gem 'paperclip', '~> 6.0.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'apipie-rails' # For API Documentation
-gem 'state_machines-activerecord' # For adding states to BolFile
+gem 'aasm' # For adding states
 gem 'cancancan', '~> 2.0' # For Authorization
 gem 'rolify' # For Roles implementation
 gem 'sidekiq', '~> 5.2' # Backgound jobs
+gem 'kaminari' # for pagination
 gem 'sidekiq-history', '~> 0.0.9' # For keeping Sidekiq history
 
 group :development, :test do
@@ -67,6 +68,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.8'
   gem 'factory_bot_rails'
   gem 'ffaker'
+  gem 'pry'
 end
 
 group :development do

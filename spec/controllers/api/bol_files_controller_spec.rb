@@ -9,18 +9,17 @@ RSpec.describe Api::BolFilesController, type: :controller do
     request.headers['Authorization'] = "Bearer #{@token}"
     request.headers['content-type'] = 'application/json'
     request.headers['Accept'] = 'application/json'
-    @shipper = FactoryBot.create(:shipper)
   end
 
   context '#index' do
     it 'returns http Unauthorized' do
       request.headers['Authorization'] = "Bearer #{@token}1111111"
-      get :index, params: { shipper_id: @shipper.id }, format: 'json'
+      get :index, format: 'json'
       expect(response.status).to eq 401
     end
 
     it 'returns http success' do
-      get :index, params: { shipper_id: @shipper.id }, format: 'json'
+      get :index, format: 'json'
       expect(response.status).to eq 200
     end
   end
@@ -33,12 +32,12 @@ RSpec.describe Api::BolFilesController, type: :controller do
 
     it 'returns http Unauthorized' do
       request.headers['Authorization'] = "Bearer #{@token}1111111"
-      get :show, params: { shipper_id: @shipper.id, id: @bol_file.id }, format: 'json'
+      get :show, params: { id: @bol_file.id }, format: 'json'
       expect(response.status).to eq 401
     end
 
     it 'returns http success' do
-      get :show, params: { shipper_id: @shipper.id, id: @bol_file.id }, format: 'json'
+      get :show, params: { id: @bol_file.id }, format: 'json'
       expect(response.status).to eq 200
     end
   end
@@ -46,13 +45,10 @@ RSpec.describe Api::BolFilesController, type: :controller do
   context '#create' do
     before do
       User.current = @user
-      @bol_type = FactoryBot.create(:bol_type)
       @params = {
-        shipper_id: @shipper.id,
         bol_file: {
           name: 'NewTestName',
-          Shipper_id: @shipper.id,
-          bol_type_id: @bol_type.id
+          bol_type_id: 1
         }
       }
     end
@@ -84,10 +80,10 @@ RSpec.describe Api::BolFilesController, type: :controller do
       User.current = @user
       @bol_file = FactoryBot.create(:bol_file)
       @params = {
-        shipper_id: @shipper.id,
         id: @bol_file.id,
         bol_file: {
-          name: 'NewTestName'
+          name: 'NewTestName',
+          bol_type_id: 1
         }
       }
     end
