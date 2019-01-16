@@ -1,6 +1,7 @@
 class Attachment < ApplicationRecord
   # Modules Inclusion
   include AASM
+  include Statuses
 
   # Constants
   PAPERCLIP_IMAGE_CONTENT_TYPE = [/\Aimage\/.*\z/, 'application/json'].freeze
@@ -19,16 +20,6 @@ class Attachment < ApplicationRecord
     'emergencyContactInfo',
     'Table'
   ].freeze
-
-  enum status: {
-    uploaded: 0,
-    ocr_pending: 1,
-    ocr_done: 2,
-    qa_approved: 3,
-    qa_rejected: 4,
-    uat_rejected: 5,
-    released: 6
-  }
 
   # Associations
   belongs_to :attachable, polymorphic: true
@@ -76,7 +67,7 @@ class Attachment < ApplicationRecord
   end
 
   def self.key_status
-    User.current.is_customer? || User.current.is_admin? ? 'uat_approved' : 'qa_approved'
+    (User.current.is_customer? || User.current.is_admin?) ? 'uat_approved' : 'qa_approved'
   end
 
   def set_bol_status

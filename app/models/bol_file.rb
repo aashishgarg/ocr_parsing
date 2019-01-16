@@ -1,18 +1,10 @@
 class BolFile < ApplicationRecord
   # Modules Inclusions
   include Attachable
+  include Statuses
 
   # Constants
   BOL_EXT = 'png'.freeze
-  enum status: {
-    uploaded: 0,
-    ocr_pending: 1,
-    ocr_done: 2,
-    qa_approved: 3,
-    qa_rejected: 4,
-    uat_rejected: 5,
-    released: 6
-  }
 
   # Associations
   belongs_to :user, inverse_of: :bol_files
