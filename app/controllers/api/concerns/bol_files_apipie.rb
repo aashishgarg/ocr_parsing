@@ -83,7 +83,7 @@ module Api
       end
       def create; end
 
-      api :PUT, '/bol_files/:id', 'Updates a BOL File'
+      api :PATCH, '/bol_files/:id', 'Updates a BOL File'
       desc 'Updates a BOL File'
       header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true

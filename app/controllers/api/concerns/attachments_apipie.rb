@@ -24,7 +24,7 @@ module Api
         end
       end
 
-      api :PUT, '/bol_files/:bol_file_id/attachments/:id', 'Updates an Attachment'
+      api :PATCH, '/bol_files/:bol_file_id/attachments/:id', 'Updates an Attachment'
       desc 'Updates an Attachment'
       header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true

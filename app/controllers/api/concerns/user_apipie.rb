@@ -54,7 +54,7 @@ module Api
       end
       def create; end
 
-      api :PUT, '/user', 'Update the details of logged in user'
+      api :PATCH, '/user', 'Update the details of logged in user'
       desc 'Update the details of logged in user(whose token is used for api endpoint authentication)'
       header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTU', required: true
       header 'Content-Type', 'application/json', required: true
