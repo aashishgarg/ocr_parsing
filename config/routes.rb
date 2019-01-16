@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   apipie
-  require 'sidekiq/web'
-  mount Sidekiq::Web => '/sidekiq'
+  require "sidekiq/web"
+  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+    ## ToDo change the username and password to rails credentials.
+    ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(username), ::Digest::SHA256.hexdigest('trantorinc')) &
+      ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest('trantorpwd'))
+  end
+  mount Sidekiq::Web, at: "/sidekiq"
 
   scope :api, defaults: { format: :json } do
     devise_for :users, controllers: { sessions: :sessions, registrations: :registrations },

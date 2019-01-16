@@ -60,6 +60,7 @@ gem 'cancancan', '~> 2.0' # For Authorization
 gem 'rolify' # For Roles implementation
 gem 'sidekiq', '~> 5.2' # Backgound jobs
 gem 'kaminari' # for pagination
+gem 'sidekiq-history', '~> 0.0.9' # For keeping Sidekiq history
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
