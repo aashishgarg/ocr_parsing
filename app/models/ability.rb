@@ -10,14 +10,14 @@ class Ability
       can :update, BolFile
       can :index, BolFile
       can :show, BolFile
-      can :index, DashboardController
+      can :index, Api::DashboardController
       can :update, Attachment
     elsif user.is_customer?
       can :read, User
       can :update, BolFile
       can :index, BolFile
       can :show, BolFile
-      can :index, DashboardController
+      can :index, Api::DashboardController
       can :update, Attachment
     end
   end

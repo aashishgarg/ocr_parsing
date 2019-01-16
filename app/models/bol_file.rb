@@ -37,7 +37,7 @@ class BolFile < ApplicationRecord
     attachments.collect(&:url)
   end
 
-  def self.get_filtered_data(params)
+  def self.search(params)
     order = params[:order].present? ? params[:order] : 'desc'
     if params[:filter_column].present? && params[:order_column].present?
       where("#{params['filter_column']} = ?", params[:filter_value]).order("#{params['order_column']} #{order}").page(params[:page])
@@ -52,6 +52,16 @@ class BolFile < ApplicationRecord
         page(params[:page])
       end
     end
+  end
+
+  def self.counts
+    all = BolFile.all
+    {
+        total: count,
+        file_verified: all.group_by(&:status)[:ocr_done]&.count || 0,
+        waiting_for_approval: all.group_by(&:status)[:qa_approved]&.count || 0,
+        file_approved: all.group_by(&:status)[:released]&.count || 0
+    }
   end
 
   private

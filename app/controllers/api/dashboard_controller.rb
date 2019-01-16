@@ -1,9 +1,10 @@
-class Api::DashboardController < ApplicationController
-  # Before Actions
-  authorize_resource :class => self
+module Api
+  class DashboardController < ApplicationController
+    # Before Actions
+    authorize_resource class: self
 
-  def index
-    @bol = BolFile.get_filtered_data(params)
-    render json: @bol
+    def index
+      render json: { data: BolFile.search(params), counts: BolFile.counts }
+    end
   end
 end
