@@ -12,6 +12,7 @@ module Api
         property :data_updated_at, DateTime
         property :ocr_parsed_data, Hash, desc: 'OCR data hash'
         property :processed_data, Hash, desc: 'Processed data of OCR'
+        property :status, Attachment.statuses.keys, desc: 'Status of attachment'
         property :created_at, DateTime
         property :updated_at, DateTime
         property :url, String

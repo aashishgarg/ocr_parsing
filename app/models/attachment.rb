@@ -76,7 +76,7 @@ class Attachment < ApplicationRecord
   end
 
   def self.key_status
-    User.current.is_customer? ? 'uat_approved' : 'qa_approved'
+    User.current.is_customer? || User.current.is_admin? ? 'uat_approved' : 'qa_approved'
   end
 
   def set_bol_status
