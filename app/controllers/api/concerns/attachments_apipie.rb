@@ -29,7 +29,9 @@ module Api
       header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true
       param :attachment, Hash, required: true do
-        param :key, String, required: true
+        param :ocr_data, Hash do
+          param :key, String, required: true
+        end
       end
       error code: 401, desc: 'Unauthorized'
       error code: 422, desc: 'Unprocessable Entity'
