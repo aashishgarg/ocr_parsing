@@ -55,6 +55,21 @@ class BolFile < ApplicationRecord
     attachments.collect(&:url)
   end
 
+  def self.get_filtered_data(params)
+    order = params[:order].present? ? params[:order] : 'desc'
+    if params[:filter_column].present? && params[:order_column].present?
+      where("#{params['filter_column']} = ?", params[:filter_value]).order("#{params['order_column']} #{order}").page(params[:page])
+    elsif params[:filter_column].blank? && params[:order_column].present?
+      order("#{params['order_column']} #{order}").page(params[:page])
+    else
+      if params[:order_column].present?
+        order("#{params['order_column']} #{order}").page(params[:page])
+      else
+        page(params[:page])
+      end
+    end
+  end
+
   private
 
   def queue_files

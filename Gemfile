@@ -59,6 +59,7 @@ gem 'state_machines-activerecord' # For adding states to BolFile
 gem 'cancancan', '~> 2.0' # For Authorization
 gem 'rolify' # For Roles implementation
 gem 'sidekiq', '~> 5.2' # Backgound jobs
+gem 'kaminari' # for pagination
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -66,6 +67,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.8'
   gem 'factory_bot_rails'
   gem 'ffaker'
+  gem 'pry'
 end
 
 group :development do
