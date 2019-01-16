@@ -5,11 +5,19 @@ module Api
       extend Apipie::DSL::Concern
 
       def_param_group :dashboard_params do
-        property :data, Hash do
+        property :data, Array do
           property :id, Integer, desc: 'Id of BOL File'
           property :name, String, desc: 'Name of BOL File'
           property :bol_type_id, Integer, desc: 'Name of BOL File'
           property :status, BolFile.statuses.keys, desc: 'Status of BOL File'
+          property :extracted_at, DateTime
+        end
+        property :counts, Hash do
+          property :total, Integer
+          property :file_verified, Integer
+          property :ocr_done, Integer
+          property :waiting_for_approval, Integer
+          property :file_approved, Integer
         end
       end
 

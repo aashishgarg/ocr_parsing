@@ -35,7 +35,7 @@ class Attachment < ApplicationRecord
   # State Machine
   aasm column: 'status', enum: true, whiny_transitions: false do
     state :uploaded, initial: true
-    state :ocr_pending, :ocr_done, :qa_approved, :qa_rejected
+    state :ocr_pending, :ocr_done, :qa_approved, :qa_rejected, :uat_rejected, :released
 
     event :sent_to_ocr do
       transitions from: :uploaded, to: :ocr_pending

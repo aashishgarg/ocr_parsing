@@ -1,5 +1,6 @@
 module Api
   class DashboardController < ApplicationController
+    include Api::Concerns::DashboardApipie
     # Before Actions
     authorize_resource class: self
 
