@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_16_102918) do
+ActiveRecord::Schema.define(version: 2019_01_16_124020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,10 +36,10 @@ ActiveRecord::Schema.define(version: 2019_01_16_102918) do
     t.integer "bol_type_id"
     t.string "name"
     t.integer "status", default: 0
-    t.datetime "status_updated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.datetime "extracted_at"
     t.index ["bol_type_id"], name: "index_bol_files_on_bol_type_id"
     t.index ["shipper_id"], name: "index_bol_files_on_shipper_id"
     t.index ["user_id"], name: "index_bol_files_on_user_id"
