@@ -25,17 +25,17 @@ class User < ApplicationRecord
 
   def generate_jwt
     JWT.encode(
-        {
-          id: id,
-          exp: 60.days.from_now.to_i
-        },
-        ENV['DEVISE_JWT_SECRET_KEY']
+      {
+        id: id,
+        exp: 60.days.from_now.to_i
+      },
+      ENV['DEVISE_JWT_SECRET_KEY']
     )
   end
 
   private
 
   def assign_default_role
-    add_role(:support) if roles.blank?
+    add_role(:customer) if roles.blank?
   end
 end
