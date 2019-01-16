@@ -24,8 +24,17 @@ class BolFile < ApplicationRecord
     filter(params[:filter_column], params[:filter_value]).ordering(params[:order_column], params[:order]).page(params[:page])
   end
 
-  def self.filter(name, value = nil)
-    name.present? ? where(name => value) : all
+  def self.filter(names, values = [])
+    names_array = names[0].split(',')
+    if names_array.present?
+      condition = ''
+      names_array.each_with_index do |name, index|
+        condition << " #{name} = '#{values[0].split(',')[index]}' and"
+      end
+      where(condition.chomp!('and'))
+    else
+      all
+    end
   end
 
   def self.ordering(name, value = nil)
