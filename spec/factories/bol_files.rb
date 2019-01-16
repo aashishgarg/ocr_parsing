@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :bol_file do
-    shipper_id { FactoryBot.create(:shipper).id }
-    bol_type_id { FactoryBot.create(:bol_type).id }
+    shipper_id 1
+    bol_type_id 1
     name { FFaker::Name.name }
     status { 'uploaded' }
     status_updated_by { FactoryBot.create(:user).id }
