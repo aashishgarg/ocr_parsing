@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2019-01-16T16:43:35.765Z",
+	"__export_date": "2019-01-16T16:46:02.590Z",
 	"__export_source": "insomnia.desktop.app:v5.16.4",
 	"resources": [
 		{
@@ -406,7 +406,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"user\": {\n\t\t\"email\": \"email11@email.com\",\n\t\t\"password\": \"Welcome@123\"\n\t}\n}"
+				"text": "{\n\t\"user\": {\n\t\t\"email\": \"email12@email.com\",\n\t\t\"password\": \"Welcome@123\"\n\t}\n}"
 			},
 			"created": 1547523996719,
 			"description": "",
@@ -420,7 +420,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1547523996720,
 			"method": "POST",
-			"modified": 1547641523343,
+			"modified": 1547657067339,
 			"name": "CREATE User",
 			"parameters": [],
 			"parentId": "fld_955b4107f61947068905e9515dfedb15",
@@ -514,7 +514,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1547619530533,
 			"method": "GET",
-			"modified": 1547641533254,
+			"modified": 1547657138859,
 			"name": "DASHBOARD",
 			"parameters": [],
 			"parentId": "fld_c95cbfeb5378433481b497cec2d64bb5",
@@ -523,7 +523,7 @@
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "{{ base_url  }}/dashboard?order=asc&order_column=&filter_column=name&filter_value=sdfsd",
+			"url": "{{ base_url  }}/dashboard?order=asc&order_column=&filter_column[]=name&filter_value[]=sdfsd",
 			"_type": "request"
 		}
 	]
