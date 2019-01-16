@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2019-01-16T16:46:02.590Z",
+	"__export_date": "2019-01-16T16:50:20.887Z",
 	"__export_source": "insomnia.desktop.app:v5.16.4",
 	"resources": [
 		{
@@ -74,28 +74,6 @@
 			"metaSortKey": -1547524422743,
 			"modified": 1547524422743,
 			"name": "Registration",
-			"parentId": "wrk_6b5054400899430b8aea7909f77408c7",
-			"_type": "request_group"
-		},
-		{
-			"_id": "fld_f5d50be295cf44bc81eb140f252339c4",
-			"created": 1547608060133,
-			"description": "",
-			"environment": {},
-			"metaSortKey": -1547523946386,
-			"modified": 1547608069468,
-			"name": "Attachments",
-			"parentId": "wrk_6b5054400899430b8aea7909f77408c7",
-			"_type": "request_group"
-		},
-		{
-			"_id": "fld_5481503264464367ac5b5a160ea384b2",
-			"created": 1547616828972,
-			"description": "",
-			"environment": {},
-			"metaSortKey": -1547523946386,
-			"modified": 1547622169494,
-			"name": "Attachments",
 			"parentId": "wrk_6b5054400899430b8aea7909f77408c7",
 			"_type": "request_group"
 		},
@@ -430,74 +408,6 @@
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
 			"url": "{{ base_url  }}/users",
-			"_type": "request"
-		},
-		{
-			"_id": "req_4ba1a4b3c57044839d5095bde9a3115d",
-			"authentication": {
-				"token": "{% response 'body', 'req_7bb4270f408540978fdf6e82eb0c49af', '$.user.token' %}",
-				"type": "bearer"
-			},
-			"body": {
-				"mimeType": "application/json",
-				"text": "{\n\t\"attachment\": {\n\t\t\"aa\": \"Hello1\"\n\t}\n}"
-			},
-			"created": 1547608085971,
-			"description": "",
-			"headers": [
-				{
-					"id": "pair_6c2bc7d7842941149925b076f76b51fa",
-					"name": "Content-Type",
-					"value": "application/json"
-				}
-			],
-			"isPrivate": false,
-			"metaSortKey": -1547608085971,
-			"method": "PUT",
-			"modified": 1547611315046,
-			"name": "UPDATE",
-			"parameters": [],
-			"parentId": "fld_f5d50be295cf44bc81eb140f252339c4",
-			"settingDisableRenderRequestBody": false,
-			"settingEncodeUrl": true,
-			"settingRebuildPath": true,
-			"settingSendCookies": true,
-			"settingStoreCookies": true,
-			"url": "{{ base_url  }}/bol_files/{% response 'body', 'req_6cea22cd456f4f6b9c4d604b56f4749c', '$.bol_file.id' %}/attachments/{% response 'body', 'req_6cea22cd456f4f6b9c4d604b56f4749c', '$.bol_file.attachments[0].id' %}",
-			"_type": "request"
-		},
-		{
-			"_id": "req_3ceab8d4259a4d2ea412247c958246b0",
-			"authentication": {
-				"token": "{% response 'body', 'req_7bb4270f408540978fdf6e82eb0c49af', '$.user.token' %}",
-				"type": "bearer"
-			},
-			"body": {
-				"mimeType": "application/json",
-				"text": "{\n\t\"attachment\": {\n\t\t\"ocr_data\": {\n\t\t\t\"shipperName\": \"Hello2\"\n\t\t}\n\t}\n}"
-			},
-			"created": 1547616839608,
-			"description": "",
-			"headers": [
-				{
-					"id": "pair_234d27007c794015b2c35d3c9a2fe946",
-					"name": "Content-Type",
-					"value": "application/json"
-				}
-			],
-			"isPrivate": false,
-			"metaSortKey": -1547616839608,
-			"method": "PUT",
-			"modified": 1547622668781,
-			"name": "UPDATE",
-			"parameters": [],
-			"parentId": "fld_5481503264464367ac5b5a160ea384b2",
-			"settingDisableRenderRequestBody": false,
-			"settingEncodeUrl": true,
-			"settingRebuildPath": true,
-			"settingSendCookies": true,
-			"settingStoreCookies": true,
-			"url": "{{ base_url  }}/bol_files/{% response 'body', 'req_6cea22cd456f4f6b9c4d604b56f4749c', '$.bol_file.id' %}/attachments/{% response 'body', 'req_6cea22cd456f4f6b9c4d604b56f4749c', '$.bol_file.attachments[0].id' %}",
 			"_type": "request"
 		},
 		{
