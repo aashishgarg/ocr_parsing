@@ -16,7 +16,7 @@ module Api
                   attach.serial_no = attach.parsed_serial_no
                 end.save
               rescue => e
-                @errors[e.message.to_s] = e.message
+                @errors[e.class.to_s] = e.message
               end
             end
           end
