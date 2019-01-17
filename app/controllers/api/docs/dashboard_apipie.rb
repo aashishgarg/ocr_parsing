@@ -1,5 +1,5 @@
 module Api
-  module Concerns
+  module Docs
     module DashboardApipie
       extend ActiveSupport::Concern
       extend Apipie::DSL::Concern
@@ -25,10 +25,11 @@ module Api
       description 'Lists all dashboard data'
       header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true
-      param :filter_column, %w[name status]
-      param :filter_value, Array
-      param :order_column, %w[name status]
-      param :order, %w[asc desc]
+      param :filter_column, Array, desc: 'List of columns for data filtering'
+      param :filter_value, Array, desc: 'Array of values in the same sequence as filter_columns'
+      param :order_column, String, desc: 'Column for ordering of data'
+      param :order, %w[asc desc], desc: 'Ordering rule'
+      param :page, Integer, desc: 'Page number for records'
       error code: 401, desc: 'Unauthorized'
       formats ['json']
       returns array_of: :dashboard_params, code: 200, desc: 'Data for dashboard'

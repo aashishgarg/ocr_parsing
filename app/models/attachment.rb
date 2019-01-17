@@ -70,6 +70,18 @@ class Attachment < ApplicationRecord
     (User.current.is_customer? || User.current.is_admin?) ? 'uat_approved' : 'qa_approved'
   end
 
+  def parsed_file_name
+    'Any file name'
+  end
+
+  def parsed_serial_no
+    1
+  end
+
+  def parent
+    BolFile.find_by(name: parsed_file_name) || BolFile.create(name: parsed_file_name)
+  end
+
   private
 
   def set_bol_status

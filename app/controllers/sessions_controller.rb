@@ -1,5 +1,5 @@
 class SessionsController < Devise::SessionsController
-  include Api::Concerns::SessionsApipie
+  include Api::Docs::SessionsApipie
   skip_before_action :set_paper_trail_whodunnit, only: :create
   skip_authorization_check only: %i[create]
 

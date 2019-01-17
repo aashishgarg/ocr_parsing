@@ -1,10 +1,9 @@
 class Api::UsersController < ApplicationController
-  include Api::Concerns::UserApipie
+  include Api::Docs::UserApipie
   # before_action :authenticate_user!
   authorize_resource
 
-   def show
-   end
+  def show; end
 
   def update
     if current_user.update_attributes(user_params)
