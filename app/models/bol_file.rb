@@ -14,8 +14,6 @@ class BolFile < ApplicationRecord
   validates :status, presence: true
   # TODO: Add file size validation
 
-  after_create_commit :queue_files, if: proc { attachments.exists? }
-
   def attachment_urls
     attachments.collect(&:url)
   end
@@ -51,11 +49,5 @@ class BolFile < ApplicationRecord
       waiting_for_approval: status_hash[:qa_approved]&.count || 0,
       file_approved: status_hash[:released]&.count || 0
     }
-  end
-
-  private
-
-  def queue_files
-    ProcessFilesJob.perform_later(self)
   end
 end
