@@ -2,12 +2,8 @@ module S3
   class ProcessFiles < Base
     def initialize(file)
       @file = file
-      @key = file.path.sub('/', '')
-    end
-
-    def process_s3_request
-      file_urls = bol_file.attachment_urls
-      @urls.each {|url| download_s3_file(url)}
+      @key = file.data.path.sub('/', '')
+      @key = file.data.path(:processed).sub('/', '') unless file.data_content_type.eql?('image/png')
     end
 
     def download_s3_file

@@ -38,8 +38,8 @@ module Pittohio
           secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
           s3_region: "us-east-1"
         },
-        bucket: ENV['AWS_BUCKET'],
-        s3_permissions: :private
+        bucket: ENV['AWS_BUCKET']
+        # ,s3_permissions: :private
       }
     end
   end

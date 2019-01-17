@@ -11,16 +11,7 @@ module Ocr
       @bol_file.attachments.each do |attachment|
         @current_attachment = attachment
         @local_file = S3::ProcessFiles.new(attachment).download_s3_file.body.path
-        convert_file
-      end
-    end
-
-    def convert_file
-      new_file_path = "#{File.dirname(@local_file)}/#{File.basename(@local_file, File.extname(@local_file))}.#{BolFile::BOL_EXT}"
-      unless File.extname(@local_file) == BolFile::BOL_EXT
-        if system("convert #{@local_file} #{new_file_path}")
-          send_to_ocr(new_file_path) if File.exist?(new_file_path)
-        end
+        send_to_ocr(@local_file)
       end
     end
 
