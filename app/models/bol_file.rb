@@ -21,17 +21,21 @@ class BolFile < ApplicationRecord
   end
 
   def self.search(params)
-    filter(params[:filter_column], params[:filter_value]).ordering(params[:order_column], params[:order]).page(params[:page])
+    filter(params[:filter_column], params[:filter_value]).ordering(params[:order_column], params[:order]).page(params[:page]).per(params[:per_page])
   end
 
   def self.filter(names, values = [])
+    return all if names.blank?
     names_array = (names.is_a?(Array) ? names[0]&.split(',') : false)
-    if names_array.present?
+    if names_array.present? && values.present?
       condition = ''
+      value_array = []
+      values = values[0].split(',')
       names_array.each_with_index do |name, index|
-        condition << " #{name} = '#{values[0].split(',')[index]}' and"
+        value_array << (name == 'status' ? statuses[values[index]] : values[index])
+        condition << " #{name} = ? and"
       end
-      where(condition.chomp!('and'))
+      (names_array.size == values.size) ? where(condition.chomp!('and'), *value_array) : all
     else
       all
     end

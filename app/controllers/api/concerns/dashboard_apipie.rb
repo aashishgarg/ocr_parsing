@@ -29,6 +29,8 @@ module Api
       param :filter_value, Array
       param :order_column, %w[name status]
       param :order, %w[asc desc]
+      param :page, Integer
+      param :per_page, Integer
       error code: 401, desc: 'Unauthorized'
       formats ['json']
       returns array_of: :dashboard_params, code: 200, desc: 'Data for dashboard'
