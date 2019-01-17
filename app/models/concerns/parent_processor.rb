@@ -4,7 +4,7 @@ module ParentProcessor
   included do
 
     # Scopes: Applied for providing the Attachments in an ordered manner based on serial_no extracted from file
-    default_scope -> { order(serial_no: :asc) }
+    scope :sequenced, -> { order(serial_no: :asc, created_at: :desc) }
 
     # Evaluates file name. Ex - For file name - (image1.png.001), parsed_file_name is (image1.png)
     def parsed_file_name
@@ -22,8 +22,8 @@ module ParentProcessor
     end
 
     # Fetches existing parent or creates new one
-    def parent
-      BolFile.find_by(parent_recognizing_condition) || User.current.bol_files.create(parent_recognizing_condition)
+    def parent(user)
+      BolFile.find_by(parent_recognizing_condition) || user.bol_files.create(parent_recognizing_condition)
     end
 
     # Condition to recognize the parent of file
