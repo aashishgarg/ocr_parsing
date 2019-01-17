@@ -7,8 +7,8 @@ module Api
         def create
           @bol_files = []
           @errors = {}
-          if attachments_param[:files].present?
-            attachments_param[:files].each do |key, attachment_params|
+          if bol_file_params[:attachments_attributes].present?
+            bol_file_params[:attachments_attributes].each do |key, attachment_params|
               begin
                 attachment = Attachment.new(attachment_params)
                 attachment.tap do |attach|
@@ -22,12 +22,6 @@ module Api
           end
           @bol_files.uniq!
           render 'index'
-        end
-
-        private
-
-        def attachments_param
-          params.require(:attachments).permit(files: [:data])
         end
       end
     end

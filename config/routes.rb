@@ -18,7 +18,6 @@ Rails.application.routes.draw do
     resources :bol_files do
       resources :attachments, only: %i[update]
     end
-    post 'attachments', to: 'bol_files#create'
     resources :dashboard, only: [:index]
   end
 
