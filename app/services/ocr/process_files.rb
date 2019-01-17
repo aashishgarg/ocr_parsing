@@ -6,11 +6,13 @@ module Ocr
                   :response, :processed_data
 
     # Callbacks
+    before_process_s3_file :download_s3_object
     after_process_s3_file :push_to_ocr
     before_push_to_ocr :set_request
     before_push_to_ocr :set_status
     after_push_to_ocr :set_status
     after_push_to_ocr :process_ocr_data
+    after_push_to_ocr :clean_local_s3_object
 
     def initialize(attachment)
       @attachment = attachment
@@ -21,11 +23,12 @@ module Ocr
       @request = Net::HTTP::Post.new(@uri.request_uri, 'Content-Type': 'application/json')
       @response = nil
       @processed_data = nil
+      @s3_file_processor = S3::ProcessFiles.new(@attachment)
     end
 
     def process_s3_file
       run_callbacks :process_s3_file do
-        @local_file = S3::ProcessFiles.new(@attachment).download_s3_file.body.path
+        @local_file = @s3_file_processor.file_path
       end
     end
 
@@ -36,6 +39,10 @@ module Ocr
     end
 
     private
+
+    def download_s3_object
+      @s3_file_processor.download_s3_file
+    end
 
     def set_request
       @request.body = { data: Base64.encode64(File.read(@local_file)).delete('\n') }.to_json
@@ -52,6 +59,10 @@ module Ocr
     def process_ocr_data
       @processed_data = Ocr::Parser.new(JSON.parse(@response.body)['data'], @response_required_fields).add_status_keys.to_json
       @attachment.update(ocr_parsed_data: @response.body, processed_data: @processed_data)
+    end
+
+    def clean_local_s3_object
+      @s3_file_processor.clean_local_file if @s3_file_processor.file_path
     end
   end
 end

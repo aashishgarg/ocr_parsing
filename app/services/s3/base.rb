@@ -18,7 +18,7 @@ module S3
 
     def download(path, key)
       File.open(path + '/' + File.basename(key), 'wb') do |file|
-        client.get_object({bucket: ENV['AWS_BUCKET'], key: key}, target: file)
+        client.get_object({ bucket: ENV['AWS_BUCKET'], key: key }, target: file)
       end
     end
   end
