@@ -1,4 +1,7 @@
 class Attachment < ApplicationRecord
+  # Attribute Accessors
+  attr_accessor :ocr_data, :parsed_data
+
   # Modules Inclusion
   include AASM
   include Statuses
@@ -97,6 +100,6 @@ class Attachment < ApplicationRecord
   end
 
   def queue_file
-    ProcessFilesJob.perform_later(attachable)
+    ProcessFilesJob.perform_later(self)
   end
 end

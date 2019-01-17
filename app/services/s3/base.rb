@@ -4,7 +4,8 @@ module S3
       Aws::S3::Resource.new(
         region: 'us-east-1',
         access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-        secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'])
+        secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+      )
     end
 
     def client
@@ -12,7 +13,7 @@ module S3
     end
 
     def objects
-      resource.bucket("#{ENV['AWS_BUCKET']}").objects
+      resource.bucket(ENV['AWS_BUCKET'].to_s).objects
     end
 
     def download(path, key)
