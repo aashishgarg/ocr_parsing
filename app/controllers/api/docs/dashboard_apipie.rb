@@ -25,6 +25,13 @@ module Api
             param :user_id, Integer, desc: 'Status of BOL File'
           end
         end
+        param :counts, Hash do
+          param :total, Integer
+          param :file_verified, Integer
+          param :ocr_done, Integer
+          param :waiting_for_approval, Integer
+          param :file_approved, Integer
+        end
       end
       def index; end
     end
