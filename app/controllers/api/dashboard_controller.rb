@@ -5,7 +5,7 @@ module Api
     authorize_resource class: self
 
     def index
-      render json: { data: BolFile.search(params), counts: BolFile.counts }
+      render json: { data: BolFile.search(params), counts: BolFile.counts(params) }
     end
   end
 end

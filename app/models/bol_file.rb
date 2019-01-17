@@ -19,17 +19,21 @@ class BolFile < ApplicationRecord
   end
 
   def self.search(params)
-    filter(params[:filter_column], params[:filter_value]).ordering(params[:order_column], params[:order]).page(params[:page])
+    filter(params[:filter_column], params[:filter_value]).ordering(params[:order_column], params[:order]).page(params[:page]).per(params[:per_page])
   end
 
   def self.filter(names, values = [])
+    return all if names.blank?
     names_array = (names.is_a?(Array) ? names[0]&.split(',') : false)
-    if names_array.present?
+    if names_array.present? && values.present?
       condition = ''
+      value_array = []
+      values = values[0].split(',')
       names_array.each_with_index do |name, index|
-        condition << " #{name} = '#{values[0].split(',')[index]}' and"
+        value_array << (name == 'status' ? statuses[values[index]] : values[index])
+        condition << " #{name} = ? and"
       end
-      where(condition.chomp!('and'))
+      (names_array.size == values.size) ? where(condition.chomp!('and'), *value_array) : all
     else
       all
     end
@@ -39,11 +43,12 @@ class BolFile < ApplicationRecord
     name.present? ? order(name => value) : order(created_at: :desc)
   end
 
-  def self.counts
+  def self.counts(params)
     all = BolFile.all
     status_hash = all.group_by(&:status).with_indifferent_access
     {
       total: count,
+      total_pages: BolFile.search(params).total_pages,
       file_verified: status_hash[:ocr_done]&.count || 0,
       ocr_done: status_hash[:ocr_done]&.count || 0,
       waiting_for_approval: status_hash[:qa_approved]&.count || 0,

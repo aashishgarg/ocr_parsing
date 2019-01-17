@@ -13,6 +13,7 @@ module Api
       param :order_column, String, desc: 'Column for ordering of data'
       param :order, %w[asc desc], desc: 'Ordering rule'
       param :page, Integer, desc: 'Page number for records'
+      param :per_page, Integer, desc: 'Records required per page'
       error code: 401, desc: 'Unauthorized'
       formats ['json']
       returns code: 200, desc: 'Data for dashboard' do
@@ -27,6 +28,7 @@ module Api
         end
         param :counts, Hash do
           param :total, Integer
+          param :total_pages, Integer
           param :file_verified, Integer
           param :ocr_done, Integer
           param :waiting_for_approval, Integer
