@@ -18,6 +18,8 @@ module Api
       render json: { errors: @bol_file.errors }, status: :unprocessable_entity unless @bol_file.save
     end
 
+    include Api::Concerns::BolFileFromAttachment
+
     def update
       if @bol_file.update(bol_file_params)
         render 'create'
@@ -25,8 +27,6 @@ module Api
         render json: { errors: @bol_file.errors }, status: :unprocessable_entity
       end
     end
-
-    include Api::Concerns::BolFileFromAttachment
 
     def destroy
       @bol_file.destroy

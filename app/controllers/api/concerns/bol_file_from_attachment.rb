@@ -3,32 +3,24 @@ module Api
     module BolFileFromAttachment
       extend ActiveSupport::Concern
 
-      def self.included(base_class)
-        base_class.class_eval do
-          # Before Actions
-          before_action :set_bol_file, only: %i[update]
-
-          def create
+      included do
+        def create
+          @bol_files = []
+          attachments_param[:file].each do |key, attachment_params|
             attachment = Attachment.new(attachment_params)
-            attachment.tap do |attachment|
-              @bol_file = attachment.attachable = attachment.parent
-              attachment.serial_no = attachment.parsed_serial_no
-            end
-            attachment.save
+            attachment.tap do |attach|
+              @bol_files << attach.attachable = attach.parent
+              attach.serial_no = attach.parsed_serial_no
+            end.save
           end
+          @bol_files.uniq!
+          render 'index'
+        end
 
-          def update
+        private
 
-          end
-
-          private
-
-          def set_bol_file
-          end
-
-          def attachment_params
-            params.require(:attachment).permit(:data)
-          end
+        def attachments_param
+          params.require(:attachments).permit(file: [:data])
         end
       end
     end
