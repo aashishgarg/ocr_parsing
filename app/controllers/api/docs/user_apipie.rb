@@ -1,5 +1,5 @@
 module Api
-  module Concerns
+  module Docs
     module UserApipie
       extend ActiveSupport::Concern
       extend Apipie::DSL::Concern

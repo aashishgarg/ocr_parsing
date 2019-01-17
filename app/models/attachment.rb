@@ -2,6 +2,7 @@ class Attachment < ApplicationRecord
   # Modules Inclusion
   include AASM
   include Statuses
+  include ParentProcessor
 
   # Constants
   PAPERCLIP_IMAGE_CONTENT_TYPE = [/\Aimage\/.*\z/, 'application/json'].freeze
@@ -30,6 +31,7 @@ class Attachment < ApplicationRecord
   validates_attachment :data, content_type: { content_type: PAPERCLIP_IMAGE_CONTENT_TYPE }
 
   # Callbacks
+  after_create_commit :queue_file
   after_update :set_bol_status, if: proc { previous_changes.has_key?(:status) }
 
   # State Machine
@@ -80,5 +82,9 @@ class Attachment < ApplicationRecord
 
   def update_bol_extracted
     attachable.update(extracted_at: updated_at) if attachable.attachments.pluck(:status).uniq == %w[ocr_done]
+  end
+
+  def queue_file
+    ProcessFilesJob.perform_later(attachable)
   end
 end

@@ -3,5 +3,7 @@ json.bol_files do |json|
     json.partial! 'bol_file', bol_file: bol_file
   end
 end
+json.merge!({ errors: @errors })  if @errors&.present?
+
 
 
