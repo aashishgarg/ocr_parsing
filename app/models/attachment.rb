@@ -9,6 +9,7 @@ class Attachment < ApplicationRecord
 
   # Constants
   PAPERCLIP_IMAGE_CONTENT_TYPE = [/\Aimage\/.*\z/, 'application/json'].freeze
+  MIME_TYPE_FOR_OCR = 'image/png'.freeze
   REQUIRED_FIELDS = [
     'shipperName',
     'shipper Address',
@@ -80,10 +81,10 @@ class Attachment < ApplicationRecord
   end
 
   def process_image_type
-    if data_content_type.eql?('image/png')
+    if data_content_type.eql?(MIME_TYPE_FOR_OCR)
       { original: {} }
     else
-      { processed: { format: 'png' } }
+      { processed: { format: Rack::Mime::MIME_TYPES.invert[MIME_TYPE_FOR_OCR].delete('.') } }
     end
   end
 

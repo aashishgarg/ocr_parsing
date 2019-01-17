@@ -4,11 +4,11 @@ module QueryBuilder
   module ClassMethods
     # Prepare the (where) part of the query
     def filter(names = [], values = [])
+      return all if names.nil? || names.empty?
       raise FilterColumnOrValuesNotArray if !names.is_a?(Array) || !values.is_a?(Array)
       raise FilterColumnAndValuesNotSame unless names.separated.size == values.separated.size
       raise ColumnNotValid unless valid_columns?(names.separated)
 
-      all if names.empty?
       filter_string = ''
       names.separated.zip(values.separated).each { |key_value| filter_string << " #{key_value[0]} = '#{key_value[1]}' and" }
       where(filter_string.chomp!('and'))
@@ -16,7 +16,7 @@ module QueryBuilder
 
     # Prepare the (order) part of the query
     def ordering(name, value)
-      raise ColumnNotValid unless valid_columns?([name])
+      raise ColumnNotValid if !name.nil? && !valid_columns?([name])
 
       order(name.present? ? { name => (value || 'asc') } : { created_at: :desc })
     end
