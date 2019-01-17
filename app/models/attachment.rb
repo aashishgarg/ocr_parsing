@@ -24,7 +24,11 @@ class Attachment < ApplicationRecord
 
   # Associations
   belongs_to :attachable, polymorphic: true
-  has_attached_file :data
+has_attached_file :data,
+                  styles: lambda { |attachment|
+                    attachment.instance.process_image_type
+                  },
+                  processors: [:ocr]
 
   # Validations
   validates_attachment_presence :data
@@ -70,6 +74,14 @@ class Attachment < ApplicationRecord
 
   def self.key_status
     (User.current.is_customer? || User.current.is_admin?) ? 'uat_approved' : 'qa_approved'
+  end
+
+  def process_image_type
+    if data_content_type.eql?('image/png')
+      { original: {} }
+    else
+      { processed: { format: 'png' } }
+    end
   end
 
   private
