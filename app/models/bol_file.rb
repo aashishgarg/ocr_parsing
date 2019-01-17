@@ -2,6 +2,7 @@ class BolFile < ApplicationRecord
   # Modules Inclusions
   include Attachable
   include Statuses
+  include QueryBuilder
 
   # Constants
   BOL_EXT = 'png'.freeze
