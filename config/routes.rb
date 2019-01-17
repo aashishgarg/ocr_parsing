@@ -18,10 +18,8 @@ Rails.application.routes.draw do
     resources :bol_files do
       resources :attachments, only: %i[update]
     end
-    resources :dashboard, only: [:index]
-
     post 'attachments', to: 'bol_files#create'
-    patch 'attachments/:id', to: 'bol_files#update'
+    resources :dashboard, only: [:index]
   end
 
   root to: redirect('/apidocs')
