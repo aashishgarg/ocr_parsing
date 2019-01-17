@@ -6,7 +6,6 @@ module Ocr
                   :response, :processed_data
 
     # Callbacks
-    before_process_s3_file :download_s3_object
     after_process_s3_file :push_to_ocr
     before_push_to_ocr :set_request
     before_push_to_ocr :set_status
@@ -26,12 +25,15 @@ module Ocr
       @s3_file_processor = S3::ProcessFiles.new(@attachment)
     end
 
+    # Downloads s3 object to local directory and extracts its local path
     def process_s3_file
       run_callbacks :process_s3_file do
+        @s3_file_processor.download_s3_file
         @local_file = @s3_file_processor.file_path
       end
     end
 
+    # Places request to OCR Service
     def push_to_ocr
       run_callbacks :push_to_ocr do
         @response = @http.request(request)
@@ -40,14 +42,12 @@ module Ocr
 
     private
 
-    def download_s3_object
-      @s3_file_processor.download_s3_file
-    end
-
+    # Sets base64 of the image
     def set_request
       @request.body = { data: Base64.encode64(File.read(@local_file)).delete('\n') }.to_json
     end
 
+    # Set the status of attachment file
     def set_status
       if @response.nil?
         @attachment.sent_to_ocr!
@@ -56,11 +56,13 @@ module Ocr
       end
     end
 
+    # Updates the direct response in (ocr_parsed_data) and processed data in (processed_data) of Attachment
     def process_ocr_data
       @processed_data = Ocr::Parser.new(JSON.parse(@response.body)['data'], @response_required_fields).add_status_keys.to_json
       @attachment.update(ocr_parsed_data: @response.body, processed_data: @processed_data)
     end
 
+    # Deletes the local downloaded attachment file
     def clean_local_s3_object
       @s3_file_processor.clean_local_file if @s3_file_processor.file_path
     end
