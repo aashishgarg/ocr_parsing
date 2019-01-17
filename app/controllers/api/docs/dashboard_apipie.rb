@@ -28,6 +28,7 @@ module Api
         end
         param :counts, Hash do
           param :total, Integer
+          param :total_pages, Integer
           param :file_verified, Integer
           param :ocr_done, Integer
           param :waiting_for_approval, Integer

@@ -43,11 +43,12 @@ class BolFile < ApplicationRecord
     name.present? ? order(name => value) : order(created_at: :desc)
   end
 
-  def self.counts
+  def self.counts(params)
     all = BolFile.all
     status_hash = all.group_by(&:status).with_indifferent_access
     {
       total: count,
+      total_pages: BolFile.search(params).total_pages,
       file_verified: status_hash[:ocr_done]&.count || 0,
       ocr_done: status_hash[:ocr_done]&.count || 0,
       waiting_for_approval: status_hash[:qa_approved]&.count || 0,
