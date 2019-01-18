@@ -78,16 +78,19 @@ module Api
       end
       def show; end
 
-      api :POST, '/attachments', 'Creates a new BOL File'
+      api :POST, '/bol_files', 'Creates a new BOL File'
       desc 'Creates a new BOL File with its attachment file'
       header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true
-      param :attachments, Array, required: true do
-        param :file, Array, required: true do
+      param :bol_file, Hash, required: true do
+        param :attachments_attributes, Hash, required: true do
           param :number1, Hash, required: true do
             param :data, File, required: true
           end
           param :number2, Hash, required: true do
+            param :data, File, required: true
+          end
+          param :number3, Hash, required: true do
             param :data, File, required: true
           end
         end
