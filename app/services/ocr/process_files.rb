@@ -52,7 +52,7 @@ module Ocr
       if @response.nil?
         @attachment.sent_to_ocr!
       elsif @response.code.eql? '200'
-        @attachment.ocr_done!
+        @attachment.parsed!
       end
     end
 
