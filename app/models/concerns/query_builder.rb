@@ -17,6 +17,7 @@ module QueryBuilder
     # Prepare the (order) part of the query
     def ordering(name, value)
       raise ColumnNotValid if !name.nil? && !valid_columns?([name])
+      return order(name => BolFile.statuses[value]) if name == 'status'
 
       order(name.present? ? { name => (value || 'asc') } : { created_at: :desc })
     end
