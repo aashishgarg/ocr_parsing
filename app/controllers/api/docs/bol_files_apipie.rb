@@ -22,11 +22,13 @@ module Api
             param :id, Integer, desc: 'Id of BOL File'
             param :name, String, desc: 'Name of BOL File'
             param :status, BolFile.statuses.keys, desc: 'Status of BOL File'
-            param :extracted_at, DateTime, desc: 'Status of BOL File'
+            param :extracted_at, DateTime, desc: 'Last attachment ocr parsing time'
             param :user_id, Integer, desc: 'Status of BOL File'
             param :attachments, Array do
               param :index, Hash do
                 param :id, Integer
+                param :status, BolFile.statuses.keys, desc: 'Status of Attachment'
+                param :serial_no, Integer, desc: 'Serial number of the attachment'
                 param :data_file_name, String
                 param :data_content_type, String
                 param :data_file_size, Integer
@@ -62,6 +64,8 @@ module Api
           param :attachments, Array do
             param :index, Hash do
               param :id, Integer
+              param :status, Attachment.statuses.keys, desc: 'Status of Attachment'
+              param :serial_no, Integer, desc: 'Serial ni of attachment'
               param :data_file_name, String
               param :data_content_type, String
               param :data_file_size, Integer
@@ -104,11 +108,13 @@ module Api
             param :id, Integer, desc: 'Id of BOL File'
             param :name, String, desc: 'Name of BOL File'
             param :status, BolFile.statuses.keys, desc: 'Status of BOL File'
-            param :extracted_at, DateTime, desc: 'Status of BOL File'
+            param :extracted_at, DateTime, desc: 'Last attachment ocr parsing time'
             param :user_id, Integer, desc: 'Status of BOL File'
             param :attachments, Array do
               param :index, Hash do
                 param :id, Integer
+                param :status, BolFile.statuses.keys, desc: 'Status of Attachment'
+                param :serial_no, Integer, desc: 'Serial number of the attachment'
                 param :data_file_name, String
                 param :data_content_type, String
                 param :data_file_size, Integer
@@ -165,6 +171,8 @@ module Api
           param :attachments, Array do
             param :index, Hash do
               param :id, Integer
+              param :status, Attachment.statuses.keys, desc: 'Status of Attachment'
+              param :serial_no, Integer, desc: 'Serial ni of attachment'
               param :data_file_name, String
               param :data_content_type, String
               param :data_file_size, Integer
