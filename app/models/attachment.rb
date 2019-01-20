@@ -1,11 +1,14 @@
 class Attachment < ApplicationRecord
+  # Attribute Accessors
+  attr_accessor :ocr_data, :parsed_data
+
   # Modules Inclusion
-  include AASM
-  include Statuses
+  include StateMachine
   include ParentProcessor
 
   # Constants
   PAPERCLIP_IMAGE_CONTENT_TYPE = [/\Aimage\/.*\z/, 'application/json'].freeze
+  MIME_TYPE_FOR_OCR = 'image/png'.freeze
   REQUIRED_FIELDS = [
     'shipperName',
     'shipper Address',
@@ -24,11 +27,11 @@ class Attachment < ApplicationRecord
 
   # Associations
   belongs_to :attachable, polymorphic: true
-has_attached_file :data,
-                  styles: lambda { |attachment|
-                    attachment.instance.process_image_type
-                  },
-                  processors: [:ocr]
+  has_attached_file :data,
+                    styles: lambda { |attachment|
+                      attachment.instance.process_image_type
+                    },
+                    processors: [:ocr]
 
   # Validations
   validates_attachment_presence :data
@@ -37,36 +40,6 @@ has_attached_file :data,
   # Callbacks
   after_create_commit :queue_file
   after_update :set_bol_status, if: proc { previous_changes.has_key?(:status) }
-
-  # State Machine
-  aasm column: 'status', enum: true, whiny_transitions: false do
-    state :uploaded, initial: true
-    state :ocr_pending, :ocr_done, :qa_approved, :qa_rejected, :uat_rejected, :released
-
-    event :sent_to_ocr do
-      transitions from: :uploaded, to: :ocr_pending
-    end
-
-    event :parsed, after: :update_bol_extracted do
-      transitions from: :ocr_pending, to: :ocr_done
-    end
-
-    event :qa_approve do
-      transitions from: %i[ocr_done qa_rejected], to: :qa_approved
-    end
-
-    event :qa_reject do
-      transitions from: %i[ocr_done qa_approved], to: :qa_rejected
-    end
-
-    event :uat_reject do
-      transitions from: :qa_approved, to: :uat_rejected
-    end
-
-    event :release do
-      transitions from: :qa_approved, to: :released
-    end
-  end
 
   def path
     data.path
@@ -77,10 +50,10 @@ has_attached_file :data,
   end
 
   def process_image_type
-    if data_content_type.eql?('image/png')
+    if data_content_type.eql?(MIME_TYPE_FOR_OCR)
       { original: {} }
     else
-      { processed: { format: 'png' } }
+      { processed: { format: Rack::Mime::MIME_TYPES.invert[MIME_TYPE_FOR_OCR].delete('.') } }
     end
   end
 
@@ -97,6 +70,6 @@ has_attached_file :data,
   end
 
   def queue_file
-    ProcessFilesJob.perform_later(attachable)
+    ProcessFilesJob.perform_later(self)
   end
 end

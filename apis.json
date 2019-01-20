@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2019-01-17T09:26:04.373Z",
+	"__export_date": "2019-01-18T05:38:44.931Z",
 	"__export_source": "insomnia.desktop.app:v6.0.2",
 	"resources": [
 		{
@@ -90,67 +90,6 @@
 			"_type": "request_group"
 		},
 		{
-			"_id": "req_6cea22cd456f4f6b9c4d604b56f4749c",
-			"authentication": {
-				"prefix": "",
-				"token": "{% response 'body', 'req_7bb4270f408540978fdf6e82eb0c49af', '$.user.token' %}",
-				"type": "bearer"
-			},
-			"body": {
-				"mimeType": "multipart/form-data",
-				"params": [
-					{
-						"id": "pair_9aabd62f0a564a5ebd706b992c227cab",
-						"name": "bol_file[name]",
-						"value": "BOL File 2"
-					},
-					{
-						"fileName": "/home/ashish/Downloads/logo.png",
-						"id": "pair_7c6af7d5b32d4c8ebc5e92d76974934d",
-						"name": "bol_file[attachments_attributes][0][data]",
-						"type": "file",
-						"value": ""
-					},
-					{
-						"fileName": "/home/ashish/Downloads/logo.png",
-						"id": "pair_dcbf214f791e4618b22bfddbd41f5f32",
-						"name": "bol_file[attachments_attributes][1][data]",
-						"type": "file",
-						"value": ""
-					},
-					{
-						"id": "pair_08ca118a27cc42be818109f008f9745f",
-						"name": "bol_file[attachments_attributes][0][ocr_data]",
-						"value": "HelloOCR"
-					}
-				]
-			},
-			"created": 1547526226742,
-			"description": "",
-			"headers": [
-				{
-					"id": "pair_32dfd8fc081a4f8ab568f74f55c644ba",
-					"name": "Content-Type",
-					"value": "multipart/form-data"
-				}
-			],
-			"isPrivate": false,
-			"metaSortKey": -1547526645811,
-			"method": "POST",
-			"modified": 1547716137427,
-			"name": "CREATE(Deprecated)",
-			"parameters": [],
-			"parentId": "wrk_6b5054400899430b8aea7909f77408c7",
-			"settingDisableRenderRequestBody": false,
-			"settingEncodeUrl": true,
-			"settingMaxTimelineDataSize": 1000,
-			"settingRebuildPath": true,
-			"settingSendCookies": true,
-			"settingStoreCookies": true,
-			"url": "{{ base_url  }}/bol_files",
-			"_type": "request"
-		},
-		{
 			"_id": "env_639f9a8cfdc840adb894d3d3b72cde74",
 			"color": "#7d69cb",
 			"created": 1547524036400,
@@ -197,7 +136,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1547524294285,
 			"method": "POST",
-			"modified": 1547715872822,
+			"modified": 1547785158935,
 			"name": "Login",
 			"parameters": [],
 			"parentId": "fld_d8daf7a9903a45a6af878a30fb11887f",
@@ -285,9 +224,9 @@
 			"description": "",
 			"headers": [],
 			"isPrivate": false,
-			"metaSortKey": -1547531397411,
+			"metaSortKey": -1547531566316.5,
 			"method": "GET",
-			"modified": 1547716016116,
+			"modified": 1547788669951,
 			"name": "SHOW",
 			"parameters": [],
 			"parentId": "fld_0e89a3247955476a904e3b3b1c3f9c69",
@@ -314,7 +253,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1547531566304,
 			"method": "GET",
-			"modified": 1547716011796,
+			"modified": 1547785824552,
 			"name": "INDEX",
 			"parameters": [],
 			"parentId": "fld_0e89a3247955476a904e3b3b1c3f9c69",
@@ -344,23 +283,18 @@
 						"value": ""
 					},
 					{
-						"fileName": "/home/ashish/Desktop/logo2.png.001",
-						"id": "pair_98dc89d813c14862a043d0e62c5a5409",
+						"fileName": "/home/ashish/Desktop/logo2.png.002",
+						"id": "pair_bed6aa6beb5e42fb9e75b26728cc975b",
 						"name": "bol_file[attachments_attributes][1][data]",
 						"type": "file",
 						"value": ""
 					},
 					{
-						"fileName": "/home/ashish/Desktop/logo2.png.002",
-						"id": "pair_1ed7358329e648339b0571ad7fc1f6ec",
+						"fileName": "/home/ashish/Desktop/logo2.png.001",
+						"id": "pair_11d1799ecfa742e3aa936964c8c9d568",
 						"name": "bol_file[attachments_attributes][2][data]",
 						"type": "file",
 						"value": ""
-					},
-					{
-						"id": "pair_da87940fc78048b19e06450d3da3da60",
-						"name": "bol_file[attachments_attributes][3][data]",
-						"value": "sdasdasdasdasda"
 					}
 				]
 			},
@@ -376,8 +310,8 @@
 			"isPrivate": false,
 			"metaSortKey": -1547531566354,
 			"method": "POST",
-			"modified": 1547717140794,
-			"name": "CREATE (Newly added)",
+			"modified": 1547788667871,
+			"name": "CREATE",
 			"parameters": [],
 			"parentId": "fld_0e89a3247955476a904e3b3b1c3f9c69",
 			"settingDisableRenderRequestBody": false,
@@ -457,7 +391,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"user\": {\n\t\t\"email\": \"email16@email.com\",\n\t\t\"password\": \"Welcome@123\"\n\t}\n}"
+				"text": "{\n\t\"user\": {\n\t\t\"email\": \"email56@email.com\",\n\t\t\"password\": \"Welcome@123\"\n\t}\n}"
 			},
 			"created": 1547523996719,
 			"description": "",
@@ -471,7 +405,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1547523996720,
 			"method": "POST",
-			"modified": 1547715867791,
+			"modified": 1547785101322,
 			"name": "CREATE User",
 			"parameters": [],
 			"parentId": "fld_955b4107f61947068905e9515dfedb15",
@@ -498,7 +432,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1547619530533,
 			"method": "GET",
-			"modified": 1547715875888,
+			"modified": 1547789904440,
 			"name": "DASHBOARD",
 			"parameters": [],
 			"parentId": "fld_c95cbfeb5378433481b497cec2d64bb5",
@@ -508,7 +442,7 @@
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "{{ base_url  }}/dashboard?order=asc&order_column=&filter_column[]=name&filter_value[]=logo3.png",
+			"url": "{{ base_url  }}/dashboard?filter_column[]=name,name&filter_value[]=logo3.png,logo3.png&order=asc&order_column=name",
 			"_type": "request"
 		}
 	]

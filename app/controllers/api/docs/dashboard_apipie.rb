@@ -20,6 +20,7 @@ module Api
         param :data, Array do
           param :index, Hash do
             param :id, Integer, desc: 'Id of BOL File'
+            param :bol_type_id, Integer, desc: 'Id of BOL type'
             param :name, String, desc: 'Name of BOL File'
             param :status, BolFile.statuses.keys, desc: 'Status of BOL File'
             param :extracted_at, DateTime, desc: 'Status of BOL File'

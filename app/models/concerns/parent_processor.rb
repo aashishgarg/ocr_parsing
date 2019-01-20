@@ -2,7 +2,6 @@ module ParentProcessor
   extend ActiveSupport::Concern
 
   included do
-
     # Scopes: Applied for providing the Attachments in an ordered manner based on serial_no extracted from file
     scope :sequenced, -> { order(serial_no: :asc, created_at: :desc) }
 

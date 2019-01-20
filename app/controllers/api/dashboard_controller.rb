@@ -5,7 +5,18 @@ module Api
     authorize_resource class: self
 
     def index
-      render json: { data: BolFile.search(params), counts: BolFile.counts(params) }
+      errors = []
+      begin
+        data = BolFile.dashboard_hash(params)
+      rescue FilterColumnAndValuesNotSame, FilterColumnOrValuesNotArray, ColumnNotValid => e
+        errors << e.class.to_s
+      end
+
+      if errors.present?
+        render json: { errors: errors }
+      else
+        render json: data
+      end
     end
   end
 end

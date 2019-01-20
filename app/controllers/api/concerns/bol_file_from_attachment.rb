@@ -4,6 +4,9 @@ module Api
       extend ActiveSupport::Concern
 
       included do
+        # Creates the BolFile through Attachment.
+        # If BolFile for attachment already exists then added into its attachments
+        # else creates a new BolFile and adds the created attachment into its attachments
         def create
           @bol_files = []
           @errors = {}
