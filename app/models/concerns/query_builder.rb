@@ -38,22 +38,30 @@ module QueryBuilder
         .per(params[:page])
     end
 
-    # Data required for the dashboard
-    def dashboard_hash(params)
-      data = search(params).includes(:attachments)
-      status_hash = data.except(:limit, :offset).group_by(&:status).with_indifferent_access
+    def counts(params)
+      status_hash = search(params).except(:limit, :offset).group_by(&:status).with_indifferent_access
       {
-        data: data.as_json(include: :attachments),
-        counts: {
-          file_verified: status_hash[:ocr_done]&.count || 0,
-          ocr_done: status_hash[:ocr_done]&.count || 0,
-          waiting_for_approval: status_hash[:qa_approved]&.count || 0,
-          file_approved: status_hash[:released]&.count || 0,
-          total_records: count,
-          total_pages: data.total_pages,
-          current_page: data.current_page
-        }
+        file_verified: status_hash[:ocr_done]&.count || 0,
+        ocr_done: status_hash[:ocr_done]&.count || 0,
+        waiting_for_approval: status_hash[:qa_approved]&.count || 0,
+        file_approved: status_hash[:released]&.count || 0
       }
+    end
+
+    def page_details(params)
+      {
+        total_records: count,
+        total_pages: search(params).total_pages,
+        current_page: search(params).current_page
+      }
+    end
+
+    # Data required for the dashboard
+    def data_hash(params)
+      hash = { bol_files: search(params).as_json(include: :attachments) }
+      hash[:counts] = counts(params) if params[:dashboard].present? && params[:dashboard] == 'true'
+      hash[:page_details] = page_details(params)
+      hash
     end
   end
 

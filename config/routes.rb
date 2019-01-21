@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     resources :bol_files do
       resources :attachments, only: %i[update]
     end
-    resources :dashboard, only: [:index]
+    get '/dashboard', to: redirect('/api/bol_files?dashboard=true')
   end
 
   root to: redirect('/apidocs')

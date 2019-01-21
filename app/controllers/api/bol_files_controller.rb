@@ -8,7 +8,13 @@ module Api
     after_action :set_line_status, only: %i[update], if: proc { params[:bol_file][:attachments_attributes].present? }
 
     def index
-      @bol_files = BolFile.all # TODO: Apply pagination
+      begin
+        data = BolFile.data_hash(params)
+      rescue FilterColumnAndValuesNotSame, FilterColumnOrValuesNotArray, ColumnNotValid => e
+        errors = []
+        errors << e.class.to_s
+      end
+      errors.present? ? render(json: { errors: errors }) : render(json: data)
     end
 
     def show; end
