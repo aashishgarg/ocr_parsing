@@ -1,8 +1,8 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2019-01-18T05:38:44.931Z",
-	"__export_source": "insomnia.desktop.app:v6.0.2",
+	"__export_date": "2019-01-21T14:28:42.496Z",
+	"__export_source": "insomnia.desktop.app:v5.16.4",
 	"resources": [
 		{
 			"_id": "wrk_6b5054400899430b8aea7909f77408c7",
@@ -19,7 +19,6 @@
 			"created": 1547523919781,
 			"data": {},
 			"isPrivate": false,
-			"metaSortKey": 1547523919781,
 			"modified": 1547524025078,
 			"name": "New Environment",
 			"parentId": "wrk_6b5054400899430b8aea7909f77408c7",
@@ -97,7 +96,6 @@
 				"base_url": "http://localhost:3000/api"
 			},
 			"isPrivate": false,
-			"metaSortKey": 1547524036400,
 			"modified": 1547641465791,
 			"name": "Development",
 			"parentId": "env_535ece31ff754f3888ece148a25b5a0c",
@@ -111,7 +109,6 @@
 				"base_url": "https://pittohio.herokuapp.com/api"
 			},
 			"isPrivate": false,
-			"metaSortKey": 1547526573289,
 			"modified": 1547641522989,
 			"name": "Production",
 			"parentId": "env_535ece31ff754f3888ece148a25b5a0c",
@@ -142,7 +139,6 @@
 			"parentId": "fld_d8daf7a9903a45a6af878a30fb11887f",
 			"settingDisableRenderRequestBody": false,
 			"settingEncodeUrl": true,
-			"settingMaxTimelineDataSize": 1000,
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
@@ -178,7 +174,6 @@
 			"parentId": "fld_0e89a3247955476a904e3b3b1c3f9c69",
 			"settingDisableRenderRequestBody": false,
 			"settingEncodeUrl": true,
-			"settingMaxTimelineDataSize": 1000,
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
@@ -205,7 +200,6 @@
 			"parentId": "fld_0e89a3247955476a904e3b3b1c3f9c69",
 			"settingDisableRenderRequestBody": false,
 			"settingEncodeUrl": true,
-			"settingMaxTimelineDataSize": 1000,
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
@@ -232,7 +226,6 @@
 			"parentId": "fld_0e89a3247955476a904e3b3b1c3f9c69",
 			"settingDisableRenderRequestBody": false,
 			"settingEncodeUrl": true,
-			"settingMaxTimelineDataSize": 1000,
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
@@ -253,17 +246,16 @@
 			"isPrivate": false,
 			"metaSortKey": -1547531566304,
 			"method": "GET",
-			"modified": 1547785824552,
+			"modified": 1548079078683,
 			"name": "INDEX",
 			"parameters": [],
 			"parentId": "fld_0e89a3247955476a904e3b3b1c3f9c69",
 			"settingDisableRenderRequestBody": false,
 			"settingEncodeUrl": true,
-			"settingMaxTimelineDataSize": 1000,
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "{{ base_url  }}/bol_files",
+			"url": "{{ base_url  }}/bol_files?filter_column[]=status&filter_value[]=ocr_done&order=asc&order_column=name&page=1&per=1",
 			"_type": "request"
 		},
 		{
@@ -276,23 +268,9 @@
 				"mimeType": "multipart/form-data",
 				"params": [
 					{
-						"fileName": "/home/ashish/Desktop/logo2.png.003",
-						"id": "pair_e6a9f0b8e77443c0ace97b0aad153cd3",
+						"fileName": "/home/ashish/Downloads/kheerGanga.jpg",
+						"id": "pair_cefe16bf377547f9808f56678e1c47c3",
 						"name": "bol_file[attachments_attributes][0][data]",
-						"type": "file",
-						"value": ""
-					},
-					{
-						"fileName": "/home/ashish/Desktop/logo2.png.002",
-						"id": "pair_bed6aa6beb5e42fb9e75b26728cc975b",
-						"name": "bol_file[attachments_attributes][1][data]",
-						"type": "file",
-						"value": ""
-					},
-					{
-						"fileName": "/home/ashish/Desktop/logo2.png.001",
-						"id": "pair_11d1799ecfa742e3aa936964c8c9d568",
-						"name": "bol_file[attachments_attributes][2][data]",
 						"type": "file",
 						"value": ""
 					}
@@ -310,13 +288,12 @@
 			"isPrivate": false,
 			"metaSortKey": -1547531566354,
 			"method": "POST",
-			"modified": 1547788667871,
+			"modified": 1548078465129,
 			"name": "CREATE",
 			"parameters": [],
 			"parentId": "fld_0e89a3247955476a904e3b3b1c3f9c69",
 			"settingDisableRenderRequestBody": false,
 			"settingEncodeUrl": true,
-			"settingMaxTimelineDataSize": 1000,
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
@@ -352,7 +329,6 @@
 			"parentId": "fld_8ccb4b422f8941d889cf3b8cfa7b4931",
 			"settingDisableRenderRequestBody": false,
 			"settingEncodeUrl": true,
-			"settingMaxTimelineDataSize": 1000,
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
@@ -379,7 +355,6 @@
 			"parentId": "fld_8ccb4b422f8941d889cf3b8cfa7b4931",
 			"settingDisableRenderRequestBody": false,
 			"settingEncodeUrl": true,
-			"settingMaxTimelineDataSize": 1000,
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
@@ -391,7 +366,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"user\": {\n\t\t\"email\": \"email56@email.com\",\n\t\t\"password\": \"Welcome@123\"\n\t}\n}"
+				"text": "{\n\t\"user\": {\n\t\t\"email\": \"email01@email.com\",\n\t\t\"password\": \"Welcome@123\"\n\t}\n}"
 			},
 			"created": 1547523996719,
 			"description": "",
@@ -405,13 +380,12 @@
 			"isPrivate": false,
 			"metaSortKey": -1547523996720,
 			"method": "POST",
-			"modified": 1547785101322,
+			"modified": 1548044048781,
 			"name": "CREATE User",
 			"parameters": [],
 			"parentId": "fld_955b4107f61947068905e9515dfedb15",
 			"settingDisableRenderRequestBody": false,
 			"settingEncodeUrl": true,
-			"settingMaxTimelineDataSize": 1000,
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
@@ -432,17 +406,16 @@
 			"isPrivate": false,
 			"metaSortKey": -1547619530533,
 			"method": "GET",
-			"modified": 1547789904440,
+			"modified": 1548079966288,
 			"name": "DASHBOARD",
 			"parameters": [],
 			"parentId": "fld_c95cbfeb5378433481b497cec2d64bb5",
 			"settingDisableRenderRequestBody": false,
 			"settingEncodeUrl": true,
-			"settingMaxTimelineDataSize": 1000,
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "{{ base_url  }}/dashboard?filter_column[]=name,name&filter_value[]=logo3.png,logo3.png&order=asc&order_column=name",
+			"url": "{{ base_url  }}/dashboard?filter_column[]=status&filter_value[]=ocr_done1&order=asc&order_column=name&page=2&per=1",
 			"_type": "request"
 		}
 	]
