@@ -9,20 +9,50 @@ class Attachment < ApplicationRecord
   # Constants
   PAPERCLIP_IMAGE_CONTENT_TYPE = [/\Aimage\/.*\z/, 'application/json'].freeze
   MIME_TYPE_FOR_OCR = 'image/png'.freeze
-  REQUIRED_FIELDS = [
-    'shipperName',
-    'shipper Address',
-    'shipperState',
-    'shipperZip',
-    'consigneeName',
-    'consigneeAddress',
-    'consigneeCity',
-    'consigneeState',
-    'consignee Zip',
-    'consignee Contact Phone',
-    'special Instructions',
-    'emergencyContactInfo',
-    'Table'
+  REQUIRED_FIELDS = %w[
+    ShipperName
+    ShipperAddress
+    ShipperAddress2
+    ShipperCity
+    ShipperState
+    ShipperZip
+    ShipperContactPhone
+    ShipperContactFax
+    ShipperContactEmail
+    ShipperContactName
+    ConsigneeName
+    ConsigneeAddress
+    ConsigneeAddress2
+    ConsigneeCity
+    ConsigneeState
+    ConsigneeZip
+    ConsigneeContactPhone
+    ConsigneeContactFax
+    ConsigneeContactEmail
+    ConsigneeContactName
+    ThirdPartyName
+    ThirdPartyAddress
+    ThirdPartyAddress2
+    ThirdPartyCity
+    ThirdPartyState
+    ThirdPartyZip
+    ThirdPartyContactPhone
+    ThirdPartyContactFax
+    ThirdPartyContactEmail
+    ThirdPartyContactName
+    SpecialInstructions
+    BolNumber
+    PoNumber
+    EmergencyContactInfo
+    PaymentTerms
+    ShipmentDate
+    PreAssignedPittPro
+    Pieces
+    PackageType
+    Weight
+    Hazmat
+    Description
+    Class
   ].freeze
 
   # Associations
@@ -40,6 +70,7 @@ class Attachment < ApplicationRecord
   # Callbacks
   after_create_commit :queue_file
   after_update :set_bol_status, if: proc { previous_changes.has_key?(:status) }
+  after_update :update_parent_details, if: proc { previous_changes.has_key?(:ocr_parsed_data) && previous_changes[:ocr_parsed_data][1].present? }
 
   def path
     data.path
@@ -67,6 +98,10 @@ class Attachment < ApplicationRecord
 
   def update_bol_extracted
     attachable.update(extracted_at: updated_at) if attachable.attachments.pluck(:status).uniq == %w[ocr_done]
+  end
+
+  def update_parent_details
+    attachable.update(shipper_name: ocr_parsed_data.dig('data', 'ShipperName')) if ocr_parsed_data.dig('data', 'ShipperName')
   end
 
   def queue_file

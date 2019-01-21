@@ -10,7 +10,10 @@ module QueryBuilder
       raise ColumnNotValid unless valid_columns?(names.separated)
 
       filter_string = ''
-      names.separated.zip(values.separated).each { |key_value| filter_string << " #{key_value[0]} = '#{key_value[1]}' and" }
+      names.separated.zip(values.separated).each do |key_value|
+        value = key_value[0] == 'status' ? (BolFile.statuses[key_value[1]] || -1) : key_value[1]
+        filter_string << " #{key_value[0]} = '#{value}' and"
+      end
       where(filter_string.chomp!('and'))
     end
 
@@ -29,23 +32,36 @@ module QueryBuilder
 
     # Combines all (where and order) parts of sql query and retrieves records
     def search(params)
-      filter(params[:filter_column], params[:filter_value]).ordering(params[:order_column], params[:order]).page(params[:page])
+      filter(params[:filter_column], params[:filter_value])
+        .ordering(params[:order_column], params[:order])
+        .page(params[:page])
+        .per(params[:per])
+    end
+
+    def counts
+      status_hash = BolFile.all.group_by(&:status).with_indifferent_access
+      {
+        file_verified: status_hash[:ocr_done]&.count || 0,
+        ocr_done: status_hash[:ocr_done]&.count || 0,
+        waiting_for_approval: status_hash[:qa_approved]&.count || 0,
+        file_approved: status_hash[:released]&.count || 0
+      }
+    end
+
+    def page_details(params)
+      {
+        total_records: count,
+        total_pages: search(params).total_pages,
+        current_page: search(params).current_page
+      }
     end
 
     # Data required for the dashboard
-    def dashboard_hash(params)
-      data = search(params)
-      status_hash = data.group_by(&:status).with_indifferent_access
-      {
-        data: data,
-        counts: {
-          total: count,
-          file_verified: status_hash[:ocr_done]&.count || 0,
-          ocr_done: status_hash[:ocr_done]&.count || 0,
-          waiting_for_approval: status_hash[:qa_approved]&.count || 0,
-          file_approved: status_hash[:released]&.count || 0
-        }
-      }
+    def data_hash(params)
+      hash = { bol_files: search(params).as_json(include: :attachments) }
+      hash[:counts] = counts if params[:dashboard].present? && params[:dashboard] == 'true'
+      hash[:page_details] = page_details(params)
+      hash
     end
   end
 

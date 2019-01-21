@@ -58,8 +58,8 @@ module Ocr
 
     # Updates the direct response in (ocr_parsed_data) and processed data in (processed_data) of Attachment
     def process_ocr_data
-      @processed_data = Ocr::Parser.new(JSON.parse(@response.body)['data'], @response_required_fields).add_status_keys.to_json
-      @attachment.update(ocr_parsed_data: @response.body, processed_data: @processed_data)
+      @processed_data = Ocr::Parser.new(JSON.parse(@response.body)['data'], @response_required_fields).add_status_keys
+      @attachment.update(ocr_parsed_data: JSON.parse(@response.body), processed_data: @processed_data)
     end
 
     # Deletes the local downloaded attachment file

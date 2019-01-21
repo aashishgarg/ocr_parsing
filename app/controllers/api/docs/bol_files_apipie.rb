@@ -21,6 +21,7 @@ module Api
           param :index, Array do
             param :id, Integer, desc: 'Id of BOL File'
             param :name, String, desc: 'Name of BOL File'
+            param :shipper_name, String, desc: 'Shipper Name of BOL File'
             param :status, BolFile.statuses.keys, desc: 'Status of BOL File'
             param :extracted_at, DateTime, desc: 'Last attachment ocr parsing time'
             param :user_id, Integer, desc: 'Status of BOL File'
@@ -43,6 +44,11 @@ module Api
             end
           end
         end
+        param :page_details, Hash do
+          param :total_records, Integer
+          param :total_pages, Integer
+          param :current_page, Integer
+        end
       end
       def index; end
 
@@ -58,6 +64,7 @@ module Api
         param :bol_file, Hash do
           param :id, Integer, desc: 'Id of BOL File'
           param :name, String, desc: 'Name of BOL File'
+          param :shipper_name, String, desc: 'Shipper Name of BOL File'
           param :status, BolFile.statuses.keys, desc: 'Status of BOL File'
           param :extracted_at, DateTime, desc: 'Status of BOL File'
           param :user_id, Integer, desc: 'Status of BOL File'
@@ -107,6 +114,7 @@ module Api
           param :index, Array do
             param :id, Integer, desc: 'Id of BOL File'
             param :name, String, desc: 'Name of BOL File'
+            param :shipper_name, String, desc: 'Shipper Name of BOL File'
             param :status, BolFile.statuses.keys, desc: 'Status of BOL File'
             param :extracted_at, DateTime, desc: 'Last attachment ocr parsing time'
             param :user_id, Integer, desc: 'Status of BOL File'
@@ -145,6 +153,7 @@ module Api
       param :bol_file, Hash, required: true do
         param :bol_type_id, Integer
         param :name, String
+        param :shipper_name, String, desc: 'Shipper Name of BOL File'
         param :status, String
         param :user_id, Integer, desc: 'ID of the user'
         param :extracted_at, DateTime, desc: 'Status of BOL File'
@@ -165,6 +174,7 @@ module Api
         param :bol_file, Hash do
           param :id, Integer, desc: 'Id of BOL File'
           param :name, String, desc: 'Name of BOL File'
+          param :shipper_name, String, desc: 'Shipper Name of BOL File'
           param :status, BolFile.statuses.keys, desc: 'Status of BOL File'
           param :extracted_at, DateTime, desc: 'Status of BOL File'
           param :user_id, Integer, desc: 'Status of BOL File'
