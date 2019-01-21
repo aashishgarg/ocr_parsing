@@ -40,6 +40,7 @@ class Attachment < ApplicationRecord
   # Callbacks
   after_create_commit :queue_file
   after_update :set_bol_status, if: proc { previous_changes.has_key?(:status) }
+  after_update :update_parent_details, if: proc { previous_changes.has_key?(:ocr_parsed_data) && previous_changes[:ocr_parsed_data][1].present? }
 
   def path
     data.path
@@ -67,6 +68,10 @@ class Attachment < ApplicationRecord
 
   def update_bol_extracted
     attachable.update(extracted_at: updated_at) if attachable.attachments.pluck(:status).uniq == %w[ocr_done]
+  end
+
+  def update_parent_details
+    attachable.update(shipper_name: ocr_parsed_data.dig('data', 'ShipperName')) if ocr_parsed_data.dig('data', 'ShipperName')
   end
 
   def queue_file
