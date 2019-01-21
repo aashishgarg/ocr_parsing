@@ -32,21 +32,26 @@ module QueryBuilder
 
     # Combines all (where and order) parts of sql query and retrieves records
     def search(params)
-      filter(params[:filter_column], params[:filter_value]).ordering(params[:order_column], params[:order]).page(params[:page])
+      filter(params[:filter_column], params[:filter_value])
+        .ordering(params[:order_column], params[:order])
+        .page(params[:page])
+        .per(params[:page])
     end
 
     # Data required for the dashboard
     def dashboard_hash(params)
       data = search(params).includes(:attachments)
-      status_hash = data.group_by(&:status).with_indifferent_access
+      status_hash = data.except(:limit, :offset).group_by(&:status).with_indifferent_access
       {
         data: data.as_json(include: :attachments),
         counts: {
-          total: count,
           file_verified: status_hash[:ocr_done]&.count || 0,
           ocr_done: status_hash[:ocr_done]&.count || 0,
           waiting_for_approval: status_hash[:qa_approved]&.count || 0,
-          file_approved: status_hash[:released]&.count || 0
+          file_approved: status_hash[:released]&.count || 0,
+          total_records: count,
+          total_pages: data.total_pages,
+          current_page: data.current_page
         }
       }
     end
