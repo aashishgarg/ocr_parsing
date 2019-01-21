@@ -59,7 +59,7 @@ module QueryBuilder
     # Data required for the dashboard
     def data_hash(params)
       hash = { bol_files: search(params).as_json(include: :attachments) }
-      hash[:counts] = counts if params[:dashboard].present? && params[:dashboard] == 'true'
+      hash[:counts] = counts if params[:dashboard] == 'true'
       hash[:page_details] = page_details(params)
       hash
     end
