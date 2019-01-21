@@ -10,7 +10,10 @@ module QueryBuilder
       raise ColumnNotValid unless valid_columns?(names.separated)
 
       filter_string = ''
-      names.separated.zip(values.separated).each { |key_value| filter_string << " #{key_value[0]} = '#{key_value[1]}' and" }
+      names.separated.zip(values.separated).each do |key_value|
+        value = key_value[0] == 'status' ? (BolFile.statuses[key_value[1]] || -1) : key_value[1]
+        filter_string << " #{key_value[0]} = '#{value}' and"
+      end
       where(filter_string.chomp!('and'))
     end
 
@@ -34,10 +37,10 @@ module QueryBuilder
 
     # Data required for the dashboard
     def dashboard_hash(params)
-      data = search(params)
+      data = search(params).includes(:attachments)
       status_hash = data.group_by(&:status).with_indifferent_access
       {
-        data: data,
+        data: data.as_json(include: :attachments),
         counts: {
           total: count,
           file_verified: status_hash[:ocr_done]&.count || 0,
