@@ -9,20 +9,20 @@ class Attachment < ApplicationRecord
   # Constants
   PAPERCLIP_IMAGE_CONTENT_TYPE = [/\Aimage\/.*\z/, 'application/json'].freeze
   MIME_TYPE_FOR_OCR = 'image/png'.freeze
-  REQUIRED_FIELDS = [
-    'shipperName',
-    'shipper Address',
-    'shipperState',
-    'shipperZip',
-    'consigneeName',
-    'consigneeAddress',
-    'consigneeCity',
-    'consigneeState',
-    'consignee Zip',
-    'consignee Contact Phone',
-    'special Instructions',
-    'emergencyContactInfo',
-    'Table'
+  REQUIRED_FIELDS = %w[
+    shipperName
+    shipperAddress
+    shipperState
+    shipperZip
+    consigneeName
+    consigneeAddress
+    consigneeCity
+    consigneeState
+    consigneeZip
+    consigneeContactPhone
+    specialInstructions
+    emergencyContactInfo
+    Table
   ].freeze
 
   # Associations
