@@ -35,10 +35,10 @@ module QueryBuilder
       filter(params[:filter_column], params[:filter_value])
         .ordering(params[:order_column], params[:order])
         .page(params[:page])
-        .per(params[:page])
+        .per(params[:per])
     end
 
-    def counts(params)
+    def counts
       status_hash = BolFile.all.group_by(&:status).with_indifferent_access
       {
         file_verified: status_hash[:ocr_done]&.count || 0,
@@ -59,7 +59,7 @@ module QueryBuilder
     # Data required for the dashboard
     def data_hash(params)
       hash = { bol_files: search(params).as_json(include: :attachments) }
-      hash[:counts] = counts(params) if params[:dashboard].present? && params[:dashboard] == 'true'
+      hash[:counts] = counts if params[:dashboard].present? && params[:dashboard] == 'true'
       hash[:page_details] = page_details(params)
       hash
     end
