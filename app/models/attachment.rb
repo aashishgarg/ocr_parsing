@@ -10,19 +10,49 @@ class Attachment < ApplicationRecord
   PAPERCLIP_IMAGE_CONTENT_TYPE = [/\Aimage\/.*\z/, 'application/json'].freeze
   MIME_TYPE_FOR_OCR = 'image/png'.freeze
   REQUIRED_FIELDS = %w[
-    shipperName
-    shipperAddress
-    shipperState
-    shipperZip
-    consigneeName
-    consigneeAddress
-    consigneeCity
-    consigneeState
-    consigneeZip
-    consigneeContactPhone
-    specialInstructions
-    emergencyContactInfo
-    Table
+    ShipperName
+    ShipperAddress
+    ShipperAddress2
+    ShipperCity
+    ShipperState
+    ShipperZip
+    ShipperContactPhone
+    ShipperContactFax
+    ShipperContactEmail
+    ShipperContactName
+    ConsigneeName
+    ConsigneeAddress
+    ConsigneeAddress2
+    ConsigneeCity
+    ConsigneeState
+    ConsigneeZip
+    ConsigneeContactPhone
+    ConsigneeContactFax
+    ConsigneeContactEmail
+    ConsigneeContactName
+    ThirdPartyName
+    ThirdPartyAddress
+    ThirdPartyAddress2
+    ThirdPartyCity
+    ThirdPartyState
+    ThirdPartyZip
+    ThirdPartyContactPhone
+    ThirdPartyContactFax
+    ThirdPartyContactEmail
+    ThirdPartyContactName
+    SpecialInstructions
+    BolNumber
+    PoNumber
+    EmergencyContactInfo
+    PaymentTerms
+    ShipmentDate
+    PreAssignedPittPro
+    Pieces
+    PackageType
+    Weight
+    Hazmat
+    Description
+    Class
   ].freeze
 
   # Associations
