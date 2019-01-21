@@ -26,6 +26,9 @@ module Pittohio
     # Use Sidekiq as queuing background
     config.active_job.queue_adapter = :sidekiq
 
+    # Load lib files
+    config.autoload_paths << Rails.root.join('lib')
+
     # File storage on Amazon S3
     # config.active_storage.service = :amazon
 
