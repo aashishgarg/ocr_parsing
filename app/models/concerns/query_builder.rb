@@ -25,7 +25,7 @@ module QueryBuilder
       order(name.present? ? { name => (value || 'asc') } : { created_at: :desc })
     end
 
-    # validates if the columns user exists in the table or not
+    # Validates if the columns user exists in the table or not
     def valid_columns?(names)
       names - columns.collect(&:name) == []
     end
@@ -41,8 +41,8 @@ module QueryBuilder
     def counts
       status_hash = BolFile.all.group_by(&:status).with_indifferent_access
       {
-        qa_rejected: status_hash[:qa_rejected]&.count || 0,
         ocr_done: status_hash[:ocr_done]&.count || 0,
+        qa_rejected: status_hash[:qa_rejected]&.count || 0,
         qa_approved: status_hash[:qa_approved]&.count || 0,
         released: status_hash[:released]&.count || 0
       }
