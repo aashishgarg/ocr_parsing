@@ -27,7 +27,7 @@ module Pittohio
     config.active_job.queue_adapter = :sidekiq
 
     # Load lib files
-    config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('lib','paperclip_processors')
 
     # File storage on Amazon S3
     # config.active_storage.service = :amazon
