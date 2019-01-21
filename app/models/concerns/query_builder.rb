@@ -39,7 +39,7 @@ module QueryBuilder
     end
 
     def counts(params)
-      status_hash = search(params).except(:limit, :offset).group_by(&:status).with_indifferent_access
+      status_hash = BolFile.all.group_by(&:status).with_indifferent_access
       {
         file_verified: status_hash[:ocr_done]&.count || 0,
         ocr_done: status_hash[:ocr_done]&.count || 0,
