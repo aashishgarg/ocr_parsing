@@ -7,12 +7,12 @@ module ParentProcessor
 
     # Evaluates file name. Ex - For file name - (image1.png.001), parsed_file_name is (image1.png)
     def parsed_file_name
-      data_file_name.split(ext)[0] + ext
+      data_file_name.split('.')[0]
     end
 
     # Evaluates the serial_no present in the file name like - (image1.png.001)
     def parsed_serial_no
-      data_file_name.split(ext)[1]&.gsub('.', '')&.to_i
+      (data_file_name.include?(ext) ? data_file_name.split(ext)[1]&.gsub('.', '') : data_file_name.gsub(ext, '').split('.')[1])&.to_i
     end
 
     # Gets file extension from content_type of file determined by paperclip
