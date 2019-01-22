@@ -9,51 +9,54 @@ class Attachment < ApplicationRecord
   # Constants
   PAPERCLIP_IMAGE_CONTENT_TYPE = [/\Aimage\/.*\z/, 'application/json'].freeze
   MIME_TYPE_FOR_OCR = 'image/png'.freeze
-  REQUIRED_FIELDS = %w[
-    ShipperName
-    ShipperAddress
-    ShipperAddress2
-    ShipperCity
-    ShipperState
-    ShipperZip
-    ShipperContactPhone
-    ShipperContactFax
-    ShipperContactEmail
-    ShipperContactName
-    ConsigneeName
-    ConsigneeAddress
-    ConsigneeAddress2
-    ConsigneeCity
-    ConsigneeState
-    ConsigneeZip
-    ConsigneeContactPhone
-    ConsigneeContactFax
-    ConsigneeContactEmail
-    ConsigneeContactName
-    ThirdPartyName
-    ThirdPartyAddress
-    ThirdPartyAddress2
-    ThirdPartyCity
-    ThirdPartyState
-    ThirdPartyZip
-    ThirdPartyContactPhone
-    ThirdPartyContactFax
-    ThirdPartyContactEmail
-    ThirdPartyContactName
-    SpecialInstructions
-    BolNumber
-    PoNumber
-    EmergencyContactInfo
-    PaymentTerms
-    ShipmentDate
-    PreAssignedPittPro
-    Pieces
-    PackageType
-    Weight
-    Hazmat
-    Description
-    Class
-  ].freeze
+  REQUIRED_HASH = {
+    ShipperName: nil,
+    ShipperAddress: nil,
+    ShipperCity: nil,
+    ShipperState: nil,
+    ShipperZip: nil,
+    ShipperContactPhone: nil,
+    ShipperContactFax: nil,
+    ShipperContactEmail: nil,
+    ShipperContactName: nil,
+    ConsigneeName: nil,
+    ConsigneeAddress: nil,
+    ConsigneeAddress2: nil,
+    ConsigneeCity: nil,
+    ConsigneeState: nil,
+    ConsigneeZip: nil,
+    ConsigneeContactPhone: nil,
+    ConsigneeContactFax: nil,
+    ConsigneeContactEmail: nil,
+    ConsigneeContactName: nil,
+    ThirdPartyName: nil,
+    ThirdPartyAddress: nil,
+    ThirdPartyAddress2: nil,
+    ThirdPartyCity: nil,
+    ThirdPartyState: nil,
+    ThirdPartyZip: nil,
+    ThirdPartyContactPhone: nil,
+    ThirdPartyContactFax: nil,
+    ThirdPartyContactEmail: nil,
+    ThirdPartyContactName: nil,
+    SpecialInstructions: nil,
+    BolNumber: nil,
+    PoNumber: nil,
+    EmergencyContactInfo: nil,
+    PaymentTerms: nil,
+    ShipmentDate: nil,
+    PreAssignedPittPro: nil,
+    Details: [
+      {
+        "Pieces": nil,
+        "PackageType": nil,
+        "Weight": nil,
+        "Hazmat": nil,
+        "Description": nil,
+        "Class": nil
+      }
+    ]
+  }.freeze
 
   # Associations
   belongs_to :attachable, polymorphic: true

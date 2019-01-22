@@ -15,7 +15,7 @@ module Ocr
 
     def initialize(attachment)
       @attachment = attachment
-      @response_required_fields = Attachment::REQUIRED_FIELDS
+      @response_required_fields = Attachment::REQUIRED_HASH
       @local_file = nil
       @uri = URI.parse(ENV['OCR_SERVICE_URL'])
       @http = Net::HTTP.new(@uri.host, @uri.port)
