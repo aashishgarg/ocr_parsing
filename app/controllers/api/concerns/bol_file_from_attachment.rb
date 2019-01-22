@@ -14,9 +14,9 @@ module Api
             bol_file_params[:attachments_attributes].each do |key, attachment_params|
               begin
                 attachment = Attachment.find_or_initialize_by(data_file_name: attachment_params[:data].original_filename)
-                attachment.assign_attributes(attachment_params)
                 attachment.tap do |attach|
                   @bol_files << attach.attachable = attach.parent(current_user)
+                  attach.assign_attributes(attachment_params)
                   attach.serial_no = attach.parsed_serial_no
                 end.save
               rescue => e
