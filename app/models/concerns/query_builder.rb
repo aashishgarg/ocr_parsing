@@ -50,7 +50,7 @@ module QueryBuilder
 
     def page_details(params)
       {
-        total_records: count,
+        total_records: search(params).count,
         total_pages: search(params).total_pages,
         current_page: search(params).current_page
       }

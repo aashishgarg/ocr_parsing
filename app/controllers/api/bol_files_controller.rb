@@ -2,6 +2,7 @@ module Api
   class BolFilesController < ApplicationController
     include Api::Docs::BolFilesApipie
     include Api::Docs::DashboardApipie
+    prepend Api::Concerns::BolFileFromAttachment
 
     # Before Actions
     authorize_resource
@@ -25,8 +26,6 @@ module Api
       render json: { errors: @bol_file.errors }, status: :unprocessable_entity unless @bol_file.save
     end
 
-    include Api::Concerns::BolFileFromAttachment
-
     def update
       if @bol_file.update(bol_file_params)
         render 'create'
@@ -47,12 +46,12 @@ module Api
 
     def set_line_status
       params[:bol_file][:attachments_attributes].each do |number, attachment_params|
-        next unless attachment_params[:id].present?
+        next if !attachment_params[:id].present? || !attachment_params[:ocr_data].present?
 
         attachment = @bol_file.attachments.find_by(id: attachment_params[:id])
-        data = JSON.parse(attachment.processed_data)
+        data = attachment.processed_data
         attachment_params[:ocr_data].each { |key, value| data[key] = { value: value, status: Attachment.key_status } }
-        attachment.update(processed_data: data.to_json)
+        attachment.update(processed_data: data)
         render json: { errors: attachment.errors }, status: :unprocessable_entity unless attachment.valid?
       end
     end
