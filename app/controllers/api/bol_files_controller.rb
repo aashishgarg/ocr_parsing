@@ -1,6 +1,7 @@
 module Api
   class BolFilesController < ApplicationController
     include Api::Docs::BolFilesApipie
+    include Api::Docs::DashboardApipie
     prepend Api::Concerns::BolFileFromAttachment
 
     # Before Actions
