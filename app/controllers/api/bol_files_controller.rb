@@ -1,6 +1,7 @@
 module Api
   class BolFilesController < ApplicationController
     include Api::Docs::BolFilesApipie
+    include Api::Docs::DashboardApipie
 
     # Before Actions
     authorize_resource
