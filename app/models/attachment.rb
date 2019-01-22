@@ -91,11 +91,9 @@ class Attachment < ApplicationRecord
   private
 
   def set_bol_status
-    statuses = []
-    attachable.attachments.pluck(:status).each { |status| statuses << Attachment.statuses[status]}
-    statuses.delete(nil)
-    bol_status = (statuses.min || 0)
-    attachable.method((Attachment.statuses.key(bol_status) + '!').to_sym).call
+    bol_status = []
+    attachable.attachments.pluck(:status).each { |status| bol_status << Attachment.statuses[status]}
+    attachable.method((Attachment.statuses.key(bol_status.min) + '!').to_sym).call
   end
 
   def update_bol_extracted
