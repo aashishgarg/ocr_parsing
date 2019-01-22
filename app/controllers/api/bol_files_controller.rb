@@ -1,6 +1,7 @@
 module Api
   class BolFilesController < ApplicationController
     include Api::Docs::BolFilesApipie
+    prepend Api::Concerns::BolFileFromAttachment
 
     # Before Actions
     authorize_resource
@@ -23,8 +24,6 @@ module Api
       @bol_file = current_user.bol_files.build(bol_file_params)
       render json: { errors: @bol_file.errors }, status: :unprocessable_entity unless @bol_file.save
     end
-
-    include Api::Concerns::BolFileFromAttachment
 
     def update
       if @bol_file.update(bol_file_params)
