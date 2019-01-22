@@ -5,7 +5,7 @@ module ParentProcessor
     # Scopes: Applied for providing the Attachments in an ordered manner based on serial_no extracted from file
     scope :sequenced, -> { order(serial_no: :asc, created_at: :desc) }
 
-    # Evaluates file name. Ex - For file name - (image1.png.001), parsed_file_name is (image1.png)
+    # Evaluates file name. Ex - For file name - (image1.png.001), parsed_file_name is (image1)
     def parsed_file_name
       data_file_name.split('.')[0]
     end
