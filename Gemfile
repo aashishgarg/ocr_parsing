@@ -11,6 +11,7 @@ gem 'cancancan', '~> 2.0' # For Authorization
 gem 'coffee-rails', '~> 4.2' # Use CoffeeScript for .coffee assets and views
 gem 'devise-jwt'             # Authentication
 gem 'dotenv-rails', groups: [:development, :test] # Shim to load environment variables from .env into ENV in development
+gem 'exception_notification' # For Error Email delivery with log trace
 gem 'jbuilder', '~> 2.5'
 gem 'kaminari'               # for pagination
 gem 'paper_trail'            # Change Audit
@@ -31,13 +32,14 @@ group :development, :test do
                                                       # debugger console
   gem 'factory_bot_rails'
   gem 'ffaker'
+  gem 'letter_opener'        # For opening any email delivery locally for development purpose
   gem 'pry'
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails', '~> 3.8'# Unit testing Framework
 end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2' # Spring speeds up development by keeping your application running in the background.
-                                    #  Read more: https://github.com/rails/spring
+                                    # Read more: https://github.com/rails/spring
   gem 'rails-erd'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
@@ -47,7 +49,7 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', '>= 2.15' # Adds support for Capybara system testing and selenium driver
-  gem 'chromedriver-helper' # Easy installation and use of chromedriver to run system tests with Chrome
+  gem 'capybara', '>= 2.15'     # Adds support for Capybara system testing and selenium driver
+  gem 'chromedriver-helper'     # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'selenium-webdriver'
 end
