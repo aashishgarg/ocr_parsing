@@ -42,9 +42,9 @@ module Ocr
 
     private
 
-    # Sets base64 of the image
+    # Sets base64 of the image and send as binary
     def set_request
-      @request.body = { data: Base64.encode64(File.read(@local_file)).delete('\n') }.to_json
+      @request.body = { data: Base64.encode64(File.read(@local_file)).delete('\n').unpack('B*') }.to_json
     end
 
     # Set the status of attachment file
