@@ -37,6 +37,13 @@ RSpec.describe Api::UsersController, type: :controller do
 
     it 'returns http success' do
       @user.add_role :admin
+      user2 = FactoryBot.create(:user)
+      put :update, params: { user: { email: user2.email } }, format: 'json'
+      expect(response.status).to eq 422
+    end
+
+    it 'returns http success' do
+      @user.add_role :admin
       put :update, params: { user: { name: 'TestName' } }, format: 'json'
       expect(response.status).to eq 200
       expect(response.content_type).to eq 'application/json'

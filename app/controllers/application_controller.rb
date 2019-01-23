@@ -49,8 +49,4 @@ class ApplicationController < ActionController::API
   def set_current_user
     User.current = current_user if signed_in?
   end
-
-  def render_not_found
-    render head: :not_found, content_type: 'application/json'
-  end
 end

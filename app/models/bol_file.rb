@@ -14,8 +14,4 @@ class BolFile < ApplicationRecord
   # Validations
   validates :status, presence: true
   # TODO: Add file size validation
-
-  def attachment_urls
-    attachments.collect(&:url)
-  end
 end
