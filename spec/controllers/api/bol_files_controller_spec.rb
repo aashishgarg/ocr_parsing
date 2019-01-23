@@ -78,43 +78,154 @@ RSpec.describe Api::BolFilesController, type: :controller do
       end
     end
 
-    context '[attachments #create]' do
-      context 'for file type' do
-        it 'png' do
-
+    # ==== create [Attachments upload] ======================== #
+    context 'single Attachment upload' do
+      context '[448118]' do
+        before do
+          file = Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/attachments/bol_files/448118",
+                                              'multipart/form-data')
+          @params = { bol_file: { attachments_attributes: { '0' => { data: file } } } }
+          post :create, params: @params, format: 'json'
+          @body = JSON.parse(response.body).with_indifferent_access
+        end
+        it 'sets bol_file name 448118' do
+          expect(@body['bol_files'][0]['name']).to eq('448118')
+        end
+        it 'sets attachment [data_file_name] = 448118' do
+          expect(@body['bol_files'][0]['attachments'][0]['data_file_name']).to eq('448118')
+        end
+        it 'sets attachment [serial_no] = nil' do
+          expect(@body['bol_files'][0]['attachments'][0]['serial_no']).to eq(nil)
         end
       end
 
-      context 'for file name' do
+      context '[448118.001]' do
         before do
-          request.headers['content-type'] = 'multipart/form-data'
-          @params = {
-            'bol_file' => {
-              'attachments_attributes' => {
-                '0' => {
-                  'data' => File.open('/home/ashish/Desktop/BolFiles/4/448118')
-                }
-              }
-            }
-          }
-        end
-
-        it '448118' do
-          @params['bol_file']['attachments_attributes']['0']['data'] = File.open('/home/ashish/Desktop/BolFiles/4/448118')
+          file = Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/attachments/bol_files/448118.001",
+                                              'multipart/form-data')
+          @params = { bol_file: { attachments_attributes: { '0' => { data: file } } } }
           post :create, params: @params, format: 'json'
           @body = JSON.parse(response.body).with_indifferent_access
-          expect(response.body).to eq('')
         end
-
-        it '448118.001 and 448118.002' do
-
+        it 'sets bol_file name 448118' do
+          expect(@body['bol_files'][0]['name']).to eq('448118')
         end
-
-        it '448118.001.tiff and 448118.002.tiff' do
-
+        it 'sets attachment [data_file_name] = 448118.001' do
+          expect(@body['bol_files'][0]['attachments'][0]['data_file_name']).to eq('448118.001')
         end
+        it 'sets attachment [serial_no] = 1' do
+          expect(@body['bol_files'][0]['attachments'][0]['serial_no']).to eq(1)
+        end
+      end
 
-        it '448118.tiff.001 and 448118.tiff.002' do
+      context '[448118.002]' do
+        before do
+          file = Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/attachments/bol_files/448118.002",
+                                              'multipart/form-data')
+          @params = { bol_file: { attachments_attributes: { '0' => { data: file } } } }
+          post :create, params: @params, format: 'json'
+          @body = JSON.parse(response.body).with_indifferent_access
+        end
+        it 'sets bol_file name 448118' do
+          expect(@body['bol_files'][0]['name']).to eq('448118')
+        end
+        it 'sets attachment [data_file_name] = 448118.002' do
+          expect(@body['bol_files'][0]['attachments'][0]['data_file_name']).to eq('448118.002')
+        end
+        it 'sets attachment [serial_no] = 2' do
+          expect(@body['bol_files'][0]['attachments'][0]['serial_no']).to eq(2)
+        end
+      end
+
+      context '[448118.tiff.001]' do
+        before do
+          file = Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/attachments/bol_files/448118.tiff.001",
+                                              'multipart/form-data')
+          @params = { bol_file: { attachments_attributes: { '0' => { data: file } } } }
+          post :create, params: @params, format: 'json'
+          @body = JSON.parse(response.body).with_indifferent_access
+        end
+        it 'sets bol_file name 448118' do
+          expect(@body['bol_files'][0]['name']).to eq('448118')
+        end
+        it 'sets attachment [data_file_name] = 448118.tiff.001' do
+          expect(@body['bol_files'][0]['attachments'][0]['data_file_name']).to eq('448118.tiff.001')
+        end
+        it 'sets attachment [serial_no] = 1' do
+          expect(@body['bol_files'][0]['attachments'][0]['serial_no']).to eq(1)
+        end
+      end
+
+      context '[448118.tiff.002]' do
+        before do
+          file = Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/attachments/bol_files/448118.tiff.002",
+                                              'multipart/form-data')
+          @params = { bol_file: { attachments_attributes: { '0' => { data: file } } } }
+          post :create, params: @params, format: 'json'
+          @body = JSON.parse(response.body).with_indifferent_access
+        end
+        it 'sets bol_file name 448118' do
+          expect(@body['bol_files'][0]['name']).to eq('448118')
+        end
+        it 'sets attachment [data_file_name] = 448118.tiff.002' do
+          expect(@body['bol_files'][0]['attachments'][0]['data_file_name']).to eq('448118.tiff.002')
+        end
+        it 'sets attachment [serial_no] = 2' do
+          expect(@body['bol_files'][0]['attachments'][0]['serial_no']).to eq(2)
+        end
+      end
+
+      context '[448118.001.tiff]' do
+        before do
+          file = Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/attachments/bol_files/448118.001.tiff",
+                                              'multipart/form-data')
+          @params = { bol_file: { attachments_attributes: { '0' => { data: file } } } }
+          post :create, params: @params, format: 'json'
+          @body = JSON.parse(response.body).with_indifferent_access
+        end
+        it 'sets bol_file name 448118' do
+          expect(@body['bol_files'][0]['name']).to eq('448118')
+        end
+        it 'sets attachment [data_file_name] = 448118.001.tiff' do
+          expect(@body['bol_files'][0]['attachments'][0]['data_file_name']).to eq('448118.001.tiff')
+        end
+        it 'sets attachment [serial_no] = 1' do
+          expect(@body['bol_files'][0]['attachments'][0]['serial_no']).to eq(1)
+        end
+      end
+
+      context '[448118.002.tiff]' do
+        before do
+          file = Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/attachments/bol_files/448118.002.tiff",
+                                              'multipart/form-data')
+          @params = { bol_file: { attachments_attributes: { '0' => { data: file } } } }
+          post :create, params: @params, format: 'json'
+          @body = JSON.parse(response.body).with_indifferent_access
+        end
+        it 'sets bol_file name 448118' do
+          expect(@body['bol_files'][0]['name']).to eq('448118')
+        end
+        it 'sets attachment [data_file_name] = 448118.002.tiff' do
+          expect(@body['bol_files'][0]['attachments'][0]['data_file_name']).to eq('448118.002.tiff')
+        end
+        it 'sets attachment [serial_no] = 2' do
+          expect(@body['bol_files'][0]['attachments'][0]['serial_no']).to eq(2)
+        end
+      end
+    end
+
+    context 'multiple attachments upload' do
+      context 'with files 448118.001 and 448118.002' do
+        before do
+          file1 = Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/attachments/bol_files/448118.001",
+                                              'multipart/form-data')
+          file2 = Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/attachments/bol_files/448118.002",
+                                               'multipart/form-data')
+          @params = { bol_file: { attachments_attributes: { '1' => { data: file1 }, '2' => { data: file2 } } } }
+          post :create, params: @params, format: 'json'
+          @body = JSON.parse(response.body).with_indifferent_access
+        end
+        it 'creates single bol_file with 2 attached files' do
 
         end
       end
