@@ -19,6 +19,7 @@ module Api
               end.save
             rescue => e
               @errors[e.class.to_s] = e.message
+              ExceptionNotifier.notify_exception(e, data: { current_user: current_user })
             end
           end
         end
