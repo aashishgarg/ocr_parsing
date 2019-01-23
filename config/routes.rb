@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resource :user, only: %i[show update]
+    resources :roles
     resources :bol_files do
       resources :attachments, only: %i[update]
     end
