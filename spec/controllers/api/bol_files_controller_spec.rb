@@ -23,6 +23,88 @@ RSpec.describe Api::BolFilesController, type: :controller do
       get :index, format: 'json'
       expect(response.status).to eq 200
     end
+
+    context '#FilterParameter' do
+      it 'filter_column without filter_value raise error' do
+        get :index, params: { filter_column: ['name'] }, format: 'json'
+        @body = JSON.parse(response.body).with_indifferent_access
+        expect(@body).to eq('errors' => %w[FilterColumnOrValuesNotArray])
+      end
+
+      it 'filter_column with non array value raises error' do
+        get :index, params: { filter_column: 'name', filter_value: '1' }, format: 'json'
+        @body = JSON.parse(response.body).with_indifferent_access
+        expect(@body).to eq('errors' => %w[FilterColumnOrValuesNotArray])
+      end
+
+      it 'filter_column and filter_value with different parameter counts raises error' do
+        get :index, params: { filter_column: ['name,status'], filter_value: %w[value] }, format: 'json'
+        @body = JSON.parse(response.body).with_indifferent_access
+        expect(@body).to eq('errors' => %w[FilterColumnAndValuesNotSame])
+      end
+
+      it 'filter_column with invalid column name raises error' do
+        get :index, params: { filter_column: ['invalidColumn'], filter_value: %w[value] }, format: 'json'
+        @body = JSON.parse(response.body).with_indifferent_access
+        expect(@body).to eq('errors' => %w[ColumnNotValid])
+      end
+
+      it 'valid filter_column and filter_value does not raise error' do
+        get :index, params: { filter_column: ['name'], filter_value: %w[value] }, format: 'json'
+        @body = JSON.parse(response.body).with_indifferent_access
+        expect(@body.key?('errors')).to eq(false)
+      end
+
+      it 'provides page_details' do
+        get :index, params: { filter_column: ['name'], filter_value: %w[value] }, format: 'json'
+        @body = JSON.parse(response.body).with_indifferent_access
+        expect(@body.key?('page_details')).to eq(true)
+      end
+
+      %w[total_records total_pages current_page].each do |key|
+        it "provides page_details[:#{key}]" do
+          get :index, params: { filter_column: ['name'], filter_value: %w[value] }, format: 'json'
+          @body = JSON.parse(response.body).with_indifferent_access
+          expect(@body['page_details'].key?(key)).to eq(true)
+        end
+      end
+
+      it 'does not provide counts' do
+        get :index, params: { filter_column: ['name'], filter_value: %w[value] }, format: 'json'
+        @body = JSON.parse(response.body).with_indifferent_access
+        expect(@body.key?('counts')).to eq(false)
+      end
+    end
+
+    context '#Dashboard' do
+      it 'has counts in response' do
+        get :index, params: { dashboard: true }, format: 'json'
+        @body = JSON.parse(response.body).with_indifferent_access
+        expect(@body.key?('counts')).to eq(true)
+      end
+
+      it 'provides page_details' do
+        get :index, params: { dashboard: true }, format: 'json'
+        @body = JSON.parse(response.body).with_indifferent_access
+        expect(@body.key?('page_details')).to eq(true)
+      end
+
+      %w[total_records total_pages current_page].each do |key|
+        it "provides page_details[:#{key}]" do
+          get :index, params: { dashboard: true }, format: 'json'
+          @body = JSON.parse(response.body).with_indifferent_access
+          expect(@body['page_details'].key?(key)).to eq(true)
+        end
+      end
+
+      %w[ocr_done qa_rejected qa_approved released].each do |key|
+        it "provides counts[:#{key}]" do
+          get :index, params: { dashboard: true }, format: 'json'
+          @body = JSON.parse(response.body).with_indifferent_access
+          expect(@body['counts'].key?(key)).to eq(true)
+        end
+      end
+    end
   end
 
   # ==== SHOW =============================================== #
