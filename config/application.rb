@@ -29,18 +29,36 @@ module Pittohio
     # File storage on Amazon S3
     # config.active_storage.service = :amazon
 
-    unless (Rails.env.test?)
+    unless Rails.env.test?
       config.paperclip_defaults = {
         storage: :s3,
         s3_host_name: 's3.amazonaws.com',
         s3_credentials: {
           access_key_id: ENV['AWS_ACCESS_KEY_ID'],
           secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-          s3_region: "us-east-1"
+          s3_region: 'us-east-1'
         },
         bucket: ENV['AWS_BUCKET']
         # ,s3_permissions: :private
       }
+
+      config.middleware.use ExceptionNotification::Rack,
+                            email: {
+                              email_prefix: "[Pitt Ohio] [#{Rails.env}] ",
+                              sender_address: %('Exception Notifier' <no-reply@pittohio.com>),
+                              exception_recipients: %w[pitt_ohio@googlegroups.com],
+                              delivery_method: Rails.env.development? ? :letter_opener : :smtp,
+                              deliver_with: :deliver,
+                              smtp_settings: {
+                                address: 'smtp.gmail.com',
+                                port: 587,
+                                domain: 'gmail.com',
+                                user_name: 'pitttohio',
+                                password: ENV['EXCEPTION_EMAIL_PASSWORD'],
+                                authentication: :plain,
+                                enable_starttls_auto: true
+                              }
+                            }
     end
   end
 end

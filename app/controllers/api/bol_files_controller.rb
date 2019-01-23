@@ -15,6 +15,7 @@ module Api
       rescue FilterColumnAndValuesNotSame, FilterColumnOrValuesNotArray, ColumnNotValid => e
         errors = []
         errors << e.class.to_s
+        ExceptionNotifier.notify_exception(e, data: { current_user: current_user })
       end
       errors.present? ? render(json: { errors: errors }) : render(json: data)
     end
