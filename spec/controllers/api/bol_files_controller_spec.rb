@@ -47,7 +47,6 @@ RSpec.describe Api::BolFilesController, type: :controller do
   # ==== create ============================================= #
   context '#create' do
     before do
-      User.current = @user
       @params = {
         bol_file: {
           name: 'NewTestName',
@@ -56,7 +55,7 @@ RSpec.describe Api::BolFilesController, type: :controller do
       }
     end
 
-    context 'Role Permissions - ' do
+    context '[Role Permissions]' do
       it 'allowed for user role :customer' do
         %i[admin support].each { |role| User.current.remove_role role }
         User.current.add_role :customer
@@ -78,12 +77,53 @@ RSpec.describe Api::BolFilesController, type: :controller do
         expect(response.status).to eq 200
       end
     end
+
+    context '[attachments #create]' do
+      context 'for file type' do
+        it 'png' do
+
+        end
+      end
+
+      context 'for file name' do
+        before do
+          request.headers['content-type'] = 'multipart/form-data'
+          @params = {
+            'bol_file' => {
+              'attachments_attributes' => {
+                '0' => {
+                  'data' => File.open('/home/ashish/Desktop/BolFiles/4/448118')
+                }
+              }
+            }
+          }
+        end
+
+        it '448118' do
+          @params['bol_file']['attachments_attributes']['0']['data'] = File.open('/home/ashish/Desktop/BolFiles/4/448118')
+          post :create, params: @params, format: 'json'
+          @body = JSON.parse(response.body).with_indifferent_access
+          expect(response.body).to eq('')
+        end
+
+        it '448118.001 and 448118.002' do
+
+        end
+
+        it '448118.001.tiff and 448118.002.tiff' do
+
+        end
+
+        it '448118.tiff.001 and 448118.tiff.002' do
+
+        end
+      end
+    end
   end
 
   # ==== UPDATE ============================================= #
   context '#update' do
     before do
-      User.current = @user
       @bol_file = FactoryBot.create(:bol_file, user: @user)
       @params = {
         id: @bol_file.id,
@@ -94,7 +134,7 @@ RSpec.describe Api::BolFilesController, type: :controller do
       }
     end
 
-    context 'Role Permissions - ' do
+    context '[Role Permissions]' do
       it 'allowed for user role :customer' do
         %i[support admin].each { |role| User.current.remove_role role }
         User.current.add_role :customer
