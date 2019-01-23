@@ -6,7 +6,7 @@ class Api::RolesController < ApplicationController
   before_action :set_role, except: [:create, :index]
 
   def index
-    @roles = Role.all # ToDo: Apply pagination
+    @roles = Role.all # TODO: Apply pagination
     render json: @roles
   end
 
