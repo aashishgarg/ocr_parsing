@@ -41,3 +41,6 @@
 
 # OCR processing folder
 /public/bol_files/*
+
+/pittohio-production
+/pittohio-staging
