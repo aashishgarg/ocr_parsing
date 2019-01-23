@@ -58,7 +58,7 @@ module Api
     end
 
     def bol_file_params
-      params.require(:bol_file).permit(:bol_type_id, :name, :status, attachments_attributes: %i[id data _destroy])
+      params.require(:bol_file).permit(:bol_type_id, :name, :status, attachments_attributes: %i[id data processed_data _destroy])
     end
   end
 end
