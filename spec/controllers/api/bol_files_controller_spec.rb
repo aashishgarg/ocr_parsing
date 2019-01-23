@@ -235,11 +235,6 @@ RSpec.describe Api::BolFilesController, type: :controller do
           attach = @body['bol_files'][0]['attachments']
           expect([attach[0]['serial_no'], attach[1]['serial_no']].sort).to eq([1, 2])
         end
-        it 'updates [updated_at] of latest attachment in [extracted_at] of bol_file' do
-          attach = @body['bol_files'][0]['attachments']
-          expect(@body['bol_files'][0]['extracted_at'])
-            .to eq([DateTime.parse(attach[0]['updated_at']), DateTime.parse(attach[1]['updated_at'])].max)
-        end
       end
     end
   end

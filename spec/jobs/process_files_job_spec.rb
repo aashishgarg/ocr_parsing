@@ -14,11 +14,4 @@ RSpec.describe ProcessFilesJob, type: :job do
       expect(attachment).to eq(attach)
     })
   end
-
-  it 'updates latest [updated_at] of all attachments in [extracted_at] of bolFile' do
-    %w[448118 448118.001 448118.002].each do |name|
-      ProcessFilesJob.perform_later(@bol_file.attachments.create(data: File.open("#{Rails.root}/spec/support/attachments/bol_files/#{name}")))
-    end
-    expect(@bol_file.extracted_at).to eq(@bol_file.attachments.collect(&:updated_at).max)
-  end
 end
