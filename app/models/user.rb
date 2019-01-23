@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   # Validations
   validates :email, uniqueness: true, presence: true, allow_blank: false#, format: { with: /\A[a-zA-Z0-9]+\z/ }
+  validates_presence_of :first_name, :last_name
 
   # callbacks
   after_create :assign_default_role
