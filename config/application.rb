@@ -53,7 +53,7 @@ module Pittohio
                                 address: 'smtp.gmail.com',
                                 port: 587,
                                 domain: 'gmail.com',
-                                user_name: 'headerlabs',
+                                user_name: 'pitttohio',
                                 password: ENV['EXCEPTION_EMAIL_PASSWORD'],
                                 authentication: :plain,
                                 enable_starttls_auto: true
