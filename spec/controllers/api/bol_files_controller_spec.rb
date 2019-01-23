@@ -11,37 +11,40 @@ RSpec.describe Api::BolFilesController, type: :controller do
     request.headers['Accept'] = 'application/json'
   end
 
+  # ==== INDEX ============================================== #
   context '#index' do
-    it 'returns http Unauthorized' do
+    it 'returns http Unauthorized for invalid token' do
       request.headers['Authorization'] = "Bearer #{@token}1111111"
       get :index, format: 'json'
       expect(response.status).to eq 401
     end
 
-    it 'returns http success' do
+    it 'returns http success for valid' do
       get :index, format: 'json'
       expect(response.status).to eq 200
     end
   end
 
+  # ==== SHOW =============================================== #
   context '#show' do
     before do
       User.current = @user
-      @bol_file = FactoryBot.create(:bol_file)
+      @bol_file = FactoryBot.create(:bol_file, user: @user)
     end
 
-    it 'returns http Unauthorized' do
+    it 'returns http Unauthorized for invalid token' do
       request.headers['Authorization'] = "Bearer #{@token}1111111"
       get :show, params: { id: @bol_file.id }, format: 'json'
       expect(response.status).to eq 401
     end
 
-    it 'returns http success' do
+    it 'returns http success for valid token' do
       get :show, params: { id: @bol_file.id }, format: 'json'
       expect(response.status).to eq 200
     end
   end
 
+  # ==== create ============================================= #
   context '#create' do
     before do
       User.current = @user
@@ -53,32 +56,35 @@ RSpec.describe Api::BolFilesController, type: :controller do
       }
     end
 
-    it 'not allowed for user role :customer' do
-      %i[admin support].each { |role| User.current.remove_role role }
-      User.current.add_role :customer
-      post :create, params: @params, format: 'json'
-      expect(response.status).to eq 403
-    end
+    context 'Role Permissions - ' do
+      it 'allowed for user role :customer' do
+        %i[admin support].each { |role| User.current.remove_role role }
+        User.current.add_role :customer
+        post :create, params: @params, format: 'json'
+        expect(response.status).to eq 200
+      end
 
-    it 'allowed for user role :support' do
-      %i[admin customer].each { |role| User.current.remove_role role }
-      User.current.add_role :support
-      post :create, params: @params, format: 'json'
-      expect(response.status).to eq 200
-    end
+      it 'allowed for user role :support' do
+        %i[admin customer].each { |role| User.current.remove_role role }
+        User.current.add_role :support
+        post :create, params: @params, format: 'json'
+        expect(response.status).to eq 200
+      end
 
-    it 'allowed for user role :admin' do
-      %i[support customer].each { |role| User.current.remove_role role }
-      User.current.add_role :admin
-      post :create, params: @params, format: 'json'
-      expect(response.status).to eq 200
+      it 'allowed for user role :admin' do
+        %i[support customer].each { |role| User.current.remove_role role }
+        User.current.add_role :admin
+        post :create, params: @params, format: 'json'
+        expect(response.status).to eq 200
+      end
     end
   end
 
+  # ==== UPDATE ============================================= #
   context '#update' do
     before do
       User.current = @user
-      @bol_file = FactoryBot.create(:bol_file)
+      @bol_file = FactoryBot.create(:bol_file, user: @user)
       @params = {
         id: @bol_file.id,
         bol_file: {
@@ -88,25 +94,27 @@ RSpec.describe Api::BolFilesController, type: :controller do
       }
     end
 
-    it 'allowed for user role :customer' do
-      %i[support admin].each { |role| User.current.remove_role role }
-      User.current.add_role :customer
-      put :update, params: @params, format: 'json'
-      expect(response.status).to eq 200
-    end
+    context 'Role Permissions - ' do
+      it 'allowed for user role :customer' do
+        %i[support admin].each { |role| User.current.remove_role role }
+        User.current.add_role :customer
+        put :update, params: @params, format: 'json'
+        expect(response.status).to eq 200
+      end
 
-    it 'allowed for user role :support' do
-      %i[admin customer].each { |role| User.current.remove_role role }
-      User.current.add_role :support
-      put :update, params: @params, format: 'json'
-      expect(response.status).to eq 200
-    end
+      it 'allowed for user role :support' do
+        %i[admin customer].each { |role| User.current.remove_role role }
+        User.current.add_role :support
+        put :update, params: @params, format: 'json'
+        expect(response.status).to eq 200
+      end
 
-    it 'allowed for user role :admin' do
-      %i[support customer].each { |role| User.current.remove_role role }
-      User.current.add_role :admin
-      put :update, params: @params, format: 'json'
-      expect(response.status).to eq 200
+      it 'allowed for user role :admin' do
+        %i[support customer].each { |role| User.current.remove_role role }
+        User.current.add_role :admin
+        put :update, params: @params, format: 'json'
+        expect(response.status).to eq 200
+      end
     end
   end
 end
