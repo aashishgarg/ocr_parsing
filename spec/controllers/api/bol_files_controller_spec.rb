@@ -218,15 +218,27 @@ RSpec.describe Api::BolFilesController, type: :controller do
       context 'with files 448118.001 and 448118.002' do
         before do
           file1 = Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/attachments/bol_files/448118.001",
-                                              'multipart/form-data')
+                                               'multipart/form-data')
           file2 = Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/attachments/bol_files/448118.002",
                                                'multipart/form-data')
           @params = { bol_file: { attachments_attributes: { '1' => { data: file1 }, '2' => { data: file2 } } } }
           post :create, params: @params, format: 'json'
           @body = JSON.parse(response.body).with_indifferent_access
         end
-        it 'creates single bol_file with 2 attached files' do
-
+        it 'creates single bol_file' do
+          expect(@body['bol_files'].count).to eq(1)
+        end
+        it 'creates two attachments under same bol file' do
+          expect(@body['bol_files'][0]['attachments'].count).to eq(2)
+        end
+        it 'creates attachments with serial numbers 1, 2' do
+          attach = @body['bol_files'][0]['attachments']
+          expect([attach[0]['serial_no'], attach[1]['serial_no']].sort).to eq([1, 2])
+        end
+        it 'updates [updated_at] of latest attachment in [extracted_at] of bol_file' do
+          attach = @body['bol_files'][0]['attachments']
+          expect(@body['bol_files'][0]['extracted_at'])
+            .to eq([DateTime.parse(attach[0]['updated_at']), DateTime.parse(attach[1]['updated_at'])].max)
         end
       end
     end
