@@ -13,21 +13,10 @@ module Ocr
     end
 
     # Modifies the Json and adds (value and status) keys in each key of json
-    # ToDO: I look dirty and inefficient. Improve me
     def add_status_keys
-      @final_hash.each do |key, value|
-        if value.is_a?(Array)
-          value.each do |val|
-            val.each do |k, v|
-              val[k] = { value: v, status: nil }
-            end
-          end
-        else
-          @final_hash[key] = { value: value, status: nil }
-        end
-      end
-
-      @final_hash
+      details = @final_hash.delete(:Details)
+      details.map! { |hash| hash.transform_values { |value| { value: value, status: nil } } }
+      @final_hash.transform_values! { |value| { value: value, status: nil } }.merge(Details: details)
     end
   end
 end
