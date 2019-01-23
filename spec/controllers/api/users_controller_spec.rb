@@ -37,6 +37,13 @@ RSpec.describe Api::UsersController, type: :controller do
 
     it 'returns http success' do
       @user.add_role :admin
+      user2 = FactoryBot.create(:user)
+      put :update, params: { user: { email: user2.email } }, format: 'json'
+      expect(response.status).to eq 422
+    end
+
+    it 'returns http success' do
+      @user.add_role :admin
       put :update, params: { user: { name: 'TestName' } }, format: 'json'
       expect(response.status).to eq 200
       expect(response.content_type).to eq 'application/json'
@@ -55,12 +62,20 @@ RSpec.describe Api::UsersController, type: :controller do
       expect(response.status).to eq 200
     end
 
-    it 'returns user details' do
-      get :show, format: 'json'
-      hash_body = JSON.parse(response.body).with_indifferent_access
-      expect(hash_body.keys?('user')).to eq true
-      %w[id email first_name last_name company phone fax token].each do |key|
-        expect(hash_body['user'].keys?(key)).to eq true
+    context '[body]' do
+      before do
+        get :show, format: 'json'
+        @hash_body = JSON.parse(response.body).with_indifferent_access
+      end
+
+      it 'returns [user] details' do
+        expect(@hash_body.key?('user')).to eq true
+      end
+
+      %w[id email first_name last_name phone fax token].each do |key|
+        it "returns [#{key}] in user details" do
+          expect(@hash_body['user'].key?(key)).to eq true
+        end
       end
     end
   end
