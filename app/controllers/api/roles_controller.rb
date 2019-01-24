@@ -3,10 +3,10 @@ class Api::RolesController < ApplicationController
 
   # Before Actions
   authorize_resource
-  before_action :set_role, except: [:create, :index]
+  before_action :set_role, :set_roles,  only: [:show, :destroy]
+  before_action :set_roles, only: [:index, :destroy]
 
   def index
-    @roles = Role.all # TODO: Apply pagination
     render json: @roles
   end
 
@@ -14,25 +14,9 @@ class Api::RolesController < ApplicationController
     render json: @role
   end
 
-  def create
-    @role = Role.new(role_params)
-    if @role.save
-      render json: @role
-    else
-      render json: { errors: @role.errors }, status: :unprocessable_entity
-    end
-  end
-
-  def update
-    if @role.update(role_params)
-      render 'create'
-    else
-      render json: { errors: @role.errors }, status: :unprocessable_entity
-    end
-  end
-
   def destroy
     @role.destroy
+    render json: @roles
   end
 
   private
@@ -43,5 +27,9 @@ class Api::RolesController < ApplicationController
 
   def role_params
     params.require(:role).permit(:name)
+  end
+
+  def set_roles
+    @roles = @roles = Role.all # TODO: Apply pagination
   end
 end
