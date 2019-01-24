@@ -116,7 +116,7 @@ class Attachment < ApplicationRecord
     processed_data_changes = changes[:processed_data][1]
     details = processed_data_changes.delete(:Details)
     processed_data_changes.each do |key, value|
-      status = processed_data_changes[key][:status]
+      status = processed_data_changes[key][:Status]
       if status.present? && !status.in?(Attachment.statuses)
         attachable.errors.add(:processed_data, "status not in #{Attachment.statuses.keys.to_sentence}")
         throw(:abort)
@@ -125,7 +125,7 @@ class Attachment < ApplicationRecord
     if details.present?
       details.map! do |hash|
         hash.each do |key, value|
-          status = hash[key][:status]
+          status = hash[key][:Status]
           if status.present? && !status.in?(Attachment.statuses)
             attachable.errors.add(:processed_data, "status not in #{Attachment.statuses.keys.to_sentence}")
             throw(:abort)
