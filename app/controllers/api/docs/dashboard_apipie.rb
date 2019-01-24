@@ -39,7 +39,7 @@ module Api
         param :page_details, Hash do
           param :total_records, Integer
           param :total_pages, Integer
-          param :current_page, Integer
+          param :page_number, Integer
         end
       end
       def index; end
