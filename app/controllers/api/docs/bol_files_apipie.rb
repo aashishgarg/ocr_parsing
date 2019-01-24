@@ -151,19 +151,34 @@ module Api
       header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
       header 'Content-Type', 'application/json', required: true
       param :bol_file, Hash, required: true do
-        param :bol_type_id, Integer
         param :name, String
-        param :shipper_name, String, desc: 'Shipper Name of BOL File'
-        param :status, String
-        param :user_id, Integer, desc: 'ID of the user'
-        param :extracted_at, DateTime, desc: 'Status of BOL File'
-        param :user_id, Integer, desc: 'Status of BOL File'
         param :attachments_attributes, Hash do
-          param :number, Hash do
-            param :data, String
+          param :number1, Hash do
+            param :id, Integer, required: true
+            param :processed_data, Hash do
+              param :Details, Array do
+                param :Class, Hash do
+                  param :value, String
+                end
+              end
+              param :PoNumber, Hash do
+                param :value, String
+              end
+            end
           end
-          param :number, Hash do
-            param :data, String
+
+          param :number1, Hash do
+            param :id, Integer, required: true
+            param :processed_data, Hash do
+              param :Details, Array do
+                param :Class, Hash do
+                  param :value, String
+                end
+              end
+              param :PoNumber, Hash do
+                param :value, String
+              end
+            end
           end
         end
       end

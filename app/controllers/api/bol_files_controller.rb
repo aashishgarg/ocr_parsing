@@ -7,7 +7,6 @@ module Api
     # Before Actions
     authorize_resource
     before_action :set_bol_file, except: %i[create index]
-    after_action :set_line_status, only: %i[update], if: proc { params[:bol_file][:attachments_attributes].present? }
 
     def index
       begin
@@ -45,20 +44,23 @@ module Api
       @bol_file = BolFile.find(params[:id])
     end
 
-    def set_line_status
-      params[:bol_file][:attachments_attributes].each do |number, attachment_params|
-        next if !attachment_params[:id].present? || !attachment_params[:ocr_data].present?
-
-        attachment = @bol_file.attachments.find_by(id: attachment_params[:id])
-        data = attachment.processed_data
-        attachment_params[:ocr_data].each { |key, value| data[key] = { value: value, status: Attachment.key_status } }
-        attachment.update(processed_data: data)
-        render json: { errors: attachment.errors }, status: :unprocessable_entity unless attachment.valid?
-      end
-    end
-
     def bol_file_params
-      params.require(:bol_file).permit(:bol_type_id, :name, :status, attachments_attributes: %i[id data processed_data _destroy])
+      whitelisted_processed_keys = {}
+      whitelisted_processed_keys[:Details] = []
+      processed_keys = Attachment::REQUIRED_HASH.dup
+      details = processed_keys.delete(:Details)
+      processed_keys.keys.each { |key| whitelisted_processed_keys[key] = %i[value status] }
+      details.first.keys.each { |key| whitelisted_processed_keys[:Details] << { key => %i[value status] } }
+
+      params.require(:bol_file).permit(:bol_type_id,
+                                       :name,
+                                       :status,
+                                       attachments_attributes: [
+                                         :id,
+                                         :data,
+                                         :_destroy,
+                                         { processed_data: whitelisted_processed_keys }
+                                       ])
     end
   end
 end

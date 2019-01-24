@@ -74,13 +74,14 @@ class Attachment < ApplicationRecord
   after_create_commit :queue_file
   after_update :set_bol_status, if: proc { previous_changes.has_key?(:status) }
   after_update :update_parent_details, if: proc { previous_changes.has_key?(:ocr_parsed_data) && previous_changes[:ocr_parsed_data][1].present? }
+  before_update :adjust_keys, if: proc { changes.key?(:processed_data) && changes[:processed_data][0].present? }
 
   def path
     data.path
   end
 
   def self.key_status
-    (User.current.is_customer? || User.current.is_admin?) ? 'uat_approved' : 'qa_approved'
+    User.current.is_customer? || User.current.is_admin? ? 'uat_approved' : 'qa_approved'
   end
 
   def process_image_type
@@ -108,6 +109,31 @@ class Attachment < ApplicationRecord
   end
 
   def queue_file
-    ProcessFilesJob.perform_later(self)
+    ProcessFilesJob.perform_later(self, User.current)
+  end
+
+  def adjust_keys
+    processed_data_changes = changes[:processed_data][1]
+    details = processed_data_changes.delete(:Details)
+    processed_data_changes.each do |key, value|
+      status = processed_data_changes[key][:status]
+      if status.present? && !status.in?(Attachment.statuses)
+        attachable.errors.add(:processed_data, "status not in #{Attachment.statuses.keys.to_sentence}")
+        throw(:abort)
+      end
+    end
+    if details.present?
+      details.map! do |hash|
+        hash.each do |key, value|
+          status = hash[key][:status]
+          if status.present? && !status.in?(Attachment.statuses)
+            attachable.errors.add(:processed_data, "status not in #{Attachment.statuses.keys.to_sentence}")
+            throw(:abort)
+          end
+        end
+      end
+      processed_data_changes[:Details] = details
+    end
+    self.processed_data = changes[:processed_data][0].merge(processed_data_changes)
   end
 end

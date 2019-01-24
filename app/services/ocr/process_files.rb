@@ -13,8 +13,9 @@ module Ocr
     after_push_to_ocr :process_ocr_data
     after_push_to_ocr :clean_local_s3_object
 
-    def initialize(attachment)
+    def initialize(attachment, current_user)
       @attachment = attachment
+      @current_user = User.current = current_user
       @response_required_fields = Attachment::REQUIRED_HASH
       @local_file = nil
       @uri = URI.parse(ENV['OCR_SERVICE_URL'])
@@ -36,7 +37,7 @@ module Ocr
     # Places request to OCR Service
     def push_to_ocr
       run_callbacks :push_to_ocr do
-        @response = @http.request(request)
+        @response = @http.request(@request)
       end
     end
 
@@ -44,7 +45,7 @@ module Ocr
 
     # Sets base64 of the image and send as binary
     def set_request
-      @request.body = { data: Base64.encode64(File.read(@local_file)).delete('\n').unpack('B*') }.to_json
+      @request.body = { data: Base64.encode64(File.read(@local_file)).delete('\n') }.to_json
     end
 
     # Set the status of attachment file
