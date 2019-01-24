@@ -49,8 +49,8 @@ module Api
       processed_keys = Attachment::REQUIRED_HASH.dup
       details = processed_keys.delete(:Details)
       whitelisted_processed_keys[:Details] = []
-      processed_keys.keys.each { |key| whitelisted_processed_keys[key] = {} }
-      details[0].keys.each { |key| whitelisted_processed_keys[:Details] << { key => {} } }
+      processed_keys.keys.each { |key| whitelisted_processed_keys[key] = [:value] }
+      details[0].keys.each { |key| whitelisted_processed_keys[:Details] << { key => [:value] } }
 
       params.require(:bol_file).permit(:bol_type_id,
                                        :name,
