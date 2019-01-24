@@ -81,7 +81,7 @@ class Attachment < ApplicationRecord
   end
 
   def self.key_status
-    (User.current.is_customer? || User.current.is_admin?) ? 'uat_approved' : 'qa_approved'
+    User.current.is_customer? || User.current.is_admin? ? 'uat_approved' : 'qa_approved'
   end
 
   def process_image_type
@@ -115,9 +115,23 @@ class Attachment < ApplicationRecord
   def adjust_keys
     processed_data_changes = changes[:processed_data][1]
     details = processed_data_changes.delete(:Details)
-    processed_data_changes.each { |key, value| processed_data_changes[key][:status] = Attachment.key_status }
+    processed_data_changes.each do |key, value|
+      status = processed_data_changes[key][:status]
+      if status.present? && !status.in?(Attachment.statuses)
+        attachable.errors.add(:processed_data, "status not in #{Attachment.statuses.keys.to_sentence}")
+        throw(:abort)
+      end
+    end
     if details.present?
-      details.map! { |hash| hash.each { |key, value| hash[key][:status] = Attachment.key_status } }
+      details.map! do |hash|
+        hash.each do |key, value|
+          status = hash[key][:status]
+          if status.present? && !status.in?(Attachment.statuses)
+            attachable.errors.add(:processed_data, "status not in #{Attachment.statuses.keys.to_sentence}")
+            throw(:abort)
+          end
+        end
+      end
       processed_data_changes[:Details] = details
     end
     self.processed_data = changes[:processed_data][0].merge(processed_data_changes)
