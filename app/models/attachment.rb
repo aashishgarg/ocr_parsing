@@ -74,7 +74,7 @@ class Attachment < ApplicationRecord
   after_create_commit :queue_file
   after_update :set_bol_status, if: proc { previous_changes.has_key?(:status) }
   after_update :update_parent_details, if: proc { previous_changes.has_key?(:ocr_parsed_data) && previous_changes[:ocr_parsed_data][1].present? }
-  before_update :adjust_keys, if: proc { changes.key? :processed_data }
+  before_update :adjust_keys, if: proc { changes.key?(:processed_data) && changes[:processed_data][0].present? }
 
   def path
     data.path
@@ -113,16 +113,13 @@ class Attachment < ApplicationRecord
   end
 
   def adjust_keys
-    if changes[:processed_data][0]
-      processed_data_changes = changes[:processed_data][1]
-      details = processed_data_changes.delete(:Details)
-      processed_data_changes.each { |key, value| processed_data_changes[key][:status] = Attachment.key_status }
-
-      if details.present?
-        details.map! { |hash| hash.each { |key, value| hash[key][:status] = Attachment.key_status } }
-        processed_data_changes[:Details] = details
-      end
-      self.processed_data = changes[:processed_data][0].merge(processed_data_changes)
+    processed_data_changes = changes[:processed_data][1]
+    details = processed_data_changes.delete(:Details)
+    processed_data_changes.each { |key, value| processed_data_changes[key][:status] = Attachment.key_status }
+    if details.present?
+      details.map! { |hash| hash.each { |key, value| hash[key][:status] = Attachment.key_status } }
+      processed_data_changes[:Details] = details
     end
+    self.processed_data = changes[:processed_data][0].merge(processed_data_changes)
   end
 end
