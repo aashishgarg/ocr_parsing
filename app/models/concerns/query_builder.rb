@@ -50,9 +50,9 @@ module QueryBuilder
 
     def page_details(params)
       {
-        total_records: search(params).count,
+        total_records: search(params).except(:limit, :offset).count,
         total_pages: search(params).total_pages,
-        current_page: search(params).current_page
+        page_number: search(params).current_page
       }
     end
 

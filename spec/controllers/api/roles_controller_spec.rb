@@ -59,7 +59,7 @@ RSpec.describe Api::RolesController, type: :controller do
 
     it 'removes role from table' do
       expect do
-        delete :destroy, params { id: @role.id }
+        delete :destroy, params: { id: @role.id }
       end.to change(Role, :count).by(-1)
       expect(response).to be_successful
     end
