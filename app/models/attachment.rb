@@ -109,18 +109,20 @@ class Attachment < ApplicationRecord
   end
 
   def queue_file
-    ProcessFilesJob.perform_later(self)
+    ProcessFilesJob.perform_later(self, User.current)
   end
 
   def adjust_keys
-    processed_data_changes = changes[:processed_data][1]
-    details = processed_data_changes.delete(:Details)
-    processed_data_changes.each { |key, value| processed_data_changes[key][:status] = Attachment.key_status }
+    if changes[:processed_data][0]
+      processed_data_changes = changes[:processed_data][1]
+      details = processed_data_changes.delete(:Details)
+      processed_data_changes.each { |key, value| processed_data_changes[key][:status] = Attachment.key_status }
 
-    if details.present?
-      details.map! { |hash| hash.each { |key, value| hash[key][:status] = Attachment.key_status } }
-      processed_data_changes[:Details] = details
+      if details.present?
+        details.map! { |hash| hash.each { |key, value| hash[key][:status] = Attachment.key_status } }
+        processed_data_changes[:Details] = details
+      end
+      self.processed_data = changes[:processed_data][0].merge(processed_data_changes)
     end
-    self.processed_data = changes[:processed_data][0].merge(processed_data_changes)
   end
 end

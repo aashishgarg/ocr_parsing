@@ -13,8 +13,9 @@ module Ocr
     after_push_to_ocr :process_ocr_data
     after_push_to_ocr :clean_local_s3_object
 
-    def initialize(attachment)
+    def initialize(attachment, current_user)
       @attachment = attachment
+      @current_user = User.current = current_user
       @response_required_fields = Attachment::REQUIRED_HASH
       @local_file = nil
       @uri = URI.parse(ENV['OCR_SERVICE_URL'])
