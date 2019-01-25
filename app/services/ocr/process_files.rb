@@ -11,13 +11,14 @@ module Ocr
     before_send_to_ocr :download_file
     before_send_to_ocr :set_body
     before_send_to_ocr { attachment.sent_to_ocr! }
-    after_send_to_ocr :set_status
+    after_send_to_ocr { response.code == '200' ? attachment.parsed! : attachment.failed! }
     after_send_to_ocr :process_ocr_data
     after_send_to_ocr :save_processed_data
     after_send_to_ocr :clean_references
 
     def initialize(attachment, current_user = nil)
       @attachment = attachment
+      attachment.processor = self
       @current_user = User.current = current_user
       @response_required_fields = Attachment::REQUIRED_HASH
       @local_file = nil
@@ -68,15 +69,6 @@ module Ocr
     # Deletes the local downloaded attachment file
     def clean_references
       s3_file_processor.clean_local_file if s3_file_processor.file_path
-    end
-
-    def set_status
-      if response.code == '200'
-        attachment.parsed!
-      else
-        attachment.failed!
-        attachment.errors.add(:ocr, "Parsing failed at ocr with response code #{response.code} due to '#{response.body}'")
-      end
     end
   end
 end

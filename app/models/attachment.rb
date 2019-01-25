@@ -1,6 +1,6 @@
 class Attachment < ApplicationRecord
   # Attribute Accessors
-  attr_accessor :ocr_data, :parsed_data
+  attr_accessor :ocr_data, :parsed_data, :processor
 
   # Modules Inclusion
   include StateMachine
@@ -139,12 +139,14 @@ class Attachment < ApplicationRecord
 
   def raise_exception
     begin
-      raise FailedAtOcr, "Parsing failed at ocr - #{errors.full_messages.to_sentence}"
+      message = "Parsing failed at ocr with response code #{processor.response.code} due to '#{processor.response.body}'"
+      raise FailedAtOcr, message
     rescue FailedAtOcr => e
       ExceptionNotifier.notify_exception(e, data: { attachment: self,
                                                     bol_file: attachable,
                                                     current_user: User.current,
-                                                    message: e.message })
+                                                    message: e.message,
+                                                    processor: processor })
     end
   end
 end
