@@ -5,14 +5,15 @@ module Ocr
 
     # Attribute Accessors
     attr_accessor :attachment, :current_user, :response_required_fields, :local_file, :uri, :http, :request, :response,
-                  :processed_data, :s3_file_processor
+                  :processed_data, :s3_file_processor, :update_hash
 
     # Callbacks
     before_send_to_ocr :download_file
     before_send_to_ocr :set_body
     before_send_to_ocr { attachment.sent_to_ocr! }
     after_send_to_ocr { response.code == '200' ? attachment.parsed! : attachment.failed! }
-    after_send_to_ocr :process_ocr_data
+    after_send_to_ocr :dump_ocr_data
+    after_send_to_ocr :process_ocr_data, if: proc { json_response['response_code'] == '100' }
     after_send_to_ocr :save_processed_data
     after_send_to_ocr :clean_references
 
@@ -29,6 +30,7 @@ module Ocr
       @response = nil
       @processed_data = nil
       @s3_file_processor = S3::ProcessFiles.new(attachment)
+      @update_hash = {}
     end
 
     # Places request to OCR Service
@@ -58,8 +60,13 @@ module Ocr
       self.processed_data = Ocr::Parser.new(json_response['data'], response_required_fields).add_status_keys
     end
 
+    def dump_ocr_data
+      update_hash[:ocr_parsed_data] = json_response
+    end
+
     def save_processed_data
-      attachment.update(ocr_parsed_data: json_response, processed_data: processed_data)
+      update_hash[:processed_data] = processed_data
+      attachment.update(update_hash)
     end
 
     def json_response

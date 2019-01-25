@@ -1,6 +1,6 @@
 class Attachment < ApplicationRecord
   # Attribute Accessors
-  attr_accessor :ocr_data, :parsed_data, :processor
+  attr_accessor :processor
 
   # Modules Inclusion
   include StateMachine
