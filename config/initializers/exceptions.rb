@@ -24,3 +24,12 @@ class ColumnNotValid < StandardError
     super(message)
   end
 end
+
+class FailedAtOcr < StandardError
+  attr_accessor :message
+
+  def initialize(message = nil)
+    @message = message
+    super(message)
+  end
+end

@@ -136,4 +136,15 @@ class Attachment < ApplicationRecord
     end
     self.processed_data = changes[:processed_data][0].merge(processed_data_changes)
   end
+
+  def raise_exception
+    begin
+      raise FailedAtOcr, "Parsing failed at ocr - #{errors.full_messages.to_sentence}"
+    rescue FailedAtOcr => e
+      ExceptionNotifier.notify_exception(e, data: { attachment: self,
+                                                    bol_file: attachable,
+                                                    current_user: User.current,
+                                                    message: e.message })
+    end
+  end
 end

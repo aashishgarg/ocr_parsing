@@ -5,11 +5,12 @@ module Statuses
     enum status: {
       uploaded: 0,
       ocr_pending: 1,
-      ocr_done: 2,
-      qa_approved: 3,
-      qa_rejected: 4,
-      uat_rejected: 5,
-      released: 6
+      failed_at_ocr: 2,
+      ocr_done: 3,
+      qa_approved: 4,
+      qa_rejected: 5,
+      uat_rejected: 6,
+      released: 7
     }
   end
 end
