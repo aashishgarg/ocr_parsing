@@ -61,15 +61,18 @@ module Ocr
       json_parser.add_status_keys
     end
 
+    # Dump data returned from ocr without any manipulations in attachment
     def dump_ocr_data
       update_hash[:ocr_parsed_data] = json_response
     end
 
+    # Dump processed data returned from ocr in attachment
     def save_processed_data
       update_hash[:processed_data] = json_parser.final_hash
       attachment.update(update_hash)
     end
 
+    # Ocr response in json format
     def json_response
       JSON.parse(response.body)
     end
