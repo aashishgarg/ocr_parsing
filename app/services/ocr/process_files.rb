@@ -5,7 +5,7 @@ module Ocr
 
     # Attribute Accessors
     attr_accessor :attachment, :current_user, :response_required_fields, :local_file, :uri, :http, :request, :response,
-                  :processed_data, :s3_file_processor, :update_hash
+                  :s3_file_processor, :update_hash, :json_parser
 
     # Callbacks
     before_send_to_ocr :download_file
@@ -19,7 +19,7 @@ module Ocr
 
     def initialize(attachment, current_user = nil)
       @attachment = attachment
-      attachment.processor = self
+      @attachment.processor = self
       @current_user = User.current = current_user
       @response_required_fields = Attachment::REQUIRED_HASH
       @local_file = nil
@@ -28,9 +28,9 @@ module Ocr
       @http.use_ssl = true
       @request = Net::HTTP::Post.new(uri.request_uri, 'Content-Type': 'application/json')
       @response = nil
-      @processed_data = nil
       @s3_file_processor = S3::ProcessFiles.new(attachment)
       @update_hash = {}
+      @json_parser = nil
     end
 
     # Places request to OCR Service
@@ -57,7 +57,8 @@ module Ocr
 
     # Updates the direct response in (ocr_parsed_data) and processed data in (processed_data) of Attachment
     def process_ocr_data
-      self.processed_data = Ocr::Parser.new(json_response['data'], response_required_fields).add_status_keys
+      self.json_parser = Ocr::Parser.new(json_response['data'], response_required_fields)
+      json_parser.add_status_keys
     end
 
     def dump_ocr_data
@@ -65,7 +66,7 @@ module Ocr
     end
 
     def save_processed_data
-      update_hash[:processed_data] = processed_data
+      update_hash[:processed_data] = json_parser.final_hash
       attachment.update(update_hash)
     end
 
