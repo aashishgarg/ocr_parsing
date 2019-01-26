@@ -8,7 +8,8 @@ module StateMachine
 
     aasm column: 'status', enum: true, whiny_transitions: false do
       state :uploaded, initial: true
-      state :ocr_pending, :ocr_done, :qa_approved, :qa_rejected, :uat_rejected, :released, :failed_at_ocr
+      state :ocr_pending, :ocr_done, :qa_approved, :qa_rejected, :uat_rejected, :released, :failed_at_ocr,
+            :failed_in_response_parsing
 
       event :sent_to_ocr do
         transitions from: :uploaded, to: :ocr_pending
@@ -18,8 +19,12 @@ module StateMachine
         transitions to: :ocr_done
       end
 
-      event :failed, after: :raise_exception do
+      event :ocr_failed, after: :raise_exception do
         transitions from: :ocr_pending, to: :failed_at_ocr
+      end
+
+      event :parsing_failed, after: :raise_exception do
+        transitions from: %i[ocr_pending ocr_done ocr_failed], to: :failed_in_response_parsing
       end
 
       event :qa_approve do
