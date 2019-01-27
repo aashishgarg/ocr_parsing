@@ -8,7 +8,7 @@ module Ocr
 
     # Callbacks
     before_add_status_keys :make_camelcase_keys
-    before_add_status_keys :set_data_in_details
+    before_add_status_keys :set_data_in_details, if: proc { !json_data['Details'].present? }
     before_add_status_keys :add_required_keys, if: proc { required_hash.present? }
 
     def initialize(json_data, required_hash)
@@ -28,8 +28,6 @@ module Ocr
     # Checks for keys of [:Details] section - (Pieces, PackageType, Weight, Hazmat, Description, Class) at root of
     # coming json and adds then to :Details section.
     def set_data_in_details
-      return if json_data['Details'].present?
-
       json_data['Details'] = [{}]
       required_details.keys.each do |key|
         json_data['Details'].first.merge!(key => json_data.delete(key.to_s))
@@ -45,10 +43,9 @@ module Ocr
     # Modifies the Json and adds [:Value,:Status] keys in each key of json
     def add_status_keys
       run_callbacks :add_status_keys do
-        details = final_hash.delete('Details')
-        details = [] unless details.present?
+        details = final_hash.delete('Details') || []
         details.map! { |hash| hash.transform_values { |value| { Value: value, Status: nil } } }
-        final_hash.transform_values! { |value| { Value: value, Status: nil } }.merge!(Details: details)
+        final_hash.transform_values! { |value| { Value: value, Status: nil } }['Details'] = details
         final_hash
       end
     end

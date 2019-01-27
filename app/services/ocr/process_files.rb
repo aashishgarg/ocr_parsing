@@ -5,7 +5,7 @@ module Ocr
 
     # Attribute Accessors
     attr_accessor :attachment, :current_user, :response_required_fields, :local_file, :uri, :http, :request, :response,
-                  :s3_file_processor, :update_hash, :json_parser
+                  :s3_file_processor, :json_parser
 
     # Callbacks
     before_send_to_ocr :download_file
@@ -29,7 +29,6 @@ module Ocr
       @request = Net::HTTP::Post.new(uri.request_uri, 'Content-Type': 'application/json')
       @response = nil
       @s3_file_processor = S3::ProcessFiles.new(attachment)
-      @update_hash = {}
       @json_parser = nil
     end
 
@@ -60,19 +59,19 @@ module Ocr
 
     # Updates the direct response in (ocr_parsed_data) and processed data in (processed_data) of Attachment
     def process_ocr_data
-      if json_response['response_code'] == '100'
+      if successful?
         begin
           self.json_parser = Ocr::Parser.new(json_response['data'], response_required_fields)
-          self.update_hash = json_parser.add_status_keys
+          json_parser.add_status_keys
         rescue => e
           attachment.parsing_failed!
-          report_exception(e)
+          report_exception(e, self)
         end
       else
         begin
           raise ResponseErrorAtOcr, "Ocr Response is - #{json_response['response_code']} not 100"
         rescue ResponseErrorAtOcr => e
-          report_exception(e)
+          report_exception(e, self)
         end
       end
     end
@@ -92,14 +91,8 @@ module Ocr
       s3_file_processor.clean_local_file if s3_file_processor.file_path
     end
 
-    # Exception
-    def report_exception(e)
-      ExceptionNotifier.notify_exception(e, data: { attachment: attachment,
-                                                    bol_file: attachment.attachable,
-                                                    current_user: current_user,
-                                                    message: e.message,
-                                                    json_parser: json_parser,
-                                                    processor: self })
+    def successful?
+      json_response['response_code'] == '100'
     end
   end
 end
