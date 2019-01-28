@@ -61,7 +61,7 @@ RSpec.describe Api::BolFilesController, type: :controller do
         expect(@body.key?('page_details')).to eq(true)
       end
 
-      %w[total_records total_pages current_page].each do |key|
+      %w[total_records total_pages page_number].each do |key|
         it "provides page_details[:#{key}]" do
           get :index, params: { filter_column: ['name'], filter_value: %w[value] }, format: 'json'
           @body = JSON.parse(response.body).with_indifferent_access
@@ -89,7 +89,7 @@ RSpec.describe Api::BolFilesController, type: :controller do
         expect(@body.key?('page_details')).to eq(true)
       end
 
-      %w[total_records total_pages current_page].each do |key|
+      %w[total_records total_pages page_number].each do |key|
         it "provides page_details[:#{key}]" do
           get :index, params: { dashboard: true }, format: 'json'
           @body = JSON.parse(response.body).with_indifferent_access
