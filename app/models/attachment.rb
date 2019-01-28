@@ -60,11 +60,7 @@ class Attachment < ApplicationRecord
 
   # Associations
   belongs_to :attachable, polymorphic: true
-  has_attached_file :data,
-                    styles: lambda { |attachment|
-                      attachment.instance.process_image_type
-                    },
-                    processors: [:ocr]
+  has_attached_file :data, styles: lambda { |attachment| attachment.instance.process_image_type }
 
   # Validations
   validates_attachment_presence :data
