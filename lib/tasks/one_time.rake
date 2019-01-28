@@ -1,4 +1,4 @@
-namespace :attachments do
+namespace :one_time do
   desc 'Migrate attachments data as per newly added statues - (failed_at_ocr -> 2, failed_in_response_parsing -> 3)'
   task migrate_statuses: :environment do
 
