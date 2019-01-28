@@ -29,25 +29,29 @@ module Pittohio
     # File storage on Amazon S3
     # config.active_storage.service = :amazon
 
+    # --- S3 bucket settings used by Paperclip to save files in s3 bucket --- #
     unless Rails.env.test?
       config.paperclip_defaults = {
-        storage: :s3,
-        s3_host_name: 's3.amazonaws.com',
-        s3_credentials: {
-          access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-          secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-          s3_region: 'us-east-1'
-        },
-        bucket: ENV['AWS_BUCKET']
-        # ,s3_permissions: :private
+          storage: :s3,
+          s3_host_name: 's3.amazonaws.com',
+          s3_credentials: {
+              access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+              secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+              s3_region: 'us-east-1'
+          },
+          bucket: ENV['AWS_BUCKET']
+          # ,s3_permissions: :private
       }
+    end
 
+    # --- Exceptions Emails to be delivered in Production or Staging Environment only --- #
+    if Rails.env.production? || Rails.env.staging?
       config.middleware.use ExceptionNotification::Rack,
                             email: {
-                              email_prefix: "[Pitt Ohio] [#{Rails.env}] ",
+                              email_prefix: "[PittOhio][#{Rails.env}] ",
                               sender_address: %('Exception Notifier' <no-reply@pittohio.com>),
                               exception_recipients: %w[pitt_ohio@googlegroups.com],
-                              delivery_method: Rails.env.development? ? :letter_opener : :smtp,
+                              delivery_method: :smtp,
                               deliver_with: :deliver,
                               smtp_settings: {
                                 address: 'smtp.gmail.com',
