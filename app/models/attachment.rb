@@ -1,6 +1,6 @@
 class Attachment < ApplicationRecord
   # Attribute Accessors
-  attr_accessor :ocr_data, :parsed_data
+  attr_accessor :processor
 
   # Modules Inclusion
   include StateMachine
@@ -116,7 +116,7 @@ class Attachment < ApplicationRecord
     processed_data_changes = changes[:processed_data][1]
     details = processed_data_changes.delete(:Details)
     processed_data_changes.each do |key, value|
-      status = processed_data_changes[key][:status]
+      status = processed_data_changes[key][:Status]
       if status.present? && !status.in?(Attachment.statuses)
         attachable.errors.add(:processed_data, "status not in #{Attachment.statuses.keys.to_sentence}")
         throw(:abort)
@@ -125,7 +125,7 @@ class Attachment < ApplicationRecord
     if details.present?
       details.map! do |hash|
         hash.each do |key, value|
-          status = hash[key][:status]
+          status = hash[key][:Status]
           if status.present? && !status.in?(Attachment.statuses)
             attachable.errors.add(:processed_data, "status not in #{Attachment.statuses.keys.to_sentence}")
             throw(:abort)
@@ -135,5 +135,18 @@ class Attachment < ApplicationRecord
       processed_data_changes[:Details] = details
     end
     self.processed_data = changes[:processed_data][0].merge(processed_data_changes)
+  end
+
+  def raise_exception
+    begin
+      message = "Parsing failed at ocr with response code #{processor.response.code} due to '#{processor.response.body}'"
+      raise FailedAtOcr, message
+    rescue FailedAtOcr => e
+      ExceptionNotifier.notify_exception(e, data: { attachment: self,
+                                                    bol_file: attachable,
+                                                    current_user: User.current,
+                                                    message: e.message,
+                                                    processor: processor })
+    end
   end
 end
