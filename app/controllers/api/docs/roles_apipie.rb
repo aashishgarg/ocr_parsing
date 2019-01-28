@@ -38,43 +38,7 @@ module Api
       end
       def show; end
 
-      api :POST, '/roles', 'Creates a new BOL File'
-      description 'Shows a specific role'
-      param :role, Hash do
-        param :name, String
-      end
-      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
-      header 'Content-Type', 'application/json', required: true
-      error code: 401, desc: 'Unauthorized'
-      error code: 422, desc: 'Unprocessable Entity'
-      formats ['json']
-      returns code: 200, desc: 'Detailed information about Role' do
-        param_group :role
-      end
-      returns code: :unprocessable_entity, desc: 'Unprocessable Entity' do
-        param_group :errors
-      end
-      def create; end
-
-      api :PUT, '/roles/:id', 'Updates a Role'
-      desc 'Updates a role'
-      param :role, Hash, required: true do
-        param :name, String
-      end
-      header 'Authentication', 'Token eyJhbGciOiJIUzI1NiJ9', required: true
-      header 'Content-Type', 'application/json', required: true
-      error code: 401, desc: 'Unauthorized'
-      error code: 422, desc: 'Unprocessable Entity'
-      formats ['json']
-      returns code: 200, desc: 'Update information about Role' do
-        param_group :role
-      end
-      returns code: :unprocessable_entity, desc: 'Unprocessable Entity' do
-        param_group :errors
-      end
-      def update;end
-
-      api :DELETE, '/roles/:id', 'Deletes a specific BOL File'
+      api :DELETE, '/roles/:id', 'Deletes a specific Role'
       desc 'Deletes a specific role'
       param :id, Integer
       param :id, String
