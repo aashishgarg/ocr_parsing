@@ -43,7 +43,7 @@ class Attachment < ApplicationRecord
     BolNumber: nil,
     PoNumber: nil,
     EmergencyContactInfo: nil,
-    PaymentTerms: 'PPD',
+    PaymentTerms: nil,
     ShipmentDate: nil,
     PreAssignedPittPro: nil,
     Details: [
