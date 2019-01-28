@@ -16,6 +16,24 @@ RSpec.describe Ocr::ProcessFiles do
   end
 
   context '#processed_data' do
+    it "all keys other than [Details] have a hash with keys ['Value', 'Status']" do
+      processed = @attach.processed_data.dup
+      processed.delete('Details')
+      processed.each do |key, value|
+        expect([value.key?('Status'), value.key?('Value')]).to eq([true, true])
+      end
+    end
+
+    it "all keys in hashes in [Details] have a hash with keys ['Value', 'Status']" do
+      processed = @attach.processed_data.dup
+      details = processed.delete('Details')
+      details.each do |hash|
+        hash.each do |key, hash1|
+          expect([hash1.key?('Status'), hash1.key?('Value')]).to eq([true, true])
+        end
+      end
+    end
+
     it 'is not same as returned response' do
       expect(@attach.processed_data).not_to eq(@file_processor.json_response)
     end
@@ -37,5 +55,13 @@ RSpec.describe Ocr::ProcessFiles do
         end
       end
     end
+  end
+
+  it 'all keys of #ocr_parsed_data with a value have same value in #processed_data' do
+
+  end
+
+  after(:all) do
+    @bol_file.destroy
   end
 end
