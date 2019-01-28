@@ -8,6 +8,7 @@ module Ocr
 
     # Callbacks
     before_add_status_keys :make_camelcase_keys
+    before_add_status_keys :apply_custom_rules
     before_add_status_keys :set_data_in_details, if: proc { !json_data['Details'].present? }
     before_add_status_keys :add_required_keys, if: proc { required_hash.present? }
 
@@ -23,6 +24,12 @@ module Ocr
       json_data.transform_keys! { |key| key.delete(' ').camelcase }
       json_data['Details'].map! { |hash| hash.transform_keys! { |key| key.delete(' ').camelcase } } if json_data['Details'].present?
       json_data
+    end
+
+    # Customizing the keys in the response json
+    def apply_custom_rules
+      json_data = json_data.with_indifferent_access
+      json_data['PaymentTerms'] = 'ppd' unless json_data['PaymentTerms'].present?
     end
 
     # Checks for keys of [:Details] section - (Pieces, PackageType, Weight, Hazmat, Description, Class) at root of
