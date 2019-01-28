@@ -88,8 +88,6 @@ class Attachment < ApplicationRecord
     end
   end
 
-  private
-
   def set_bol_status
     statuses = []
     attachable.attachments.pluck(:status).each { |status| statuses << Attachment.statuses[status]}
@@ -106,6 +104,10 @@ class Attachment < ApplicationRecord
 
   def queue_file
     ProcessFilesJob.perform_later(self, User.current)
+  end
+
+  def stored_at_s3?
+    Rails.configuration.respond_to?(:paperclip_defaults) && Rails.configuration&.paperclip_defaults&.dig(:storage) == :s3
   end
 
   def adjust_keys
