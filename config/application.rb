@@ -32,15 +32,15 @@ module Pittohio
     # --- S3 bucket settings used by Paperclip to save files in s3 bucket --- #
     unless Rails.env.test?
       config.paperclip_defaults = {
-          storage: :s3,
-          s3_host_name: 's3.amazonaws.com',
-          s3_credentials: {
-              access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-              secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-              s3_region: 'us-east-1'
-          },
-          bucket: ENV['AWS_BUCKET']
-          # ,s3_permissions: :private
+        storage: :s3,
+        s3_host_name: 's3.amazonaws.com',
+        s3_credentials: {
+          access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+          secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+          s3_region: 'us-east-1'
+        },
+        bucket: ENV['AWS_BUCKET'],
+        s3_permissions: :private
       }
     end
 
