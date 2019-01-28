@@ -28,7 +28,7 @@ module Ocr
 
     # Customizing the keys in the response json
     def apply_custom_rules
-      json_data = json_data.with_indifferent_access
+      self.json_data = json_data.with_indifferent_access
       json_data['PaymentTerms'] = 'PPD' unless json_data['PaymentTerms'].present?
     end
 
