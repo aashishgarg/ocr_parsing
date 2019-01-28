@@ -1,6 +1,8 @@
 class Attachment < ApplicationRecord
   # Attribute Accessors
   attr_accessor :processor
+  attr_reader :signed_original_url
+  attr_reader :signed_processed_url
 
   # Modules Inclusion
   include StateMachine
@@ -86,6 +88,14 @@ class Attachment < ApplicationRecord
     else
       { processed: { format: Rack::Mime::MIME_TYPES.invert[MIME_TYPE_FOR_OCR].delete('.') } }
     end
+  end
+
+  def signed_original_url
+    data.expiring_url(ENV['URL_EXPIRATION_TIME'].to_i)
+  end
+
+  def signed_processed_url
+    data_content_type.eql?('image/png') ? signed_original_url : data.expiring_url(ENV['URL_EXPIRATION_TIME'].to_i, :processed)
   end
 
   private
