@@ -15,7 +15,7 @@ module Ocr
     after_send_to_ocr :dump_ocr_data
     after_send_to_ocr :process_ocr_data
     after_send_to_ocr :save_processed_data
-    after_send_to_ocr :clean_references
+    after_send_to_ocr :clean_references, if: proc { attachment.stored_at_s3? }
 
     def initialize(attachment, current_user = nil)
       @attachment = attachment
@@ -28,7 +28,7 @@ module Ocr
       @http.use_ssl = true
       @request = Net::HTTP::Post.new(uri.request_uri, 'Content-Type': 'application/json')
       @response = nil
-      @s3_file_processor = S3::ProcessFiles.new(attachment)
+      @s3_file_processor = nil
       @json_parser = nil
     end
 
@@ -42,8 +42,13 @@ module Ocr
     # Downloads s3 object to local directory and extracts its local path
     def download_file
       run_callbacks :download_file do
-        s3_file_processor.download_s3_file
-        self.local_file = s3_file_processor.file_path
+        if attachment.stored_at_s3?
+          @s3_file_processor = S3::ProcessFiles.new(attachment)
+          s3_file_processor.download_s3_file
+          self.local_file = s3_file_processor.file_path
+        else
+          self.local_file = attachment.path
+        end
       end
     end
 
