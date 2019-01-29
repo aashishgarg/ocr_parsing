@@ -29,7 +29,9 @@ module Ocr
     # Customizing the keys in the response json
     def apply_custom_rules
       json_data['PaymentTerms'] = 'PPD' unless json_data['PaymentTerms'].present?
-      json_data['BolNumber'] = json_data.delete('BOLNumber') || json_data.delete('_BOLNumber') || json_data.delete('bolNumber')
+      bol_number = %w[bolnumber BolNumber bolNumber bol_number BOLNumber _BOLNumber bolNumber _BOLNumber_ Bol_Number]
+                   .collect { |key| json_data.delete(key) }.compact.first
+      json_data['BolNumber'] = bol_number
     end
 
     # Checks for keys of [:Details] section - (Pieces, PackageType, Weight, Hazmat, Description, Class) at root of
