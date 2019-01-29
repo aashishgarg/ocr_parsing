@@ -29,6 +29,7 @@ module Ocr
     # Customizing the keys in the response json
     def apply_custom_rules
       self.json_data = Attachment.parse_custom_rules(self.json_data)
+      json_data['BolNumber'] = %w[BolNumber bolNumber BOLNumber].collect { |key| json_data.delete(key) }.compact.first
     end
 
     # Checks for keys of [:Details] section - (Pieces, PackageType, Weight, Hazmat, Description, Class) at root of
