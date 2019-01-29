@@ -5,6 +5,8 @@ development:
   :concurrency: 8
 production:
   :concurrency: 10
+staging:
+  :concurrency: 10
 :queues:
   - ocr_queue
 
