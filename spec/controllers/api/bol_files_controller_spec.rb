@@ -162,6 +162,17 @@ RSpec.describe Api::BolFilesController, type: :controller do
 
     # ==== create [Attachments upload] ======================== #
     context 'single Attachment upload' do
+      it 'type [PNG] provides same urls' do
+        file = Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/attachments/bol_files/488118.001.png",
+                                            'multipart/form-data')
+        @params = { bol_file: { attachments_attributes: { '0' => { data: file } } } }
+        post :create, params: @params, format: 'json'
+        @body = JSON.parse(response.body).with_indifferent_access
+        expect(@body['bol_files'][0]['attachments'][0]['original_url']).not_to eq(nil)
+        expect(@body['bol_files'][0]['attachments'][0]['original_url'])
+          .to eq(@body['bol_files'][0]['attachments'][0]['processed_url'])
+      end
+
       context '[448118]' do
         before do
           file = Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/attachments/bol_files/448118",
