@@ -14,6 +14,7 @@ module CustomRule
   module ClassMethods
     def parse_custom_rules(json_data)
       process_payment_terms(json_data)
+      json_data['BolNumber'] = %w[BolNumber bolNumber BOLNumber].collect { |key| json_data.delete(key) }.compact.first
       json_data
     end
 
