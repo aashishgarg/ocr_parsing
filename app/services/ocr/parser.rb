@@ -28,8 +28,7 @@ module Ocr
 
     # Customizing the keys in the response json
     def apply_custom_rules
-      self.json_data = json_data.with_indifferent_access
-      json_data['PaymentTerms'] = 'PPD' unless json_data['PaymentTerms'].present?
+      self.json_data = Attachment.parse_custom_rules(self.json_data)
     end
 
     # Checks for keys of [:Details] section - (Pieces, PackageType, Weight, Hazmat, Description, Class) at root of
