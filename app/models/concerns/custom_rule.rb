@@ -3,26 +3,27 @@ module CustomRule
 
   included do
     extend ClassMethods
-    #Constants
+    # Constants
     PAYMENT_TERMS = {
       'PPD' => 'Prepaid',
       'COL' => 'Collect',
-      '3RD' => 'Third party'
+      '3RD' => 'Third Party'
     }.freeze
   end
 
   module ClassMethods
     def parse_custom_rules(json_data)
       process_payment_terms(json_data)
-      json_data['BolNumber'] = %w[BolNumber bolNumber BOLNumber].collect { |key| json_data.delete(key) }.compact.first
+      bol_number = %w[BolNumber bolNumber BOLNumber].collect do |key|
+        json_data.delete(key)
+      end
+      json_data['BolNumber'] = bol_number.compact.first
       json_data
     end
 
     def process_payment_terms(json_data)
-      if json_data['PaymentTerms'].present?
-        json_data['PaymentTerms'] = 'PPD' unless PAYMENT_TERMS.keys.include?(json_data['PaymentTerms'].strip!)
-      else
-        json_data['PaymentTerms'] = 'PPD'
+      unless PAYMENT_TERMS.keys.include?(json_data['PaymentTerms']&.strip!)
+        json_data['PaymentTerms'] = PAYMENT_TERMS.key('Prepaid')
       end
     end
   end

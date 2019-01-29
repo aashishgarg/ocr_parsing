@@ -43,7 +43,7 @@ module Ocr
     # Adds required keys to the json if not present
     def add_required_keys
       required_hash.delete('Details') unless json_data['Details'].present?
-      self.final_hash = required_hash.with_indifferent_access.merge(json_data)
+      self.final_hash = json_data
     end
 
     # Modifies the Json and adds [:Value,:Status] keys in each key of json
