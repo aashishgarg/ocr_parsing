@@ -7,6 +7,7 @@ class Attachment < ApplicationRecord
   # Modules Inclusion
   include StateMachine
   include ParentProcessor
+  include CustomRule
 
   # Constants
   PAPERCLIP_IMAGE_CONTENT_TYPE = [/\Aimage\/.*\z/, 'application/json'].freeze
