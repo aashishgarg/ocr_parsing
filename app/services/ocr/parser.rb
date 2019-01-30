@@ -37,6 +37,8 @@ module Ocr
     def set_data_in_details
       json_data['Details'] = [{}]
       required_details.keys.each do |key|
+        next unless json_data.key? key.to_s
+
         json_data['Details'].first.merge!(key => json_data.delete(key.to_s))
       end
     end

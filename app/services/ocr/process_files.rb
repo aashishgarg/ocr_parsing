@@ -21,7 +21,7 @@ module Ocr
       @attachment = attachment
       @attachment.processor = self
       @current_user = User.current = current_user
-      @response_required_fields = Attachment::REQUIRED_HASH
+      @response_required_fields = Attachment::MERGING_HASH
       @local_file = nil
       @uri = URI.parse(ENV['OCR_SERVICE_URL'])
       @http = Net::HTTP.new(uri.host, uri.port)

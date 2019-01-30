@@ -3,7 +3,7 @@ module ProcessedHashManagement
 
   included do
     # Hash that needs to be merged with Ocr response if merging is enabled.
-    REQUIRED_HASH = {
+    MERGING_HASH = {
         ShipperName: nil,
         ShipperAddress: nil,
         ShipperCity: nil,

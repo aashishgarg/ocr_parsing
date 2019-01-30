@@ -47,7 +47,7 @@ module Api
     def bol_file_params
       whitelisted_processed_keys = {}
       whitelisted_processed_keys[:Details] = []
-      processed_keys = Attachment::REQUIRED_HASH.dup
+      processed_keys = Attachment::MERGING_HASH.dup
       details = processed_keys.delete(:Details)
       processed_keys.keys.each { |key| whitelisted_processed_keys[key] = %i[Value Status] }
       details.first.keys.each { |key| whitelisted_processed_keys[:Details] << { key => %i[Value Status] } }
