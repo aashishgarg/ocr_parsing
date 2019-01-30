@@ -66,7 +66,7 @@ module Ocr
     def process_ocr_data
       if successful?
         begin
-          self.json_parser = Ocr::Parser.new(json_response['data'], response_required_fields)
+          self.json_parser = Ocr::Parser.new(json_response['data'], response_required_fields, attachment.merging_required)
           json_parser.add_status_keys
         rescue => e
           attachment.parsing_failed!
