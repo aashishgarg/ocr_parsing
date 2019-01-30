@@ -1,65 +1,18 @@
 class Attachment < ApplicationRecord
   # Attribute Accessors
   attr_accessor :processor
+  attr_accessor :merging_required # if true then processed_data will have the REQUIRED_HASH merged
   attr_reader :signed_original_url
   attr_reader :signed_processed_url
 
   # Modules Inclusion
   include StateMachine
   include ParentProcessor
-  include CustomRule
+  include ProcessedHashManagement
 
   # Constants
   PAPERCLIP_IMAGE_CONTENT_TYPE = [/\Aimage\/.*\z/, 'application/json'].freeze
   MIME_TYPE_FOR_OCR = 'image/png'.freeze
-  REQUIRED_HASH = {
-    ShipperName: nil,
-    ShipperAddress: nil,
-    ShipperCity: nil,
-    ShipperState: nil,
-    ShipperZip: nil,
-    ShipperContactPhone: nil,
-    ShipperContactFax: nil,
-    ShipperContactEmail: nil,
-    ShipperContactName: nil,
-    ConsigneeName: nil,
-    ConsigneeAddress: nil,
-    ConsigneeAddress2: nil,
-    ConsigneeCity: nil,
-    ConsigneeState: nil,
-    ConsigneeZip: nil,
-    ConsigneeContactPhone: nil,
-    ConsigneeContactFax: nil,
-    ConsigneeContactEmail: nil,
-    ConsigneeContactName: nil,
-    ThirdPartyName: nil,
-    ThirdPartyAddress: nil,
-    ThirdPartyAddress2: nil,
-    ThirdPartyCity: nil,
-    ThirdPartyState: nil,
-    ThirdPartyZip: nil,
-    ThirdPartyContactPhone: nil,
-    ThirdPartyContactFax: nil,
-    ThirdPartyContactEmail: nil,
-    ThirdPartyContactName: nil,
-    SpecialInstructions: nil,
-    BolNumber: nil,
-    PoNumber: nil,
-    EmergencyContactInfo: nil,
-    PaymentTerms: nil,
-    ShipmentDate: nil,
-    PreAssignedPittPro: nil,
-    Details: [
-      {
-        "Pieces": nil,
-        "PackageType": nil,
-        "Weight": nil,
-        "Hazmat": nil,
-        "Description": nil,
-        "Class": nil
-      }
-    ]
-  }.freeze
 
   # Associations
   belongs_to :attachable, polymorphic: true
@@ -70,6 +23,7 @@ class Attachment < ApplicationRecord
   validates_attachment :data, content_type: { content_type: PAPERCLIP_IMAGE_CONTENT_TYPE }
 
   # Callbacks
+  after_initialize(proc { @merging_required = false })
   after_create_commit :queue_file
   after_update :set_bol_status, if: proc { previous_changes.has_key?(:status) }
   after_update :update_parent_details, if: proc { previous_changes.has_key?(:ocr_parsed_data) && previous_changes[:ocr_parsed_data][1].present? }
