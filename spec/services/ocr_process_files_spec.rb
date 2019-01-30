@@ -39,14 +39,14 @@ RSpec.describe Ocr::ProcessFiles do
     end
 
     context 'contains required key' do
-      Attachment::REQUIRED_HASH.keys.each do |key|
+      Attachment::MERGING_HASH.keys.each do |key|
         it "[#{key}]" do
           expect(@attach.processed_data.key?(key.to_s)).to eq(true)
         end
       end
 
       context '[Details] further contains required key' do
-        Attachment::REQUIRED_HASH[:Details].each do |hash|
+        Attachment::MERGING_HASH[:Details].each do |hash|
           hash.keys.each do |key|
             it "[#{key}]" do
               expect(@attach.processed_data['Details'].first.key?(key.to_s)).to eq(true)
