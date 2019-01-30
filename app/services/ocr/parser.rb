@@ -22,9 +22,7 @@ module Ocr
 
     # Make all the keys in json camel cased
     def make_camelcase_keys
-      json_data.transform_keys! { |key| key.delete(' ').camelcase }
-      json_data['Details'].map! { |hash| hash.transform_keys! { |key| key.delete(' ').camelcase } } if json_data['Details'].present?
-      json_data
+      json_data.mappable!
     end
 
     # Customizing the keys in the response json
@@ -35,12 +33,7 @@ module Ocr
     # Checks for keys of [:Details] section - (Pieces, PackageType, Weight, Hazmat, Description, Class) at root of
     # coming json and adds then to :Details section.
     def set_data_in_details
-      json_data['Details'] = [{}]
-      required_details.keys.each do |key|
-        next unless json_data.key? key.to_s
-
-        json_data['Details'].first.merge!(key => json_data.delete(key.to_s))
-      end
+      json_data.provision_details_hash!
     end
 
     # Adds required keys to the json if not present

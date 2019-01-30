@@ -38,27 +38,14 @@ RSpec.describe Ocr::ProcessFiles do
       expect(@attach.processed_data).not_to eq(@file_processor.json_response)
     end
 
-    context 'contains required key' do
-      Attachment::MERGING_HASH.keys.each do |key|
-        it "[#{key}]" do
-          expect(@attach.processed_data.key?(key.to_s)).to eq(true)
-        end
-      end
-
-      context '[Details] further contains required key' do
-        Attachment::MERGING_HASH[:Details].each do |hash|
-          hash.keys.each do |key|
-            it "[#{key}]" do
-              expect(@attach.processed_data['Details'].first.key?(key.to_s)).to eq(true)
-            end
-          end
-        end
-      end
+    it 'contains same keys as ocr_parsed_data' do
+      ocr_hash = Ocr::CustomRules.new(@attach.ocr_parsed_data['data']).apply_all
+      ocr_keys = ocr_hash.keys.collect(&:apply_transform_rule!).sort
+      processed_hash = @attach.processed_data.dup
+      details_keys = processed_hash.delete('Details').first.keys
+      processed_keys = (processed_hash.keys + details_keys).flatten.sort
+      expect(processed_keys).to eq(ocr_keys)
     end
-  end
-
-  it 'all keys of #ocr_parsed_data with a value have same value in #processed_data' do
-
   end
 
   after(:all) do
