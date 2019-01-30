@@ -7,8 +7,8 @@ module Ocr
     end
 
     def apply_all
+      apply_payment_terms if json_data.key? 'PaymentTerms'
       apply_bol_number
-      apply_payment_terms
     end
 
     def apply_bol_number
