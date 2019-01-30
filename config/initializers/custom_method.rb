@@ -4,18 +4,42 @@ class Array
   end
 end
 
+class Symbol
+  def apply_transform_rule!
+    to_s.apply_transform_rule!
+  end
+end
+
 class String
   def apply_transform_rule!
-    delete(' ').camelcase
+    to_s.delete(' ').camelcase
   end
 end
 
 class Hash
-  def mappable!
-    details = delete('Details') || delete('details') || delete(:details) || delete(:Details)
+  def mappable_transform!
     transform_keys!(&:apply_transform_rule!)
-    details.transform_keys!(&:apply_transform_rule!) if details.present? && details.is_a?(Hash)
-    merge!('Details' => details) if details.present?
+  end
+
+  def details_hash
+    details = delete('Details') || delete('details') || delete(:details) || delete(:Details)
+    details.present? ? { 'Details' => details.first } : {}
+  end
+
+  def mappable!
+    mappable_transform!.merge!(details_hash.mappable_transform!)
+  end
+
+  def provision_details_hash!
+    self['Details'] = [{}]
+    details = Attachment::MERGING_HASH.dup.delete(:Details)&.first || {}
+    return self if details.blank?
+
+    details.keys.each do |key|
+      next unless key? key.to_s
+
+      self['Details'].first.merge!(key.to_s => delete(key.to_s))
+    end
     self
   end
 end
