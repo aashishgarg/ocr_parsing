@@ -22,9 +22,7 @@ module Ocr
 
     # Make all the keys in json camel cased
     def make_camelcase_keys
-      json_data.transform_keys! { |key| key.delete(' ').camelcase }
-      json_data['Details'].map! { |hash| hash.transform_keys! { |key| key.delete(' ').camelcase } } if json_data['Details'].present?
-      json_data
+      json_data.mappable!
     end
 
     # Customizing the keys in the response json
