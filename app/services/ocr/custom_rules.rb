@@ -17,8 +17,9 @@ module Ocr
     end
 
     def apply_payment_terms
-      permitted_payment_term = (json_data['PaymentTerms']&.strip!).in?(Attachment::PAYMENT_TERMS.keys)
-      json_data['PaymentTerms'] = Attachment::PAYMENT_TERMS.key('Prepaid') unless permitted_payment_term
+      Attachment::PAYMENT_TERMS.each_pair do |key, value|
+        json_data['PaymentTerms'] = key if value['options'].include?(json_data['PaymentTerms'])
+      end
       json_data
     end
   end
