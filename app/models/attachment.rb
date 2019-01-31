@@ -2,7 +2,6 @@ class Attachment < ApplicationRecord
   # Attribute Accessors
   attr_accessor :processor
   attr_accessor :merging_required # if true then processed_data will have the MERGING_HASH merged
-  attr_accessor :send_to_ocr
   attr_reader :signed_original_url
   attr_reader :signed_processed_url
 
