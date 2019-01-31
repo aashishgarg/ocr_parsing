@@ -12,7 +12,7 @@ module StateMachine
             :failed_in_response_parsing
 
       event :sent_to_ocr do
-        transitions from: :uploaded, to: :ocr_pending
+        transitions to: :ocr_pending
       end
 
       event :parsed, after: :update_bol_extracted do

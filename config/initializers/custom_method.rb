@@ -14,6 +14,23 @@ class String
   def apply_transform_rule!
     to_s.delete(' ').camelcase
   end
+
+  def file_name
+    split('.').first
+  end
+
+  def extension
+    all_extensions = Rack::Mime::MIME_TYPES.keys
+    array = split('.')
+    array.shift
+    array.select { |item| item.prepend('.').in?(all_extensions) }.first&.delete('.')
+  end
+
+  def serial_no
+    array = split('.')
+    array.shift
+    array.select { |item| item.to_i.positive? }.first.to_i
+  end
 end
 
 class Hash

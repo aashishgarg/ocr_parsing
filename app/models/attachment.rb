@@ -24,7 +24,7 @@ class Attachment < ApplicationRecord
 
   # Callbacks
   after_initialize(proc { @merging_required = false })
-  after_create_commit :queue_file
+  after_commit :queue_file, if: proc { previous_changes.has_key?(:data_file_name) }
   after_update :set_bol_status, if: proc { previous_changes.has_key?(:status) }
   after_update :update_parent_details, if: proc { previous_changes.has_key?(:ocr_parsed_data) && previous_changes[:ocr_parsed_data][1].present? }
   before_update :adjust_keys, if: proc { changes.key?(:processed_data) && changes[:processed_data][0].present? }
