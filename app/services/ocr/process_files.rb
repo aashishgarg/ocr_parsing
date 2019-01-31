@@ -5,7 +5,7 @@ module Ocr
 
     # Attribute Accessors
     attr_accessor :attachment, :current_user, :response_required_fields, :local_file, :uri, :http, :request, :response,
-                  :s3_file_processor, :json_parser
+                  :s3_file_processor, :json_parser, :response_body
 
     # Callbacks
     before_send_to_ocr :download_file
@@ -30,12 +30,14 @@ module Ocr
       @response = nil
       @s3_file_processor = nil
       @json_parser = nil
+      @response_body = nil
     end
 
     # Places request to OCR Service
     def send_to_ocr
       run_callbacks :send_to_ocr do
         self.response = http.request(request)
+        self.response_body = JSON.parse(response.body)
       end
     end
 
@@ -59,14 +61,14 @@ module Ocr
 
     # Dump data returned from ocr without any manipulations in attachment
     def dump_ocr_data
-      attachment.update(ocr_parsed_data: json_response)
+      attachment.update(ocr_parsed_data: response_body)
     end
 
     # Updates the direct response in (ocr_parsed_data) and processed data in (processed_data) of Attachment
     def process_ocr_data
       if successful?
         begin
-          self.json_parser = Ocr::Parser.new(json_response['data'], response_required_fields, attachment.merging_required)
+          self.json_parser = Ocr::Parser.new(response_body['data'].dup, response_required_fields.dup, attachment.merging_required)
           json_parser.add_status_keys
         rescue => e
           attachment.parsing_failed!
@@ -74,7 +76,7 @@ module Ocr
         end
       else
         begin
-          raise ResponseErrorAtOcr, "Ocr Response is - #{json_response['response_code']} not 100"
+          raise ResponseErrorAtOcr, "Ocr Response is - #{response_body['response_code']} not 100"
         rescue ResponseErrorAtOcr => e
           report_exception(e, self)
         end
@@ -86,18 +88,13 @@ module Ocr
       attachment.update(processed_data: json_parser.final_hash)
     end
 
-    # Ocr response in json format
-    def json_response
-      JSON.parse(response.body)
-    end
-
     # Deletes the local downloaded attachment file
     def clean_references
       s3_file_processor.clean_local_file if s3_file_processor.file_path
     end
 
     def successful?
-      json_response['response_code'] == '100'
+      response_body['response_code'] == '100'
     end
   end
 end
