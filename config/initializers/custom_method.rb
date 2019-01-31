@@ -35,11 +35,7 @@ class Hash
     details = Attachment::MERGING_HASH.dup.delete(:Details)&.first || {}
     return self if details.blank?
 
-    details.keys.each do |key|
-      next unless key? key.to_s
-
-      self['Details'].first.merge!(key.to_s => delete(key.to_s))
-    end
+    details.keys.each { |key| self['Details'].first.merge!(key.to_s => delete(key.to_s)) }
     self
   end
 end
