@@ -188,7 +188,7 @@ RSpec.describe Api::BolFilesController, type: :controller do
           expect(@body['bol_files'][0]['attachments'][0]['data_file_name']).to eq('448118')
         end
         it 'sets attachment [serial_no] = nil' do
-          expect(@body['bol_files'][0]['attachments'][0]['serial_no']).to eq(nil)
+          expect(@body['bol_files'][0]['attachments'][0]['serial_no']).to eq(0)
         end
       end
 
