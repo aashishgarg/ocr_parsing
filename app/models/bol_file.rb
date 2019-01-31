@@ -21,7 +21,8 @@ class BolFile < ApplicationRecord
       bol_file_params[:attachments_attributes].each do |key, attachment_params|
         begin
           file_name = attachment_params[:data].original_filename.file_name
-          bol_file = user.bol_files.find_or_initialize_by(name: file_name)
+          bol_file = BolFile.find_or_initialize_by(name: file_name)
+          bol_file.user = user
           serial_no = attachment_params[:data].original_filename.serial_no
           attachment = bol_file.attachments.find_or_initialize_by(serial_no: serial_no)
           _params = attachment_params.merge(serial_no: serial_no)
