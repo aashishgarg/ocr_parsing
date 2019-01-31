@@ -14,11 +14,19 @@ class String
   def apply_transform_rule!
     to_s.delete(' ').camelcase
   end
+
+  def apply_transform_rule
+    to_s.gsub(' ', '').camelcase
+  end
 end
 
 class Hash
   def mappable_transform!
     transform_keys!(&:apply_transform_rule!)
+  end
+
+  def mappable_transform
+    transform_keys(&:apply_transform_rule)
   end
 
   def details_hash
