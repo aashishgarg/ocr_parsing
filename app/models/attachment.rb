@@ -64,7 +64,7 @@ class Attachment < ApplicationRecord
   end
 
   def update_parent_details
-    attachable.update(shipper_name: ocr_parsed_data.dig('data', 'ShipperName')) if ocr_parsed_data.dig('data', 'ShipperName')
+    attachable.update(shipper_name: ocr_parsed_data['data'].mappable_transform['ShipperName']) if ocr_parsed_data['data'].mappable_transform['ShipperName'].present?
   end
 
   def queue_file
