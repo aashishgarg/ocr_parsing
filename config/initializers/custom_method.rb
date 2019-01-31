@@ -37,11 +37,11 @@ class Hash
 
     all_nil = true
     details.keys.each do |key|
-      all_nil = false if key? key
+      all_nil = false if key? key.to_s
       self['Details'].first.merge!(key.to_s => delete(key.to_s))
     end
 
-    merge! 'Details' => [] if all_nil
+    merge!('Details' => []) if all_nil
     self
   end
 end

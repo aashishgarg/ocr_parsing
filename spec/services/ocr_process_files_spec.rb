@@ -11,7 +11,7 @@ RSpec.describe Ocr::ProcessFiles do
 
   context '#ocr_parsed_data' do
     it 'is saved same as returned response' do
-      expect(@attach.ocr_parsed_data).to eq(@file_processor.json_response)
+      expect(@attach.ocr_parsed_data).to eq(@file_processor.response_body)
     end
   end
 
@@ -34,17 +34,27 @@ RSpec.describe Ocr::ProcessFiles do
       end
     end
 
-    it 'is not same as returned response' do
-      expect(@attach.processed_data).not_to eq(@file_processor.json_response)
+    it '[Details] hash all required keys' do
+      expect(@attach.processed_data['Details'].first.keys).to eq(Attachment::MERGING_HASH[:Details].first.keys.map(&:to_s))
     end
 
-    it 'contains same keys as ocr_parsed_data' do
+    it '[Details] is blank array if no related key is available in ocr_response' do
+      %w[hazmat pieces weight description].each { |key| @file_processor.response_body['data'].delete(key) }
+      response = @file_processor.process_ocr_data
+      expect(response['Details']).to eq([])
+    end
+
+    it 'is not same as returned response' do
+      expect(@attach.processed_data).not_to eq(@file_processor.response_body)
+    end
+
+    it 'contains same keys of ocr_parsed_data' do
       ocr_hash = Ocr::CustomRules.new(@attach.ocr_parsed_data['data']).apply_all
       ocr_keys = ocr_hash.keys.collect(&:apply_transform_rule!).sort
       processed_hash = @attach.processed_data.dup
-      details_keys = processed_hash.delete('Details').first.keys
+      details_keys = processed_hash.delete('Details').first&.keys || []
       processed_keys = (processed_hash.keys + details_keys).flatten.sort
-      expect(processed_keys).to eq(ocr_keys)
+      expect(ocr_keys - processed_keys).to eq([])
     end
   end
 
