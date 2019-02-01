@@ -25,7 +25,7 @@ class BolFile < ApplicationRecord
           bol_files << BolFile.provision(attachment_params, file_name, user)
         rescue ActiveRecord::RecordNotUnique => e
           retry if (retries += 1) < 3
-          ExceptionNotifier.notify_exception(e, data: { message: 'Contact Administrator' }) if retries >= 3
+          ExceptionNotifier.notify_exception(e, data: { message: 'Contact Administrator for Bol file creation' }) if retries >= 3
         rescue => e
           errors = {}
           errors[e.class.to_s] = e.message
