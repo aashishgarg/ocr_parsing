@@ -21,6 +21,7 @@ class Attachment < ApplicationRecord
   # Validations
   validates_attachment_presence :data
   validates_attachment :data, content_type: { content_type: PAPERCLIP_IMAGE_CONTENT_TYPE }
+  validates :status, presence: true, inclusion: { in: Attachment.statuses.keys }
 
   # Callbacks
   after_initialize(proc { @merging_required = false })
