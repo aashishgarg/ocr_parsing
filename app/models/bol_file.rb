@@ -13,7 +13,8 @@ class BolFile < ApplicationRecord
 
   # Validations
   validates :status, presence: true, inclusion: { in: BolFile.statuses.keys }
-  validates :name, uniqueness: true, presence: true
+  validates :name, uniqueness: true, presence:
+
 
   def self.provision_bulk_upload(bol_file_params, user)
     bol_files = []
