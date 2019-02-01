@@ -49,10 +49,11 @@ ActiveRecord::Schema.define(version: 2019_02_01_070821) do
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
+    t.bigint "resource_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "resource_id"
-    t.index ["resource_id"], name: "index_roles_on_resource_id"
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
   create_table "users", force: :cascade do |t|

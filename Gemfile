@@ -26,6 +26,7 @@ gem 'sidekiq', '~> 5.2'      # Backgound jobs
 gem 'sidekiq-history', '~> 0.0.9' # For keeping Sidekiq history
 gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'   # Use Uglifier as compressor for JavaScript assets
+gem 'sidekiq-failures'       # See details of failed jobs
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw] # Call 'byebug' anywhere in the code to stop execution and get a
