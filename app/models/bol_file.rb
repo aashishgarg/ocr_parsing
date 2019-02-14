@@ -11,6 +11,9 @@ class BolFile < ApplicationRecord
   belongs_to :user, inverse_of: :bol_files
   accepts_nested_attributes_for :attachments
 
+  # Callbacks
+  after_update_commit :update_datetime, if: proc { previous_changes.key?(:status) }
+
   # Validations
   validates :status, presence: true
   # TODO: Add file size validation
@@ -37,5 +40,20 @@ class BolFile < ApplicationRecord
       end
     end
     { bol_files: bol_files, errors: (defined?(errors) ? errors : []) }
+  end
+
+  private
+
+  def update_datetime
+    value = previous_changes[:status].last
+    if BolFile.statuses[value] < BolFile.statuses['qa_approved']
+      update(qa_approved_at: nil, released_at: nil)
+    elsif value == 'qa_approved'
+      update(qa_approved_at: DateTime.now, released_at: nil)
+    elsif value == 'released'
+      update(released_at: DateTime.now)
+    elsif BolFile.statuses[value].between?(BolFile.statuses['qa_approved'], BolFile.statuses['released'])
+      update(released_at: nil)
+    end
   end
 end
