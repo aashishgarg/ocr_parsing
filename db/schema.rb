@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2019_02_14_114755) do
     t.datetime "qa_approved_at"
     t.datetime "released_at"
     t.index ["bol_type_id"], name: "index_bol_files_on_bol_type_id"
+    t.index ["name"], name: "index_bol_files_on_name", unique: true
     t.index ["user_id"], name: "index_bol_files_on_user_id"
   end
 
