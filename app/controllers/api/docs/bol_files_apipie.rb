@@ -27,6 +27,8 @@ module Api
             param :bol_number, String, desc: 'BOL Number of the BOL File'
             param :pitt_pro, String, desc: 'PreAssignedPittPro of the BOL File'
             param :user_id, Integer, desc: 'Status of BOL File'
+            param :qa_approved_at, DateTime, desc: 'Time when it was qa_approved'
+            param :released_at, DateTime, desc: 'Time when it was released'
             param :attachments, Array do
               param :index, Hash do
                 param :id, Integer
@@ -72,6 +74,8 @@ module Api
           param :bol_number, String, desc: 'BOL Number of the BOL File'
           param :pitt_pro, String, desc: 'PreAssignedPittPro of the BOL File'
           param :user_id, Integer, desc: 'Status of BOL File'
+          param :qa_approved_at, DateTime, desc: 'Time when it was qa_approved'
+          param :released_at, DateTime, desc: 'Time when it was released'
           param :attachments, Array do
             param :index, Hash do
               param :id, Integer
@@ -124,6 +128,8 @@ module Api
             param :bol_number, String, desc: 'BOL Number of the BOL File'
             param :pitt_pro, String, desc: 'PreAssignedPittPro of the BOL File'
             param :user_id, Integer, desc: 'Status of BOL File'
+            param :qa_approved_at, DateTime, desc: 'Time when it was qa_approved'
+            param :released_at, DateTime, desc: 'Time when it was released'
             param :attachments, Array do
               param :index, Hash do
                 param :id, Integer
@@ -201,6 +207,8 @@ module Api
           param :bol_number, String, desc: 'BOL Number of the BOL File'
           param :pitt_pro, String, desc: 'PreAssignedPittPro of the BOL File'
           param :user_id, Integer, desc: 'Status of BOL File'
+          param :qa_approved_at, DateTime, desc: 'Time when it was qa_approved'
+          param :released_at, DateTime, desc: 'Time when it was released'
           param :attachments, Array do
             param :index, Hash do
               param :id, Integer
