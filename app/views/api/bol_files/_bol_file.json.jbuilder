@@ -1,4 +1,4 @@
-json.(bol_file, :id, :name, :shipper_name, :status, :user_id, :extracted_at)
+json.(bol_file, :id, :name, :shipper_name, :status, :user_id, :extracted_at, :bol_number, :pitt_pro)
 
 json.attachments do |json|
   json.array!(bol_file.attachments.sequenced) do |attachment|

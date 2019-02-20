@@ -24,6 +24,8 @@ module Api
             param :shipper_name, String, desc: 'Shipper Name of BOL File'
             param :status, BolFile.statuses.keys, desc: 'Status of BOL File'
             param :extracted_at, DateTime, desc: 'Last attachment ocr parsing time'
+            param :bol_number, String, desc: 'BOL Number of the BOL File'
+            param :pitt_pro, String, desc: 'PreAssignedPittPro of the BOL File'
             param :user_id, Integer, desc: 'Status of BOL File'
             param :attachments, Array do
               param :index, Hash do
@@ -67,6 +69,8 @@ module Api
           param :shipper_name, String, desc: 'Shipper Name of BOL File'
           param :status, BolFile.statuses.keys, desc: 'Status of BOL File'
           param :extracted_at, DateTime, desc: 'Status of BOL File'
+          param :bol_number, String, desc: 'BOL Number of the BOL File'
+          param :pitt_pro, String, desc: 'PreAssignedPittPro of the BOL File'
           param :user_id, Integer, desc: 'Status of BOL File'
           param :attachments, Array do
             param :index, Hash do
@@ -117,6 +121,8 @@ module Api
             param :shipper_name, String, desc: 'Shipper Name of BOL File'
             param :status, BolFile.statuses.keys, desc: 'Status of BOL File'
             param :extracted_at, DateTime, desc: 'Last attachment ocr parsing time'
+            param :bol_number, String, desc: 'BOL Number of the BOL File'
+            param :pitt_pro, String, desc: 'PreAssignedPittPro of the BOL File'
             param :user_id, Integer, desc: 'Status of BOL File'
             param :attachments, Array do
               param :index, Hash do
@@ -192,6 +198,8 @@ module Api
           param :shipper_name, String, desc: 'Shipper Name of BOL File'
           param :status, BolFile.statuses.keys, desc: 'Status of BOL File'
           param :extracted_at, DateTime, desc: 'Status of BOL File'
+          param :bol_number, String, desc: 'BOL Number of the BOL File'
+          param :pitt_pro, String, desc: 'PreAssignedPittPro of the BOL File'
           param :user_id, Integer, desc: 'Status of BOL File'
           param :attachments, Array do
             param :index, Hash do

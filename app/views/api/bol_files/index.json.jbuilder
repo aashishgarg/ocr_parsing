@@ -5,5 +5,3 @@ json.bol_files do |json|
 end
 json.merge!({ errors: @errors })  if @errors&.present?
 
-
-
