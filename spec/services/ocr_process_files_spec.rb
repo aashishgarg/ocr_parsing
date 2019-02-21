@@ -4,7 +4,9 @@ RSpec.describe Ocr::ProcessFiles do
   before(:all) do
     @user = FactoryBot.create(:user)
     @bol_file = FactoryBot.create(:bol_file, user: @user)
+    @bol_file1 = FactoryBot.create(:bol_file, user: @user)
     @attach = @bol_file.attachments.create(data: File.open("#{Rails.root}/spec/support/attachments/bol_files/448118"))
+    @attach1 = @bol_file1.attachments.create(data: File.open("#{Rails.root}/spec/support/attachments/bol_files/448118.001"))
     @file_processor = Ocr::ProcessFiles.new(@attach, @user)
     @file_processor.send_to_ocr
   end
@@ -12,6 +14,27 @@ RSpec.describe Ocr::ProcessFiles do
   context '#ocr_parsed_data' do
     it 'is saved same as returned response' do
       expect(@attach.ocr_parsed_data).to eq(@file_processor.response_body)
+    end
+
+    context '[BOLNumber]' do
+      it 'when present then updates [bol_number] in [BolFile]' do
+        expect(@attach.ocr_parsed_data.dig('data', 'BOLNumber')).to eq(@bol_file.bol_number)
+      end
+
+      it 'when not present then [bol_number] in [BolFile] is nil' do
+        expect(@bol_file1.bol_number).to eq(nil)
+      end
+    end
+
+    context '[preAssigned PIT Pro]' do
+      it 'when present then updates [pitt_pro] in [BolFile]' do
+        @attach1.update(ocr_parsed_data: { 'data' => { 'preAssigned PIT Pro' => 'New Value' } })
+        expect(@attach1.ocr_parsed_data.dig('data', 'preAssigned PIT Pro')).to eq(@bol_file1.pitt_pro)
+      end
+
+      it 'when not present then [pitt_pro] in [BolFile] is nil' do
+        expect(@bol_file.pitt_pro).to eq(nil)
+      end
     end
   end
 
