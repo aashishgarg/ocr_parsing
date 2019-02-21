@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_14_114755) do
+ActiveRecord::Schema.define(version: 2019_02_20_114106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 2019_02_14_114755) do
     t.bigint "user_id"
     t.datetime "extracted_at"
     t.string "shipper_name"
+    t.string "bol_number"
+    t.string "pitt_pro"
     t.datetime "qa_approved_at"
     t.datetime "released_at"
     t.index ["bol_type_id"], name: "index_bol_files_on_bol_type_id"

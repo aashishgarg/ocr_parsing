@@ -26,6 +26,7 @@ class Attachment < ApplicationRecord
   # Callbacks
   after_initialize(proc { @merging_required = false })
   after_commit :queue_file, if: proc { previous_changes.has_key?(:data_file_name) }
+  after_update :update_bol_file_bol_number_pitt_pro, if: proc { previous_changes.has_key?(:ocr_parsed_data) && previous_changes[:ocr_parsed_data][1].present? }
   after_update :set_bol_status, if: proc { previous_changes.has_key?(:status) }
   after_update :update_parent_details, if: proc { previous_changes.has_key?(:ocr_parsed_data) && previous_changes[:ocr_parsed_data][1].present? }
   before_update :adjust_keys, if: proc { changes.key?(:processed_data) && changes[:processed_data][0].present? }
@@ -58,6 +59,10 @@ class Attachment < ApplicationRecord
     statuses = []
     attachable.attachments.pluck(:status).each { |status| statuses << Attachment.statuses[status]}
     attachable.method((Attachment.statuses.key(statuses.min) + '!').to_sym).call
+  end
+
+  def update_bol_file_bol_number_pitt_pro
+    attachable.update(bol_number: (ocr_parsed_data.dig('data', 'BOLNumber') || attachable.bol_number), pitt_pro: (ocr_parsed_data.dig('data', 'preAssigned PIT Pro') || attachable.pitt_pro))
   end
 
   def update_bol_extracted
