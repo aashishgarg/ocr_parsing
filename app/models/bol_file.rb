@@ -22,7 +22,7 @@ class BolFile < ApplicationRecord
   validates :name, uniqueness: true, presence: true
 
   def annotations
-    ANNOTATIONS.select { |json| json['Shipper Name']&.delete("\n")&.strip == shipper_name.delete("\n")&.strip }.first || {}
+    ANNOTATIONS.select { |json| json['Shipper Name'] == shipper_name.delete("\n")&.strip }.first || {}
   end
 
   def self.provision_bulk_upload(bol_file_params, user)
