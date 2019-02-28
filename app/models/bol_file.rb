@@ -1,4 +1,7 @@
 class BolFile < ApplicationRecord
+  # Attribute Accessors
+  attr_accessor :annotations_required
+
   # Modules Inclusions
   include Attachable
   include Statuses

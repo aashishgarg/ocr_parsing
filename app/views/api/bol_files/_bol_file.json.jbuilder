@@ -1,5 +1,5 @@
-json.(bol_file, :id, :name, :shipper_name, :status, :user_id, :extracted_at, :qa_approved_at, :released_at, :bol_number, :pitt_pro, :annotations)
-
+json.(bol_file, :id, :name, :shipper_name, :status, :user_id, :extracted_at, :qa_approved_at, :released_at, :bol_number, :pitt_pro)
+json.annotations bol_file.annotations if bol_file.annotations_required
 json.attachments do |json|
   json.array!(bol_file.attachments.sequenced) do |attachment|
     json.partial! 'api/attachments/attachment', attachment: attachment
