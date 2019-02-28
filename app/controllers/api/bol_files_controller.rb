@@ -7,7 +7,7 @@ module Api
     # Before Actions
     authorize_resource
     before_action :set_bol_file, except: %i[create index]
-    before_action :annotations_required, except: %i[index]
+    before_action :annotations_required, only: %i[index show]
 
     def index
       begin
