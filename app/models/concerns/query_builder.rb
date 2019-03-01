@@ -58,7 +58,9 @@ module QueryBuilder
 
     # Data required for the dashboard
     def data_hash(params)
-      hash = { bol_files: search(params).as_json(include: :attachments) }
+      inclusions_hash = { include: :attachments }
+      inclusions_hash[:methods] = :annotations if params[:annotations_required].present?
+      hash = { bol_files: search(params).as_json(inclusions_hash) }
       hash[:counts] = counts if params[:dashboard] == 'true'
       hash[:page_details] = page_details(params)
       hash

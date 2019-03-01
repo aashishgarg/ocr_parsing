@@ -1,7 +1,4 @@
 class BolFile < ApplicationRecord
-  # Attribute Accessors
-  attr_accessor :annotations_required
-
   # Modules Inclusions
   include Attachable
   include Statuses
@@ -22,7 +19,7 @@ class BolFile < ApplicationRecord
   validates :name, uniqueness: true, presence: true
 
   def annotations
-    ANNOTATIONS.select { |json| json['Shipper Name'] == shipper_name.delete("\n")&.strip }.first || {}
+    ANNOTATIONS.select { |json| json['Shipper Name'] == shipper_name&.squish if json['Shipper Name'].present? }.first || {}
   end
 
   def self.provision_bulk_upload(bol_file_params, user)

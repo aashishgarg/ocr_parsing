@@ -7,7 +7,7 @@ module Api
     # Before Actions
     authorize_resource
     before_action :set_bol_file, except: %i[create index]
-    before_action :annotations_required, only: %i[index show]
+    before_action :show_annotation, only: %i[show index]
 
     def index
       begin
@@ -41,12 +41,12 @@ module Api
 
     private
 
-    def set_bol_file
-      @bol_file = BolFile.find(params[:id])
+    def show_annotation
+      @show_annotation = params[:annotations_required].present?
     end
 
-    def annotations_required
-      @bol_file.annotations_required = params[:annotations_required].present?
+    def set_bol_file
+      @bol_file = BolFile.find(params[:id])
     end
 
     def bol_file_params
